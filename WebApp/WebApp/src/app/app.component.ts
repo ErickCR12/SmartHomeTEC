@@ -10,6 +10,8 @@ export class AppComponent {
   notLogged: boolean = false;
   notReg: boolean = false;
   notEditProf: boolean = false;
+  notShop: boolean = false;
+  notReport: boolean = false;
 
   clickLog() {
     this.notLogged = !this.notLogged
@@ -20,5 +22,13 @@ export class AppComponent {
 
   clickProfEdit() {
     this.notEditProf = !this.notEditProf
+  }
+
+  clickShop() {
+    this.notShop = !this.notShop
+  }
+
+  clickReports() {
+    this.notReport = !this.notReport
   }
 }

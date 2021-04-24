@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { LoginScreen } from './components/loginComponent/login.component';
 import { RegisterComponent } from './components/register-component/register-component.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { ShopComponent } from './components/shop/shop.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 
 @NgModule({
@@ -13,6 +15,8 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
     LoginScreen,
     RegisterComponent,
     EditProfileComponent,
+    ShopComponent,
+    ReportsComponent,
     
   ],
   imports: [

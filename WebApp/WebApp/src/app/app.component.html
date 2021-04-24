@@ -13,7 +13,13 @@
           <a class="nav-link active" aria-current="page" (click)="clickReg()">{{notReg? "Hide Register":"Register"}}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickProfEdit()">{{notReg? "Hide Edit Profile":"EditProfile"}}</a>
+          <a class="nav-link active" aria-current="page" (click)="clickProfEdit()">{{notEditProf? "Hide Edit Profile":"EditProfile"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickShop()">{{notShop? "Hide Shop":"Shop"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickReports()">{{notReport? "Hide Report":"Report"}}</a>
         </li>
       </ul>
     </div>
@@ -30,3 +36,8 @@
 <app-edit-profile *ngIf="notEditProf; else elseEditProf"></app-edit-profile>
 <ng-template #elseEditProf></ng-template>
 
+<app-shop *ngIf="notShop; else elseShop"></app-shop>
+<ng-template #elseShop></ng-template>
+
+<app-reports *ngIf="notReport; else elseReport"></app-reports>
+<ng-template #elseReport></ng-template>
