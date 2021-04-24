@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#">ResTEC</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickLog()">{{notLogged? "Hide Log In":"Log In"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickReg()">{{notReg? "Hide Register":"Register"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickProfEdit()">{{notReg? "Hide Edit Profile":"EditProfile"}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<loginScreen *ngIf="notLogged; else elseBlock"></loginScreen>
+<ng-template #elseBlock></ng-template>
+
+<app-register-component *ngIf="notReg; else elseReg"></app-register-component>
+<ng-template #elseReg></ng-template>
+
+<app-edit-profile *ngIf="notEditProf; else elseEditProf"></app-edit-profile>
+<ng-template #elseEditProf></ng-template>
+
