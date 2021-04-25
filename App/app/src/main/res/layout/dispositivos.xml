@@ -118,13 +118,13 @@
         android:layout_width="187dp"
         android:layout_height="63dp"
         android:background="#78517c"
-        android:text="Siguiente"
+        android:text="Regresar"
         android:textColor="#f17950"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.958" />
+        app:layout_constraintVertical_bias="0.976" />
 
     <TextView
         android:id="@+id/lblconsumo"

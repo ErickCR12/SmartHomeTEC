@@ -12,7 +12,7 @@
         android:layout_height="75dp"
         android:background="#78517c"
         android:gravity="clip_horizontal|center_horizontal|center_vertical"
-        android:text="Salir"
+        android:text="Regresar"
         android:textColor="#f17950"
         android:textSize="18sp"
         android:textStyle="bold"

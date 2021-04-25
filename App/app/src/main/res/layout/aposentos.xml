@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.534" />
+        app:layout_constraintVertical_bias="0.559" />
 
     <EditText
         android:id="@+id/txtaposentonombre2"
@@ -30,7 +30,7 @@
         android:text="Añadir Aposento"
         android:textColor="#f17950"
         android:textStyle="bold"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.45"
@@ -57,7 +57,7 @@
         android:layout_width="163dp"
         android:layout_height="64dp"
         android:background="#78517c"
-        android:text="Visualizar"
+        android:text="Regresar"
         android:textColor="#f17950"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,10 +68,10 @@
 
     <TextView
         android:id="@+id/lbltitulo"
-        android:layout_width="267dp"
+        android:layout_width="337dp"
         android:layout_height="47dp"
         android:gravity="clip_horizontal|center_horizontal|center_vertical"
-        android:text="Añadir Aposento"
+        android:text="Administrar Aposento"
         android:textColor="#f17950"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -82,11 +82,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/lblindicador"
+        android:layout_width="392dp"
+        android:layout_height="48dp"
+        android:gravity="clip_horizontal|center_horizontal|center_vertical"
+        android:text="Añadir Aposento"
+        android:textColor="#f17950"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.43"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47" />
+
     <Button
         android:id="@+id/btneditar"
         android:layout_width="149dp"
         android:layout_height="75dp"
         android:background="#78517c"
+        android:enabled="true"
         android:text="Editar"
         android:textColor="#f17950"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,6 +118,7 @@
         android:layout_width="133dp"
         android:layout_height="73dp"
         android:background="#78517c"
+        android:enabled="true"
         android:text="Añadir"
         android:textColor="#f17950"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -115,6 +133,7 @@
         android:layout_width="149dp"
         android:layout_height="73dp"
         android:background="#78517c"
+        android:enabled="true"
         android:text="Consultar"
         android:textColor="#f17950"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -129,6 +148,7 @@
         android:layout_width="131dp"
         android:layout_height="73dp"
         android:background="#78517c"
+        android:enabled="true"
         android:text="Eliminar"
         android:textColor="#f17950"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -137,5 +157,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.27" />
+
+    <Spinner
+        android:id="@+id/spnseleccionados"
+        android:layout_width="216dp"
+        android:layout_height="60dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/btnvisualizar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.581" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
