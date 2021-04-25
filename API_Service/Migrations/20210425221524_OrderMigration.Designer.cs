@@ -3,84 +3,23 @@ using System;
 using API_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API_Service.Migrations
 {
     [DbContext(typeof(SmartHomeDbContext))]
-    partial class SmartHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210425221524_OrderMigration")]
+    partial class OrderMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("API_Service.Models.Admin", b =>
-                {
-                    b.Property<string>("username")
-                        .HasColumnType("text");
-
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("username");
-
-                    b.ToTable("admin");
-                });
-
-            modelBuilder.Entity("API_Service.Models.Chamber", b =>
-                {
-                    b.Property<string>("name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Clientemail")
-                        .HasColumnType("text");
-
-                    b.HasKey("name");
-
-                    b.HasIndex("Clientemail");
-
-                    b.ToTable("chambers");
-                });
-
-            modelBuilder.Entity("API_Service.Models.Client", b =>
-                {
-                    b.Property<string>("email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("continent")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("country")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("last_name1")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("last_name2")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("email");
-
-                    b.ToTable("clients");
-                });
 
             modelBuilder.Entity("API_Service.Models.Device", b =>
                 {
@@ -123,21 +62,6 @@ namespace API_Service.Migrations
                     b.ToTable("device_types");
                 });
 
-            modelBuilder.Entity("API_Service.Models.DirectionClient", b =>
-                {
-                    b.Property<string>("direction")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Clientemail")
-                        .HasColumnType("text");
-
-                    b.HasKey("direction");
-
-                    b.HasIndex("Clientemail");
-
-                    b.ToTable("directions_clients");
-                });
-
             modelBuilder.Entity("API_Service.Models.Distributor", b =>
                 {
                     b.Property<int>("legal_card")
@@ -169,9 +93,6 @@ namespace API_Service.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("Clientemail")
-                        .HasColumnType("text");
-
                     b.Property<int?>("Deviceserial_number")
                         .HasColumnType("integer");
 
@@ -189,8 +110,6 @@ namespace API_Service.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("consecutive");
-
-                    b.HasIndex("Clientemail");
 
                     b.HasIndex("Deviceserial_number");
 
@@ -212,13 +131,6 @@ namespace API_Service.Migrations
                     b.ToTable("DeviceDistributor");
                 });
 
-            modelBuilder.Entity("API_Service.Models.Chamber", b =>
-                {
-                    b.HasOne("API_Service.Models.Client", null)
-                        .WithMany("chambers")
-                        .HasForeignKey("Clientemail");
-                });
-
             modelBuilder.Entity("API_Service.Models.Device", b =>
                 {
                     b.HasOne("API_Service.Models.DeviceType", null)
@@ -226,19 +138,8 @@ namespace API_Service.Migrations
                         .HasForeignKey("DeviceTypename");
                 });
 
-            modelBuilder.Entity("API_Service.Models.DirectionClient", b =>
-                {
-                    b.HasOne("API_Service.Models.Client", null)
-                        .WithMany("directions")
-                        .HasForeignKey("Clientemail");
-                });
-
             modelBuilder.Entity("API_Service.Models.Order", b =>
                 {
-                    b.HasOne("API_Service.Models.Client", null)
-                        .WithMany("orders")
-                        .HasForeignKey("Clientemail");
-
                     b.HasOne("API_Service.Models.Device", null)
                         .WithMany("orders")
                         .HasForeignKey("Deviceserial_number");
@@ -257,15 +158,6 @@ namespace API_Service.Migrations
                         .HasForeignKey("distributorslegal_card")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("API_Service.Models.Client", b =>
-                {
-                    b.Navigation("chambers");
-
-                    b.Navigation("directions");
-
-                    b.Navigation("orders");
                 });
 
             modelBuilder.Entity("API_Service.Models.Device", b =>

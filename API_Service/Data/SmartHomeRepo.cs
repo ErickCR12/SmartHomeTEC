@@ -16,12 +16,12 @@ namespace API_Service.Data
 
         public IEnumerable<Device> GetAllDevices()
         {
-            return _db.Devices.ToList();
+            return _db.devices.ToList();
         }
 
         public Device GetDevice(int serialNumber)
         {
-            return _db.Devices.Find(serialNumber);
+            return _db.devices.Find(serialNumber);
         }
 
         public void AddDevice(Device device)
@@ -31,7 +31,7 @@ namespace API_Service.Data
         }
         public IEnumerable<DeviceType> GetAllDeviceTypes()
         {
-            return _db.DeviceTypes.ToList();
+            return _db.device_types.ToList();
         }
     }
 }

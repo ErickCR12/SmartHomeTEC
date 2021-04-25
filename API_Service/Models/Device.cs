@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,14 +9,16 @@ namespace API_Service.Models
     {
 
         [Key]
-        public int SerialNumber {get; set;}
+        public int serial_number {get; set;}
         [Required]
-        public string Brand {get; set;}
+        public string brand {get; set;}
         [Required]
-        public int ElectricUsage {get; set;}
+        public int electric_usage {get; set;}
 
-        public string DeviceTypeName {get; set;}
-        public DeviceType DeviceType {get; set;}
+        public List<Distributor> distributors {get; set;}
+        public List<Order> orders {get; set;}
+
+
     }
 
 }

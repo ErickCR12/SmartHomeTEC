@@ -3,35 +3,23 @@ using System;
 using API_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API_Service.Migrations
 {
     [DbContext(typeof(SmartHomeDbContext))]
-    partial class SmartHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210425223708_ChamberMigration")]
+    partial class ChamberMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("API_Service.Models.Admin", b =>
-                {
-                    b.Property<string>("username")
-                        .HasColumnType("text");
-
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("username");
-
-                    b.ToTable("admin");
-                });
 
             modelBuilder.Entity("API_Service.Models.Chamber", b =>
                 {
@@ -123,21 +111,6 @@ namespace API_Service.Migrations
                     b.ToTable("device_types");
                 });
 
-            modelBuilder.Entity("API_Service.Models.DirectionClient", b =>
-                {
-                    b.Property<string>("direction")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Clientemail")
-                        .HasColumnType("text");
-
-                    b.HasKey("direction");
-
-                    b.HasIndex("Clientemail");
-
-                    b.ToTable("directions_clients");
-                });
-
             modelBuilder.Entity("API_Service.Models.Distributor", b =>
                 {
                     b.Property<int>("legal_card")
@@ -226,13 +199,6 @@ namespace API_Service.Migrations
                         .HasForeignKey("DeviceTypename");
                 });
 
-            modelBuilder.Entity("API_Service.Models.DirectionClient", b =>
-                {
-                    b.HasOne("API_Service.Models.Client", null)
-                        .WithMany("directions")
-                        .HasForeignKey("Clientemail");
-                });
-
             modelBuilder.Entity("API_Service.Models.Order", b =>
                 {
                     b.HasOne("API_Service.Models.Client", null)
@@ -262,8 +228,6 @@ namespace API_Service.Migrations
             modelBuilder.Entity("API_Service.Models.Client", b =>
                 {
                     b.Navigation("chambers");
-
-                    b.Navigation("directions");
 
                     b.Navigation("orders");
                 });
