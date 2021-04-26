@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API_Service.Migrations
 {
     [DbContext(typeof(SmartHomeDbContext))]
-    [Migration("20210425223708_ChamberMigration")]
-    partial class ChamberMigration
+    [Migration("20210426004112_FullMigration")]
+    partial class FullMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,17 +21,31 @@ namespace API_Service.Migrations
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("API_Service.Models.Admin", b =>
+                {
+                    b.Property<string>("username")
+                        .HasColumnType("text");
+
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("username");
+
+                    b.ToTable("admin");
+                });
+
             modelBuilder.Entity("API_Service.Models.Chamber", b =>
                 {
                     b.Property<string>("name")
                         .HasColumnType("text");
 
-                    b.Property<string>("Clientemail")
+                    b.Property<string>("client_email")
                         .HasColumnType("text");
 
                     b.HasKey("name");
 
-                    b.HasIndex("Clientemail");
+                    b.HasIndex("client_email");
 
                     b.ToTable("chambers");
                 });
@@ -73,15 +87,16 @@ namespace API_Service.Migrations
             modelBuilder.Entity("API_Service.Models.Device", b =>
                 {
                     b.Property<int>("serial_number")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("DeviceTypename")
-                        .HasColumnType("text");
+                        .HasColumnType("integer");
 
                     b.Property<string>("brand")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("client_email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("device_type_name")
                         .HasColumnType("text");
 
                     b.Property<int>("electric_usage")
@@ -89,7 +104,9 @@ namespace API_Service.Migrations
 
                     b.HasKey("serial_number");
 
-                    b.HasIndex("DeviceTypename");
+                    b.HasIndex("client_email");
+
+                    b.HasIndex("device_type_name");
 
                     b.ToTable("devices");
                 });
@@ -111,12 +128,25 @@ namespace API_Service.Migrations
                     b.ToTable("device_types");
                 });
 
+            modelBuilder.Entity("API_Service.Models.DirectionClient", b =>
+                {
+                    b.Property<string>("direction")
+                        .HasColumnType("text");
+
+                    b.Property<string>("client_email")
+                        .HasColumnType("text");
+
+                    b.HasKey("direction");
+
+                    b.HasIndex("client_email");
+
+                    b.ToTable("directions_clients");
+                });
+
             modelBuilder.Entity("API_Service.Models.Distributor", b =>
                 {
                     b.Property<int>("legal_card")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("integer");
 
                     b.Property<string>("continent")
                         .IsRequired()
@@ -142,13 +172,15 @@ namespace API_Service.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("Clientemail")
+                    b.Property<int>("bill_number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("client_email")
                         .HasColumnType("text");
 
-                    b.Property<int?>("Deviceserial_number")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("bill_number")
+                    b.Property<int>("device_serial_number")
                         .HasColumnType("integer");
 
                     b.Property<int>("price")
@@ -163,64 +195,89 @@ namespace API_Service.Migrations
 
                     b.HasKey("consecutive");
 
-                    b.HasIndex("Clientemail");
+                    b.HasIndex("client_email");
 
-                    b.HasIndex("Deviceserial_number");
+                    b.HasIndex("device_serial_number");
 
                     b.ToTable("orders");
                 });
 
-            modelBuilder.Entity("DeviceDistributor", b =>
+            modelBuilder.Entity("device_distributor", b =>
                 {
-                    b.Property<int>("devicesserial_number")
+                    b.Property<int>("devices_serial_number")
                         .HasColumnType("integer");
 
-                    b.Property<int>("distributorslegal_card")
+                    b.Property<int>("distributors_legal_card")
                         .HasColumnType("integer");
 
-                    b.HasKey("devicesserial_number", "distributorslegal_card");
+                    b.HasKey("devices_serial_number", "distributors_legal_card");
 
-                    b.HasIndex("distributorslegal_card");
+                    b.HasIndex("distributors_legal_card");
 
-                    b.ToTable("DeviceDistributor");
+                    b.ToTable("device_distributor");
                 });
 
             modelBuilder.Entity("API_Service.Models.Chamber", b =>
                 {
-                    b.HasOne("API_Service.Models.Client", null)
+                    b.HasOne("API_Service.Models.Client", "client")
                         .WithMany("chambers")
-                        .HasForeignKey("Clientemail");
+                        .HasForeignKey("client_email");
+
+                    b.Navigation("client");
                 });
 
             modelBuilder.Entity("API_Service.Models.Device", b =>
                 {
-                    b.HasOne("API_Service.Models.DeviceType", null)
+                    b.HasOne("API_Service.Models.Client", "client")
                         .WithMany("devices")
-                        .HasForeignKey("DeviceTypename");
+                        .HasForeignKey("client_email");
+
+                    b.HasOne("API_Service.Models.DeviceType", "device_type")
+                        .WithMany("devices")
+                        .HasForeignKey("device_type_name");
+
+                    b.Navigation("client");
+
+                    b.Navigation("device_type");
+                });
+
+            modelBuilder.Entity("API_Service.Models.DirectionClient", b =>
+                {
+                    b.HasOne("API_Service.Models.Client", "client")
+                        .WithMany("directions")
+                        .HasForeignKey("client_email");
+
+                    b.Navigation("client");
                 });
 
             modelBuilder.Entity("API_Service.Models.Order", b =>
                 {
-                    b.HasOne("API_Service.Models.Client", null)
+                    b.HasOne("API_Service.Models.Client", "client")
                         .WithMany("orders")
-                        .HasForeignKey("Clientemail");
+                        .HasForeignKey("client_email");
 
-                    b.HasOne("API_Service.Models.Device", null)
+                    b.HasOne("API_Service.Models.Device", "device")
                         .WithMany("orders")
-                        .HasForeignKey("Deviceserial_number");
+                        .HasForeignKey("device_serial_number")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("client");
+
+                    b.Navigation("device");
                 });
 
-            modelBuilder.Entity("DeviceDistributor", b =>
+            modelBuilder.Entity("device_distributor", b =>
                 {
                     b.HasOne("API_Service.Models.Device", null)
                         .WithMany()
-                        .HasForeignKey("devicesserial_number")
+                        .HasForeignKey("devices_serial_number")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API_Service.Models.Distributor", null)
                         .WithMany()
-                        .HasForeignKey("distributorslegal_card")
+                        .HasForeignKey("distributors_legal_card")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -228,6 +285,10 @@ namespace API_Service.Migrations
             modelBuilder.Entity("API_Service.Models.Client", b =>
                 {
                     b.Navigation("chambers");
+
+                    b.Navigation("devices");
+
+                    b.Navigation("directions");
 
                     b.Navigation("orders");
                 });

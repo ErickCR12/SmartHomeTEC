@@ -29,6 +29,20 @@ namespace API_Service.Data
             _db.Add(device);
             _db.SaveChanges();
         }
+
+        public void UpdateDevice(Device device)
+        {
+            _db.Update(device);
+            _db.SaveChanges();
+        }
+
+        public void DeleteDevice(Device device)
+        {
+            _db.Remove(device);
+            _db.SaveChanges();
+        }
+
+
         public IEnumerable<DeviceType> GetAllDeviceTypes()
         {
             return _db.device_types.ToList();

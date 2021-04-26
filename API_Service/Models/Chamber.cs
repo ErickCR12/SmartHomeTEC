@@ -10,6 +10,10 @@ namespace API_Service.Models
 
         [Key]
         public string name {get; set;}
+
+        public string client_email { get; set; }
+        [ForeignKey("client_email")]
+        public Client client {get; set;}
         
     }
 

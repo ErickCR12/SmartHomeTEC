@@ -20,6 +20,14 @@ namespace API_Service.Models
         [Required]
         public string purchase_time {get; set;}
 
+        public string client_email { get; set; }
+        [ForeignKey("client_email")]
+        public Client client {get; set;}
+
+        public int device_serial_number { get; set; }
+        [ForeignKey("device_serial_number")]
+        public Device device {get; set;}
+
     }
 
 }

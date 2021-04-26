@@ -8,6 +8,8 @@ namespace API_Service.Data
         IEnumerable<Device> GetAllDevices();
         Device GetDevice(int serialNumber);
         void AddDevice(Device device);
+        void UpdateDevice(Device device);
+        void DeleteDevice(Device device);
 
         IEnumerable<DeviceType> GetAllDeviceTypes();
     }

@@ -82,3 +82,8 @@ REFERENCES clients (email);
 ALTER TABLE chambers
 ADD CONSTRAINT CHAMBERS_CLIENTS_FK FOREIGN KEY (client_email)
 REFERENCES clients (email);
+
+INSERT INTO device_types(name, description, warranty_months)
+VALUES ('Refrigeradoras', 'Refris inteligentes', 24)
+
+

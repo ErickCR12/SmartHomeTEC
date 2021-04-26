@@ -16,7 +16,7 @@ namespace API_Service.Models
         public string country {get; set;}
         [Required]
         public string continent {get; set;}
-        public List<Device> devices {get; set;}
+        public List<Device> devices_ {get; set;}
         
     }
 
