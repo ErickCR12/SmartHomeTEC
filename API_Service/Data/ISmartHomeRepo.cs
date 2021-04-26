@@ -17,6 +17,10 @@ namespace API_Service.Data
         void UpdateDeviceType(DeviceType deviceType);
         void DeleteDeviceType(DeviceType deviceType);
 
+        IEnumerable<Client> GetAllClients();
+        Client GetClient(string email);
+        void AddClient(Client client);
+
     }
 
 }

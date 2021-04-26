@@ -70,5 +70,21 @@ namespace API_Service.Data
             _db.Remove(deviceType);
             _db.SaveChanges();
         }
+
+        public IEnumerable<Client> GetAllClients()
+        {
+            return _db.clients.ToList();
+        }
+
+        public Client GetClient(string email)
+        {
+            return _db.clients.Find(email);
+        }
+
+        public void AddClient(Client client)
+        {
+            _db.Add(client);
+            _db.SaveChanges();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace WebServiceResTEC.Profiles
         {
             CreateMap<Device, DeviceDto>().ReverseMap();
             CreateMap<DeviceType, DeviceTypeDto>().ReverseMap();
-
+            CreateMap<Client, ClientDto>().ReverseMap();
         }
     }
 
