@@ -12,6 +12,11 @@ namespace API_Service.Data
         void DeleteDevice(Device device);
 
         IEnumerable<DeviceType> GetAllDeviceTypes();
+        DeviceType GetDeviceType(string name);
+        void AddDeviceType(DeviceType deviceType);
+        void UpdateDeviceType(DeviceType deviceType);
+        void DeleteDeviceType(DeviceType deviceType);
+
     }
 
 }

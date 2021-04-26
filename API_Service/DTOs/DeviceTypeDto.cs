@@ -1,11 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace API_Service.DTOs
 {
 
     public class DeviceTypeDto
     {
-        public string Name {get; set;}
-        public string Description {get; set;}
-        public int WarrantyMonths {get; set;}
+        [Required]
+        public string name {get; set;}
+        [Required]
+        public string description {get; set;}
+        [Required] 
+        public int warranty_months {get; set;}
     }
 
 }

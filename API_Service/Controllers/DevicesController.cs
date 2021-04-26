@@ -47,12 +47,10 @@ namespace API_Service.Controllers
         }
 
         //POST api/devices
-        //This request returns a list of Chef entities in a JSON format representing the chef database.
+        //This request receives all the needed info to create a new Device in the devices database.
         [HttpPost]
         public ActionResult <DeviceDto> CreateDevice(DeviceDto deviceDto)
         {
-            Console.WriteLine(deviceDto.serial_number);
-            Console.WriteLine(deviceDto.device_type_name);
             var deviceModel = _mapper.Map<Device>(deviceDto);
             _repository.AddDevice(deviceModel);
 
@@ -63,9 +61,9 @@ namespace API_Service.Controllers
         }
 
         
-        //PUT api/dishes/{id}
-        //This request receives a JSON representing Dish Entity to be updated. This JSON is mapped to a Dish Data Model 
-        //and with the id received in the header of the request, the matching entity will be replaced with the new info.
+        //PUT api/dishes/{serial_number}
+        //This request receives a JSON representing Device Entity to be updated. This JSON is mapped to a Device Data Model 
+        //and with the serial_number received in the header of the request, the matching entity will be replaced with the new info.
         [HttpPut("{serial_number}")]
         public ActionResult UpdateDish(int serial_number, DeviceDto deviceDto)
         {
@@ -82,8 +80,8 @@ namespace API_Service.Controllers
             return NoContent();
         }
 
-        //DELETE api/dishes/{id}
-        //This request deletes the Dish entity with the id received in the request header.
+        //DELETE api/devices/{serial_number}
+        //This request deletes the Device entity with the serial_number received in the request header.
         [HttpDelete("{serial_number}")]
         public ActionResult DeleteDish(int serial_number)
         {

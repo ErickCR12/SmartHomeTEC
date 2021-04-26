@@ -47,5 +47,28 @@ namespace API_Service.Data
         {
             return _db.device_types.ToList();
         }
+
+        public DeviceType GetDeviceType(string name)
+        {
+            return _db.device_types.Find(name);
+        }
+
+        public void AddDeviceType(DeviceType deviceType)
+        {
+            _db.Add(deviceType);
+            _db.SaveChanges();
+        }
+
+        public void UpdateDeviceType(DeviceType deviceType)
+        {
+            _db.Update(deviceType);
+            _db.SaveChanges();
+        }
+
+        public void DeleteDeviceType(DeviceType deviceType)
+        {
+            _db.Remove(deviceType);
+            _db.SaveChanges();
+        }
     }
 }
