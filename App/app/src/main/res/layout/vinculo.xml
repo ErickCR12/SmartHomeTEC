@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#83d1c4">
+    android:background="#FFFFFF">
 
     <TextView
         android:id="@+id/lbltitulo4"
@@ -12,7 +12,7 @@
         android:layout_height="57dp"
         android:gravity="clip_horizontal|center_horizontal|center_vertical"
         android:text="Vincular dispositivos"
-        android:textColor="#f17950"
+        android:textColor="#FF071145"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,7 +27,7 @@
         android:layout_height="55dp"
         android:gravity="clip_horizontal|center_horizontal|center_vertical"
         android:text="Aposento"
-        android:textColor="#f17950"
+        android:textColor="#FF071145"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,7 +43,7 @@
         android:layout_height="46dp"
         android:gravity="clip_horizontal|center_horizontal|center_vertical"
         android:text="Dispositivo"
-        android:textColor="#f17950"
+        android:textColor="#FF071145"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +57,7 @@
         android:id="@+id/btnvincular"
         android:layout_width="187dp"
         android:layout_height="63dp"
-        android:background="#78517c"
+        android:background="#FF071145"
         android:text="Vincular"
         android:textColor="#f17950"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,7 +71,7 @@
         android:id="@+id/btnsiguie"
         android:layout_width="187dp"
         android:layout_height="63dp"
-        android:background="#78517c"
+        android:background="#FF071145"
         android:text="Regresar"
         android:textColor="#f17950"
         app:layout_constraintBottom_toBottomOf="parent"

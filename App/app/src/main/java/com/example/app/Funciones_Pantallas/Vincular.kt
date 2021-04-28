@@ -28,9 +28,6 @@ class Vincular: AppCompatActivity() {
         val aposento_registrados = intent.getStringArrayListExtra("aposentos")
         val dispositivo_registrados = intent.getStringArrayListExtra("dispositivos")
 
-        Log.i("aposentos_", aposento_registrados.toString())
-        Log.i("dispositivos_", dispositivo_registrados.toString())
-
         //Variable para administrar el spinner con la información de aposentos y dispositivos
         //Se crea un spinner para mostar los elementos seleccionados por el usuario
         val aposentos_disp = findViewById<Spinner>(R.id.spinner_dispositivo)

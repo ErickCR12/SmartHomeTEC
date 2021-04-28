@@ -24,12 +24,11 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".Funciones_Pantallas.Registrarse" />
         <activity android:name=".Funciones_Pantallas.Gestion_Aposentos" />
         <activity android:name=".Funciones_Pantallas.Vincular" />
         <activity android:name=".Funciones_Pantallas.Control" />
         <activity android:name=".Funciones_Pantallas.Gestion_Dispositivos" />
-        <activity android:name=".Funciones_Pantallas.Feedback" />
+        <activity android:name=".Funciones_Pantallas.Menu" />
 
         <activity android:name=".Funciones_Pantallas.Inicio"
             android:theme="@style/AppTheme.NoActionBar">
