@@ -9,7 +9,7 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" (click)="clickLog()">{{notLogged? "Hide Log In":"Log In"}}</a>
         </li>
-        <li class="nav-item" >
+        <li class="nav-item">
           <a class="nav-link active" aria-current="page" (click)="clickReg()">{{notReg? "Hide Register":"Register"}}</a>
         </li>
         <li class="nav-item">
@@ -20,6 +20,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" (click)="clickReports()">{{notReport? "Hide Report":"Report"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickDeviceManager()">{{notDeviceType? "Hide DeviceType":"DeviceType"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickDevices()">{{notDevices? "Hide Devices":"Devices"}}</a>
         </li>
       </ul>
     </div>
@@ -41,3 +47,9 @@
 
 <app-reports *ngIf="notReport; else elseReport"></app-reports>
 <ng-template #elseReport></ng-template>
+
+<app-device-maganer *ngIf="notDeviceType; else elseNotType"></app-device-maganer>
+<ng-template #elseNotType></ng-template>
+
+<app-devices *ngIf="notDevices; else elseNotDevice"></app-devices>
+<ng-template #elseNotDevice></ng-template>

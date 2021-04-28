@@ -7,6 +7,8 @@ import { RegisterComponent } from './components/register-component/register-comp
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { ReportsComponent } from './components/reports/reports.component';
+import { DeviceMaganerComponent } from './components/device-maganer/device-maganer.component';
+import { DevicesComponent } from './components/devices/devices.component';
 
 
 @NgModule({
@@ -17,6 +19,8 @@ import { ReportsComponent } from './components/reports/reports.component';
     EditProfileComponent,
     ShopComponent,
     ReportsComponent,
+    DeviceMaganerComponent,
+    DevicesComponent,
     
   ],
   imports: [

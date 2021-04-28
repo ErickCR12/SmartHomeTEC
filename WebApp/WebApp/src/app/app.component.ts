@@ -12,6 +12,8 @@ export class AppComponent {
   notEditProf: boolean = false;
   notShop: boolean = false;
   notReport: boolean = false;
+  notDeviceType: boolean = false;
+  notDevices: boolean = false;
 
   clickLog() {
     this.notLogged = !this.notLogged
@@ -30,5 +32,13 @@ export class AppComponent {
 
   clickReports() {
     this.notReport = !this.notReport
+  }
+  //type devices
+  clickDeviceManager() {
+    this.notDeviceType = !this.notDeviceType
+  }
+
+  clickDevices() {
+    this.notDevices = !this.notDevices
   }
 }
