@@ -27,7 +27,7 @@ namespace API_Service.Controllers
         //GET api/clients
         //This request returns a list of Client entities in a JSON format representing the chef database.
         [HttpGet]
-        public ActionResult <ClientDto> GetAllClients()
+        public ActionResult <IEnumerable<ClientDto>> GetAllClients()
         {
             var clientsItem = _repository.GetAllClients();
             return Ok(_mapper.Map<IEnumerable<ClientDto>>(clientsItem));

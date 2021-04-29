@@ -8,7 +8,7 @@ using API_Service.Models;
 namespace API_Service.Controllers
 {
 
-    //This is an API Controller for the Chef entity type. This Controller allows a GET request to obtain all the Chefs in the database.
+    //This is an API Controller for the DeviceTypes entity type.
     [Route("api/[controller]")]
     [ApiController]
     public class DeviceTypesController : ControllerBase
@@ -25,7 +25,7 @@ namespace API_Service.Controllers
         //GET api/devicetypes
         //This request returns a list of DeviceTypes entities in a JSON format representing the device_types database.
         [HttpGet]
-        public ActionResult <DeviceTypeDto> GetAllDeviceTypes()
+        public ActionResult <IEnumerable<DeviceTypeDto>> GetAllDeviceTypes()
         {
             var deviceTypesItem = _repository.GetAllDeviceTypes();
             return Ok(_mapper.Map<IEnumerable<DeviceTypeDto>>(deviceTypesItem));
@@ -81,7 +81,7 @@ namespace API_Service.Controllers
         //DELETE api/devicetypes/{id}
         //This request deletes the DeviceType entity with the name received in the request header.
         [HttpDelete("{name}")]
-        public ActionResult DeleteDish(string name)
+        public ActionResult DeleteDeviceType(string name)
         {
             var deviceTypeFromRepo = _repository.GetDeviceType(name);
             if(deviceTypeFromRepo == null)

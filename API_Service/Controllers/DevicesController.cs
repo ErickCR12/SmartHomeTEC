@@ -27,7 +27,7 @@ namespace API_Service.Controllers
         //GET api/devices
         //This request returns a list of Device entities in a JSON format representing the chef database.
         [HttpGet]
-        public ActionResult <DeviceDto> GetAllDevices()
+        public ActionResult <IEnumerable<DeviceDto>> GetAllDevices()
         {
             var devicesItem = _repository.GetAllDevices();
             return Ok(_mapper.Map<IEnumerable<DeviceDto>>(devicesItem));
@@ -83,7 +83,7 @@ namespace API_Service.Controllers
         //DELETE api/devices/{serial_number}
         //This request deletes the Device entity with the serial_number received in the request header.
         [HttpDelete("{serial_number}")]
-        public ActionResult DeleteDish(int serial_number)
+        public ActionResult DeleteDevice(int serial_number)
         {
             var deviceFromRepo = _repository.GetDevice(serial_number);
             if(deviceFromRepo == null)

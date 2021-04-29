@@ -343,5 +343,93 @@ namespace API_Service.Data
             sqlCmd.ExecuteNonQuery();
             DBconn.Close();
         }
+
+        public IEnumerable<Distributor> GetOnlineStore(string continent, string country)
+        {
+            List<Distributor> onlineStoreByRegion = new List<Distributor>();
+            
+            DBconn.Open();
+
+            var sqlCmd = new NpgsqlCommand(
+                "SELECT name, legal_card, serial_number, brand, electric_usage, device_type_name " +
+                "FROM public.device_distributor, distributors, devices " + 
+                "WHERE 	legal_card = distributors_legal_card AND " +
+                "serial_number = devices_serial_number AND " +
+                "continent = @p1 AND " + 
+                "country = @p2", 
+                DBconn
+                );
+
+            sqlCmd.Parameters.AddWithValue("p1", continent);
+            sqlCmd.Parameters.AddWithValue("p2", country);
+
+            NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
+            while(DBreader.Read())
+            {
+                int legal_card = Int32.Parse(DBreader[1].ToString());
+                Distributor distributor = onlineStoreByRegion.Find(o => o.legal_card == legal_card);
+                bool alreadyInList = true;
+                if(distributor == null)
+                {
+                    distributor = new Distributor();
+                    distributor.devices_ = new List<Device>();
+                    alreadyInList = false;
+                }
+
+                distributor.name = DBreader[0].ToString();
+                distributor.legal_card = legal_card;
+
+                Device device = new Device();
+                device.serial_number = Int32.Parse(DBreader[2].ToString());
+                device.brand = DBreader[3].ToString();
+                device.electric_usage = Int32.Parse(DBreader[4].ToString());
+                device.device_type_name = DBreader[5].ToString();
+
+                distributor.devices_.Add(device);
+
+                if(!alreadyInList)
+                    onlineStoreByRegion.Add(distributor);
+            }
+            DBconn.Close();
+
+            return onlineStoreByRegion;
+        }
+
+        public void AddOnlineStore(IEnumerable<Distributor> distributors)
+        {
+            DeleteOnlineStore();
+            DBconn.Open();
+            foreach(Distributor distributor in distributors)
+            {
+                foreach(Device device in distributor.devices_)
+                {
+                    var sqlCmd = new NpgsqlCommand(
+                        "INSERT INTO device_distributor (devices_serial_number, distributors_legal_card) " +
+                        "VALUES (@p1, @p2)", 
+                        DBconn
+                        );
+
+                    sqlCmd.Parameters.AddWithValue("p1", device.serial_number);
+                    sqlCmd.Parameters.AddWithValue("p2", distributor.legal_card);
+                    sqlCmd.ExecuteNonQuery();
+                    
+                }
+            }
+            DBconn.Close();
+        }
+
+        public void DeleteOnlineStore()
+        {
+            DBconn.Open();
+
+            var sqlCmd = new NpgsqlCommand(
+                "DELETE FROM device_distributor", 
+                DBconn
+                );
+
+            sqlCmd.ExecuteNonQuery();
+
+            DBconn.Close();
+        }
     }
 }
