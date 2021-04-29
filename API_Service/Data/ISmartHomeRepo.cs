@@ -25,6 +25,9 @@ namespace API_Service.Data
         void AddOnlineStore(IEnumerable<Distributor> distributors);
         void DeleteOnlineStore();
 
+        void AddOrder(Order order);
+
+
     }
 
 }

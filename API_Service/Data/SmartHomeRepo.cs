@@ -431,5 +431,27 @@ namespace API_Service.Data
 
             DBconn.Close();
         }
+
+        public void AddOrder(Order order)
+        {
+            DBconn.Open();
+
+            var sqlCmd = new NpgsqlCommand(
+                "INSERT INTO orders (price, purchase_date, purchase_time, client_email, device_serial_number) " +
+                "VALUES (@p1, @p2, @p3, @p4, @p5) RETURNING consecutive, bill_number", DBconn
+                );
+
+            sqlCmd.Parameters.AddWithValue("p1", order.price);
+            sqlCmd.Parameters.AddWithValue("p2", order.purchase_date);
+            sqlCmd.Parameters.AddWithValue("p3", order.purchase_time);
+            sqlCmd.Parameters.AddWithValue("p4", order.client_email);
+            sqlCmd.Parameters.AddWithValue("p5", order.device_serial_number);
+            NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
+
+            DBreader.Read();
+            order.consecutive = Int32.Parse(DBreader[0].ToString());
+            order.bill_number = Int32.Parse(DBreader[1].ToString());
+            DBconn.Close();
+        }
     }
 }

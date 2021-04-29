@@ -29,7 +29,6 @@ namespace API_Service.Controllers
         public ActionResult <IEnumerable<DistributorDto>> GetOnlineStore(RegionDto regionDto)
         {
             var onlineStore = _repository.GetOnlineStore(regionDto.continent, regionDto.country);
-            // Console.WriteLine(onlineStore[0].devices_[0].serial_number);
             return Ok(_mapper.Map<IEnumerable<DistributorDto>>(onlineStore));
         }
 
