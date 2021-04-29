@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {DataService} from '../../data.service';
+import {DeviceType} from '../../models/device-type';
 
 @Component({
   selector: 'app-device-maganer',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeviceMaganerComponent implements OnInit {
 
-  constructor() { }
+
+  deviceTypes: DeviceType[] | undefined;
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+  }
+
+  getAllDeviceTypes(): void{
+    this.dataService.getAllDeviceTypes().subscribe( data => this.deviceTypes = data);
   }
 
 }

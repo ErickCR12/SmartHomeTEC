@@ -9,6 +9,7 @@ import { ShopComponent } from './components/shop/shop.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { DeviceMaganerComponent } from './components/device-maganer/device-maganer.component';
 import { DevicesComponent } from './components/devices/devices.component';
+import { MessagesComponent } from './messages/messages.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { DevicesComponent } from './components/devices/devices.component';
     ReportsComponent,
     DeviceMaganerComponent,
     DevicesComponent,
-    
+    MessagesComponent,
+
   ],
   imports: [
     BrowserModule
