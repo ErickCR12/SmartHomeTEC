@@ -368,12 +368,11 @@ namespace API_Service.Data
             {
                 int legal_card = Int32.Parse(DBreader[1].ToString());
                 Distributor distributor = onlineStoreByRegion.Find(o => o.legal_card == legal_card);
-                bool alreadyInList = true;
                 if(distributor == null)
                 {
                     distributor = new Distributor();
                     distributor.devices_ = new List<Device>();
-                    alreadyInList = false;
+                    onlineStoreByRegion.Add(distributor);
                 }
 
                 distributor.name = DBreader[0].ToString();
@@ -385,10 +384,7 @@ namespace API_Service.Data
                 device.electric_usage = Int32.Parse(DBreader[4].ToString());
                 device.device_type_name = DBreader[5].ToString();
 
-                distributor.devices_.Add(device);
-
-                if(!alreadyInList)
-                    onlineStoreByRegion.Add(distributor);
+                distributor.devices_.Add(device);                    
             }
             DBconn.Close();
 
