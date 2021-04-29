@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#83d1c4">
+    android:background="#FFFFFF">
 
     <TextView
         android:id="@+id/lblrestec4"
         android:layout_width="351dp"
         android:layout_height="164dp"
-        android:background="#83d1c4"
+        android:background="#FFFFFF"
         android:gravity="center"
         android:text="SmartHomeTEC"
         android:textColor="#f17950"
