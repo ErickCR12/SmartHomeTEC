@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#">ResTEC</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickLog()">{{notLogged? "Hide Log In":"Log In"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickReg()">{{notReg? "Hide Register":"Register"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickProfEdit()">{{notEditProf? "Hide Edit Profile":"EditProfile"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickShop()">{{notShop? "Hide Shop":"Shop"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickReports()">{{notReport? "Hide Report":"Report"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickDeviceManager()">{{notDeviceType? "Hide DeviceType":"DeviceType"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickDevices()">{{notDevices? "Hide Devices":"Devices"}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<loginScreen *ngIf="notLogged; else elseBlock"></loginScreen>
+<ng-template #elseBlock></ng-template>
+
+<app-register-component *ngIf="notReg; else elseReg"></app-register-component>
+<ng-template #elseReg></ng-template>
+
+<app-edit-profile *ngIf="notEditProf; else elseEditProf"></app-edit-profile>
+<ng-template #elseEditProf></ng-template>
+
+<app-shop *ngIf="notShop; else elseShop"></app-shop>
+<ng-template #elseShop></ng-template>
+
+<app-reports *ngIf="notReport; else elseReport"></app-reports>
+<ng-template #elseReport></ng-template>
+
+<app-device-maganer *ngIf="notDeviceType; else elseNotType"></app-device-maganer>
+<ng-template #elseNotType></ng-template>
+
+<app-devices *ngIf="notDevices; else elseNotDevice"></app-devices>
+<ng-template #elseNotDevice></ng-template>
+
+
+<app-messages></app-messages>
