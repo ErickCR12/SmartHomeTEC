@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.dispositivos.*
 
 class Gestion_Dispositivos: AppCompatActivity() {
 
-
     //Se crea un list de dispositivos registrados y caracaterísticas
     val dispositivos_registrados = arrayListOf<String>()
     val tipos_registrados = arrayListOf<String>()
@@ -29,6 +28,7 @@ class Gestion_Dispositivos: AppCompatActivity() {
         //Se recibe la información de los aposentos registrados de al ventana anterior
         val intent = getIntent()
         val aposentos_re = intent.getStringArrayListExtra("aposentos")
+        /** FALTA UNA VARIABLE PARA RECIBIR LA GARANTÍA*/
 
         //Variables para recibir los datos de entrada de los dispositivos y sus características
         val disp_nombre = findViewById<EditText>(R.id.txtdispsotivo) as EditText
@@ -60,17 +60,38 @@ class Gestion_Dispositivos: AppCompatActivity() {
             disp_serie.setText("")
             disp_consumo.setText("")
 
+            //Esta sección de códgio sireve para mostrar la información de fecha y hora
+            val calendario:java.util.Calendar = java.util.Calendar.getInstance()
+
+            //El formato es Día-Mes-Año la garantía
+            val dia = calendario.get(java.util.Calendar.DAY_OF_MONTH)
+            val mes = calendario.get(java.util.Calendar.MONTH)
+            val ano = calendario.get(java.util.Calendar.YEAR)
+
+            /** AQUÍ SE TENDRÍA QUE RECIBIR EL MES DE GARANTÍA QUE VIENE DEL API PARA HACER EL CÁLCULO*/
+            val garantia = mes + 1
+
         }
 
         btnsiguiente.setOnClickListener {
-            val intent = Intent(this, Vincular::class.java)
+
+            val intent = Intent(this, Menu::class.java)
+
+            dispositivos_registrados.add("*")
+
+            for (registro in 0 until aposentos_re.size) {
+                dispositivos_registrados.add(aposentos_re[registro])
+                }
+
             intent.putExtra("dispositivos", dispositivos_registrados)
-            intent.putExtra("aposentos", aposentos_re)
+            startActivity(intent)
+
+            //intent.putExtra("aposentos", aposentos_re)
             //intent.putExtra("marcas", marcas_registrados)
             //intent.putExtra("series", series_registrados)
             //intent.putExtra("consumos", consumo_registrados)
             //intent.putExtra("tiempos", garantias_registrados)
-            startActivity(intent)
+
         }
     }
 }

@@ -13,41 +13,33 @@ class Menu: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
 
-
         //Se recibe la información de los aposentos registrados de al ventana anterior
-        //val intent = getIntent()
-        //var aposentos_informacion = intent.getStringArrayListExtra("aposentos")
-        //var dispositivos_informacion = intent.getStringArrayListExtra("dispositivos")
-        //var aposento_registrados_informacion = intent.getStringArrayListExtra("aposentos_vi")
-        //var dispositivo_registrados_informacion = intent.getStringArrayListExtra("dispositivos_vi")
+        val intent = getIntent()
+        var aposentos_informacion = intent.getStringArrayListExtra("aposentos")
+        var dispositivos_informacion = intent.getStringArrayListExtra("dispositivos")
+        var vinculaciones = intent.getStringArrayListExtra("vinculados")
+
 
         btnmenu.setOnClickListener {
             startActivity(Intent(this, Gestion_Aposentos::class.java))
         }
 
         btnmenu1.setOnClickListener {
-            val intent = Intent(this, Vincular::class.java)
-            //intent.putExtra("aposentos", aposentos_informacion)
-            startActivity(Intent(this, Gestion_Dispositivos::class.java))
+            val intent2 = Intent(this, Gestion_Dispositivos::class.java)
+            intent2.putExtra("aposentos", aposentos_informacion)
+            startActivity(intent2)
         }
 
         btnmenu2.setOnClickListener {
-            val intent = getIntent()
-            val aposento_registrados = intent.getStringArrayListExtra("aposentos")
-            val dispositivo_registrados = intent.getStringArrayListExtra("dispositivos")
-            //val intent = Intent(this, Vincular::class.java)
-            //intent.putExtra("aposentos", aposentos_informacion)
-            //intent.putExtra("dispositivos", dispositivos_informacion)
-            //startActivity(intent)
+            val intent3 = Intent(this, Vincular::class.java)
+            intent3.putExtra("dispositivos", dispositivos_informacion)
+            startActivity(intent3)
         }
 
         btnmenu3.setOnClickListener {
-            //Log.i("APOSENTOS", aposentos_informacion.toString())
-            //Log.i("DISPOSITIVOS", dispositivos_informacion.toString())
-            //val intent = Intent(this, Control::class.java)
-            //intent.putExtra("aposentos_vi", aposento_registrados_informacion)
-            //intent.putExtra("dispositivos_vi", dispositivo_registrados_informacion)
-            //startActivity(intent)
+            val intent4 = Intent(this, Control::class.java)
+            intent4.putExtra("vinculados", vinculaciones)
+            startActivity(intent4)
         }
 
     }

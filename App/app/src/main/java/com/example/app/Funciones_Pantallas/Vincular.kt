@@ -16,8 +16,7 @@ import kotlinx.serialization.json.buildJsonObject
 class Vincular: AppCompatActivity() {
 
     //Se crea un list de dispositivos registrados y caracaterísticas
-    val vinculo_aposentos = arrayListOf<String>()
-    val vinculo_dispositivos = arrayListOf<String>()
+    val vinculados = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,20 +24,30 @@ class Vincular: AppCompatActivity() {
 
         //Se recibe la información de los aposentos registrados de al ventana anterior
         val intent = getIntent()
-        val aposento_registrados = intent.getStringArrayListExtra("aposentos")
-        val dispositivo_registrados = intent.getStringArrayListExtra("dispositivos")
+        val aposento_registrados = intent.getStringArrayListExtra("dispositivos")
+
+        val dispositivos_registrados = aposento_registrados.reversed()
+
+        //Se sleccionan los array para el mostrarlos en los spinners
+        val delimitador = Posicion("*", aposento_registrados)
+
+        val dispositivo_re = aposento_registrados.subList(0,delimitador)
+        Log.i("DISPOSITIVO", dispositivo_re.toString())
+
+        val aposento_re = dispositivos_registrados.subList(0, delimitador+1)
+        Log.i("APOSENTO", aposento_re.toString())
 
         //Variable para administrar el spinner con la información de aposentos y dispositivos
         //Se crea un spinner para mostar los elementos seleccionados por el usuario
-        val aposentos_disp = findViewById<Spinner>(R.id.spinner_dispositivo)
-        val dispositivos_disp = findViewById<Spinner>(R.id.spinner_aposentos)
+        val aposentos_disp = findViewById<Spinner>(R.id.spinner_aposentos)
+        val dispositivos_disp = findViewById<Spinner>(R.id.spinner_dispositivo)
 
         //Se toman las listas de arrays creadas en la sección de values/strings del proyecto para
         //poder trabajar con ellos y mostrar lo que estan almacenan en la interfaz
-        val l_aposentos = ArrayAdapter(this,android.R.layout.simple_spinner_item, aposento_registrados)
+        val l_aposentos = ArrayAdapter(this,android.R.layout.simple_spinner_item, aposento_re)
         aposentos_disp.adapter = l_aposentos
 
-        val l_dispositivos = ArrayAdapter(this,android.R.layout.simple_spinner_item, dispositivo_registrados)
+        val l_dispositivos = ArrayAdapter(this,android.R.layout.simple_spinner_item, dispositivo_re)
         dispositivos_disp.adapter = l_dispositivos
 
         //Indicadores de las posiciones de los elementos vinculados
@@ -66,23 +75,32 @@ class Vincular: AppCompatActivity() {
         }
 
         btnvincular.setOnClickListener {
-            Log.i("aposento", indicador_aposento.toString())
-            Log.i("dispositivo", indicador_dispositivo.toString())
-
             //Se añaden los nuevos valores vinculados a su respectivo array
-            vinculo_aposentos.add(aposento_registrados.get(indicador_aposento))
-            vinculo_dispositivos.add(dispositivo_registrados.get(indicador_dispositivo))
+            vinculados.add(aposento_re.get(indicador_aposento))
+            vinculados.add(dispositivo_re.get(indicador_dispositivo))
+            //vinculo_dispositivos.add(dispositivo_registrados.get(indicador_dispositivo))
 
             //Se eliminan del array original para no desplegarlos como opción otra vez
-            dispositivo_registrados.removeAt(indicador_dispositivo)
+            dispositivo_re.removeAt(indicador_dispositivo)
+
         }
 
         //Se envia la iformación a la siguiente ventana
         btnsiguie.setOnClickListener {
-            val intent = Intent(this, Control::class.java)
-            intent.putExtra("aposentos_vi", vinculo_aposentos)
-            intent.putExtra("dispositivos_vi", vinculo_dispositivos)
+
+            val intent = Intent(this, Menu::class.java)
+            Log.i("VINCULO", vinculados.toString())
+            intent.putExtra("vinculados", vinculados)
             startActivity(intent)
         }
+    }
+
+    private fun Posicion(elemento: String, datos: ArrayList<String>): Int {
+        for (registro in 0 until datos.size) {
+            if (elemento == datos.get(registro)) {
+                return registro
+            }
+        }
+        return -1
     }
 }

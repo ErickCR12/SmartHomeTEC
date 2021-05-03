@@ -31,14 +31,14 @@ public class RegistroDBHelper extends  SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + RegistroDb.RegistroEntrada.TABLE_NAME + "("
-                + RegistroDb.RegistroEntrada.ID_USUARIO + "INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + RegistroDb.RegistroEntrada.USUARIO + "TEXT NOT NULL,"
-                + RegistroDb.RegistroEntrada.DISPOSITIVO + "TEXT NOT NULL,"
-                + RegistroDb.RegistroEntrada.MARCA + "TEXT NOT NULL,"
-                + RegistroDb.RegistroEntrada.SERIE + "INTEGER NOT NULL,"
-                + RegistroDb.RegistroEntrada.DESCRIPCION + "TEXT,"
-                + "UNIQUE (" + RegistroDb.RegistroEntrada.SERIE + "))"
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + RegistroDB.RegistroEntrada.TABLE_NAME + "("
+                + RegistroDB.RegistroEntrada.ID_USUARIO + "INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + RegistroDB.RegistroEntrada.USUARIO + "TEXT NOT NULL,"
+                + RegistroDB.RegistroEntrada.DISPOSITIVO + "TEXT NOT NULL,"
+                + RegistroDB.RegistroEntrada.MARCA + "TEXT NOT NULL,"
+                + RegistroDB.RegistroEntrada.SERIE + "INTEGER NOT NULL,"
+                + RegistroDB.RegistroEntrada.DESCRIPCION + "TEXT,"
+                + "UNIQUE (" + RegistroDB.RegistroEntrada.SERIE + "))"
         );
     }
 
@@ -48,10 +48,10 @@ public class RegistroDBHelper extends  SQLiteOpenHelper{
 
     public void  crearRegistro(SQLiteDatabase db, Registro registro){
         db.insert(
-                RegistroDb.RegistroEntrada.TABLE_NAME,
+                RegistroDB.RegistroEntrada.TABLE_NAME,
                 null,
                 registro.toContentValues());
-        Cursor cursor = getReadableDatabase().rawQuery("select last_insert_rowid() as idRegistro from registro", null );
+        Cursor cursor = getReadableDatabase().rawQuery("select last_insert_rowid() as idUsuario from registro", null );
         if(cursor.moveToFirst()){
             do{
                 Integer id = cursor.getInt(cursor.getColumnIndex("idUsuario"));
@@ -71,13 +71,14 @@ public class RegistroDBHelper extends  SQLiteOpenHelper{
                 Registro registro = new Registro(cursor.getInt(cursor.getColumnIndex("idUsuario")),
                         cursor.getString(cursor.getColumnIndex("nombreUsuario")),
                         cursor.getString(cursor.getColumnIndex("nombreDispositivo")),
+                        cursor.getString(cursor.getColumnIndex("tipoDispositivo")),
                         cursor.getString(cursor.getColumnIndex("marcaDispositivo")),
                         cursor.getInt(cursor.getColumnIndex("serieDispositivo")),
                         cursor.getString(cursor.getColumnIndex("descripcionDispositivo"))
                         /**REVISAR EL DETALLE DE AQUÍ**/
                         );
                 //Corregir este detalle
-                registro.setIdCliente(cursor.getColumnIndex("idUsuario"));
+                registro.setIdUsuario(cursor.getColumnIndex("idUsuario"));
                 lista.add(registro);
             }while (cursor.moveToNext());
         }
@@ -86,9 +87,9 @@ public class RegistroDBHelper extends  SQLiteOpenHelper{
 
     public int updateActividad(Registro registro, Integer idRegistro){
         return getWritableDatabase().update(
-                RegistroDb.RegistroEntrada.TABLE_NAME,
+                RegistroDB.RegistroEntrada.TABLE_NAME,
                 registro.toContentValues(),
-                RegistroDb.RegistroEntrada.ID_USUARIO + "LIKE ?",
+                RegistroDB.RegistroEntrada.ID_USUARIO + "LIKE ?",
                 new String[]{idRegistro.toString()}
         );
     }

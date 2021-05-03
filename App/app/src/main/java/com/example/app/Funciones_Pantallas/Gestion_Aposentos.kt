@@ -166,7 +166,6 @@ class Gestion_Aposentos: AppCompatActivity() {
                 aposento_nombre.visibility = View.VISIBLE
                 editar_aposento.visibility = View.INVISIBLE
                 aposentos_disponibles.visibility = View.INVISIBLE
-
             }
 
             /**
@@ -184,9 +183,14 @@ class Gestion_Aposentos: AppCompatActivity() {
 
         //Se envía toda la información a la ventana de gestión de dispositivos
         btnvisualizar2.setOnClickListener {
-            val intent = Intent(this, Gestion_Dispositivos::class.java)
+
+            //val intent = Intent(this, Gestion_Dispositivos::class.java)
+
+            val intent = Intent(this, Menu::class.java)
             intent.putExtra("aposentos", aposentos_registrados)
             startActivity(intent)
+
+            //startActivity(Intent(this, Menu::class.java))
         }
     }
 

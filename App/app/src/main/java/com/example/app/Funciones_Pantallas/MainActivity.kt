@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 if (Corroborar(usuario, usuarios_registrados)  && Corroborar(contrasena, contrasenas_registradas)){
                     Log.i("info", "REGISTRO Existoso")
                     Toast.makeText(this, "Bienvenido $usuario", Toast.LENGTH_LONG).show()
-                    startActivity(Intent(this, Gestion_Aposentos::class.java))
+                    startActivity(Intent(this, Menu::class.java))
                 }
                 else{
                     Toast.makeText(this, "Datos ingresados no registrados", Toast.LENGTH_LONG).show()
