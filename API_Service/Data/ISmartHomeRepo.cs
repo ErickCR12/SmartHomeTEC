@@ -27,6 +27,9 @@ namespace API_Service.Data
 
         void AddOrder(Order order);
 
+        LoginProfile CheckCredentials(LoginProfile loginProfile);
+
+        Admin GetAdmin();
 
     }
 

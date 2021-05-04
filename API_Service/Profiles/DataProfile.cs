@@ -22,6 +22,7 @@ namespace WebServiceResTEC.Profiles
             CreateMap<Order, OrderDto>().ForMember(x => x.purchase_date,
                 opt => opt.MapFrom(src => ((DateTime)src.purchase_date).ToShortDateString())).ReverseMap();
 
+            CreateMap<LoginProfile, LoginDto>().ReverseMap();
         }
     }
 

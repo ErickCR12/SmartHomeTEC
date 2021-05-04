@@ -11,6 +11,7 @@ import { DeviceMaganerComponent } from './components/device-maganer/device-magan
 import { DevicesComponent } from './components/devices/devices.component';
 import { MessagesComponent } from './messages/messages.component';
 
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MessagesComponent } from './messages/messages.component';
 
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent, LoginScreen]

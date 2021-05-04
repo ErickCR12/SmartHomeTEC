@@ -449,5 +449,51 @@ namespace API_Service.Data
             order.bill_number = Int32.Parse(DBreader[1].ToString());
             DBconn.Close();
         }
+
+        public LoginProfile CheckCredentials(LoginProfile loginProfile)
+        {
+            List<Client> clients = (List<Client>)GetAllClients();
+            Admin admin = GetAdmin();
+
+
+            if (admin.username == loginProfile.Username && admin.password == loginProfile.Password)
+            {
+                loginProfile.UserType = "Admin";
+                return loginProfile;
+            }
+            
+            foreach(Client client in clients)
+            {
+                if (client.email == loginProfile.Username && client.password == loginProfile.Password)
+                {
+                    loginProfile.UserType = "Client";
+                    return loginProfile;
+                }
+            }
+            loginProfile.UserType = "Invalid";
+            return loginProfile;
+        }
+
+        public Admin GetAdmin()
+        {
+            Admin admin = new Admin();
+            
+            DBconn.Open();
+            var sqlCmd = new NpgsqlCommand(
+                "SELECT username, password " +
+                "FROM admin", 
+                DBconn
+                );
+
+            NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
+            while(DBreader.Read())
+            {
+                admin.username = DBreader[0].ToString();
+                admin.password = DBreader[1].ToString();
+            }
+            DBconn.Close();
+
+            return admin;
+        }
     }
 }

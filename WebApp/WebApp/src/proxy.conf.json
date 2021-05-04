@@ -2,7 +2,7 @@
   "/api/": {
     "target": "https://localhost:5001",
     "secure": false,
-    "logLevel": "debug",
-    "changeOrigin": true
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

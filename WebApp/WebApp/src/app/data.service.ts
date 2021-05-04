@@ -9,7 +9,7 @@ import {DeviceType} from './models/device-type';
 })
 export class DataService {
 
-  private deviceTypesUrl = '/api/deviceTypes/';
+  private deviceTypesUrl = 'api/devicetypes/';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
