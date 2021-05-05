@@ -10,14 +10,10 @@ import {DeviceType} from '../../models/device-type';
 export class DeviceMaganerComponent implements OnInit {
 
 
-  deviceTypes: DeviceType[] | undefined;
-  constructor(private dataService: DataService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  getAllDeviceTypes(): void{
-    this.dataService.getAllDeviceTypes().subscribe( data => this.deviceTypes = data);
-  }
 
 }
