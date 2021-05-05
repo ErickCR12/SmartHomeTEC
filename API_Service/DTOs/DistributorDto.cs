@@ -10,7 +10,6 @@ namespace API_Service.DTOs
         [Required]
         public int legal_card {get; set;}
 
-        public string name {get; set;}
         [Required]
         public IEnumerable<DeviceDto> devices {get; set;}
         

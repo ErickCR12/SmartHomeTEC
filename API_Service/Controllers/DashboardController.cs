@@ -37,14 +37,14 @@ namespace API_Service.Controllers
         //GET api/dashboard/devicePerUser
         //This request returns a numerical value representing the amount of devices per user.
         [HttpGet("devicesPerRegion")]
-        public ActionResult <IEnumerable<DevicePerRegionDto>> GetDevicesPerRegion()
+        public ActionResult <IEnumerable<RegionDto>> GetDevicesPerRegion()
         {
             var devicePerRegionValue = _repository.GetDevicesPerRegion();
 
-            return Ok(_mapper.Map<IEnumerable<DevicePerRegionDto>>(devicePerRegionValue));
+            return Ok(_mapper.Map<IEnumerable<RegionDto>>(devicePerRegionValue));
         }
 
-        //GET api/dashboard/devicePerUser
+        //GET api/dashboard/activeDevices   
         //This request returns a numerical value representing the amount of devices per user.
         [HttpGet("activeDevices")]
         public ActionResult <NumericalDto> GetActiveDevices()

@@ -11,6 +11,8 @@ namespace API_Service.DTOs
         public string continent {get; set;}
         [Required]
         public string country {get; set;}
+
+        public int amount {get; set;}
         
     }
 

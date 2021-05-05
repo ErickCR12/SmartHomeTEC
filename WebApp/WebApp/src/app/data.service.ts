@@ -4,12 +4,22 @@ import { catchError, map, tap } from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MessageService} from './message.service';
 import {DeviceType} from './models/device-type';
+import {Device} from './models/device';
+import {Login} from './models/login';
+import {Client} from './models/client';
+import {Distributor} from './models/distributor';
+import {Region} from './models/region';
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
   private deviceTypesUrl = 'api/devicetypes/';
+  private devicesUrl = 'api/devices/';
+  private clientsUrl = 'api/clients/';
+  private onlineStoreUrl = 'api/onlinestore/';
+  private dashboardUrl = 'api/dashboard/';
+  private loginUrl = 'api/login/';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -22,87 +32,100 @@ export class DataService {
         catchError(this.handleError<DeviceType[]>('getAllDeviceTypes', []))
       );
   }
-  //
-  // addDish(dish: DishInterface): Observable<DishInterface> {
-  //   return this.http.post<DishInterface>(this.dishesUrl, dish, this.httpOptions).pipe(
-  //     tap((newDish: DishInterface) => this.log(`added dish w/ id=${newDish.id}`)),
-  //     catchError(this.handleError<DishInterface>('addDish'))
-  //   );
-  // }
-  //
-  // updateDish(dish: DishInterface): Observable<DishInterface> {
-  //   return this.http.put<DishInterface>(this.dishesUrl + dish.id, dish, this.httpOptions).pipe(
-  //     tap((newDish: DishInterface) => this.log(`updated dish w/ id=${newDish.id}`)),
-  //     catchError(this.handleError<DishInterface>('updateDish'))
-  //   );
-  // }
-  //
-  // deleteDish(dishId: number): Observable<{}> {
-  //   // @ts-ignore
-  //   return this.http.delete(this.dishesUrl + dishId, this.httpOptions).pipe(
-  //     catchError(this.handleError('deleteDish'))
-  //   );
-  // }
-  //
-  // getAllMenus(): Observable<MenuInterface[]> {
-  //   this.messageService.add('DataService: fetched menus');
-  //   return this.http.get<MenuInterface[]>(this.menusUrl)
-  //     .pipe(
-  //       catchError(this.handleError<MenuInterface[]>('getAllMenus', []))
-  //     );
-  // }
-  //
-  // addMenu(menu: MenuInterface): Observable<MenuInterface> {
-  //   return this.http.post<MenuInterface>(this.menusUrl, menu, this.httpOptions).pipe(
-  //     tap((newMenu: MenuInterface) => this.log(`added menu w/ id=${newMenu.id}`)),
-  //     catchError(this.handleError<MenuInterface>('addMenu'))
-  //   );
-  // }
-  //
-  // updateMenu(menu: MenuInterface): Observable<MenuInterface> {
-  //   return this.http.put<MenuInterface>(this.menusUrl + menu.id, menu, this.httpOptions).pipe(
-  //     tap((newMenu: MenuInterface) => this.log(`updated menu w/ id=${newMenu.id}`)),
-  //     catchError(this.handleError<MenuInterface>('updateMenu'))
-  //   );
-  // }
-  //
-  // deleteMenu(menuId: number): Observable<{}> {
-  //   // @ts-ignore
-  //   return this.http.delete(this.menusUrl + menuId, this.httpOptions).pipe(
-  //     catchError(this.handleError('deleteMenu'))
-  //   );
-  // }
-  //
-  // getAllOrders(): Observable<OrderInterface[]> {
-  //   this.messageService.add('DataService: fetched orders');
-  //   return this.http.get<OrderInterface[]>(this.ordersUrl)
-  //     .pipe(
-  //       catchError(this.handleError<OrderInterface[]>('getAllOrders', []))
-  //     );
-  // }
-  //
-  // getOrderByChef(email: string): Observable<OrderInterface[]> {
-  //   this.messageService.add('DataService: fetched orders');
-  //   return this.http.get<OrderInterface[]>(this.ordersUrl + email)
-  //     .pipe(
-  //       catchError(this.handleError<OrderInterface[]>('getOrdersByChef', []))
-  //     );
-  // }
-  //
-  // updateOrder(order: OrderInterface): Observable<OrderInterface> {
-  //   return this.http.put<OrderInterface>(this.ordersUrl + order.id, order, this.httpOptions).pipe(
-  //     tap((newOrder: OrderInterface) => this.log(`updated order w/ id=${newOrder.id}`)),
-  //     catchError(this.handleError<OrderInterface>('updateOrder'))
-  //   );
-  // }
-  //
-  // deleteOrder(orderId: number): Observable<{}> {
-  //   // @ts-ignore
-  //   return this.http.delete(this.ordersUrl + orderId, this.httpOptions).pipe(
-  //     catchError(this.handleError('deleteOrder'))
-  //   );
-  // }
-  //
+
+  addDeviceType(deviceType: DeviceType): Observable<DeviceType> {
+    return this.http.post<DeviceType>(this.deviceTypesUrl, deviceType, this.httpOptions).pipe(
+      tap((newDeviceType: DeviceType) => this.log(`added deviceType w/ name=${newDeviceType.name}`)),
+      catchError(this.handleError<DeviceType>('addDeviceType'))
+    );
+  }
+
+  updateDeviceType(deviceType: DeviceType): Observable<DeviceType> {
+    return this.http.put<DeviceType>(this.deviceTypesUrl + deviceType.name, deviceType, this.httpOptions).pipe(
+      tap((updatedDeviceType: DeviceType) => this.log(`updated deviceType w/ name=${updatedDeviceType.name}`)),
+      catchError(this.handleError<DeviceType>('updateDish'))
+    );
+  }
+
+  deleteDeviceType(deviceTypeName: string): Observable<{}> {
+    return this.http.delete(this.deviceTypesUrl + deviceTypeName, this.httpOptions).pipe(
+      catchError(this.handleError('deleteDeviceType'))
+    );
+  }
+
+  getAllDevices(): Observable<Device[]> {
+    this.messageService.add('DataService: fetched devices');
+    return this.http.get<Device[]>(this.devicesUrl)
+      .pipe(
+        catchError(this.handleError<Device[]>('getAllDevices', []))
+      );
+  }
+
+  addDevice(device: Device): Observable<Device> {
+    return this.http.post<Device>(this.devicesUrl, device, this.httpOptions).pipe(
+      tap((newDevice: Device) => this.log(`added device w/ serial_number=${newDevice.serial_number}`)),
+      catchError(this.handleError<Device>('addDevice'))
+    );
+  }
+
+  updateDevice(device: Device): Observable<Device> {
+    return this.http.put<Device>(this.devicesUrl + device.serial_number, device, this.httpOptions).pipe(
+      tap((newDevice: Device) => this.log(`updated device w/ serial_number=${newDevice.serial_number}`)),
+      catchError(this.handleError<Device>('updateDevice'))
+    );
+  }
+
+  deleteDevice(deviceSerialNumber: number): Observable<{}> {
+    // @ts-ignore
+    return this.http.delete(this.menusUrl + deviceSerialNumber, this.httpOptions).pipe(
+      catchError(this.handleError('deleteDevice'))
+    );
+  }
+
+  addClient(client: Client): Observable<Client> {
+    return this.http.post<Client>(this.clientsUrl, client, this.httpOptions).pipe(
+      tap((newClient: Client) => this.log(`added client w/ email=${newClient.email}`)),
+      catchError(this.handleError<Client>('addClient'))
+    );
+  }
+
+  updateClient(client: Client): Observable<Client> {
+    return this.http.put<Client>(this.clientsUrl + client.email, client, this.httpOptions).pipe(
+      tap((newClient: Client) => this.log(`updated device w/ email=${newClient.email}`)),
+      catchError(this.handleError<Client>('updateClient'))
+    );
+  }
+
+  getLoginCredentials(loginCred: Login): Observable<Login>
+  {
+    return this.http.post<Login>(this.loginUrl, loginCred, this.httpOptions).pipe(
+      tap((logCredentials: Login) => this.log(`usertype logged: ${logCredentials.userType}`)),
+      catchError(this.handleError<Login>('getLoginCredentials'))
+    );
+  }
+
+  getOnlineStore(region: Region): Observable<Distributor[]> {
+    return this.http.post<Distributor[]>(this.onlineStoreUrl + 'distributors', region, this.httpOptions).pipe(
+      tap((newOnlineStore: Distributor[]) => this.log(`obtained online store`)),
+      catchError(this.handleError<Distributor[]>('getOnlineStore'))
+    );
+  }
+
+  addOnlineStore(distributors: Distributor[]): Observable<Distributor[]> {
+    return this.http.post<Distributor[]>(this.onlineStoreUrl, distributors, this.httpOptions).pipe(
+      tap((newOnlineStore: Distributor[]) => this.log(`created new online store`)),
+      catchError(this.handleError<Distributor[]>('addClient'))
+    );
+  }
+
+  getActiveDevices(): Observable<number> {
+    this.messageService.add('DataService: fetched ActiveDevices');
+    return this.http.get<number>(this.dashboardUrl + 'activeDevices')
+      .pipe(
+        catchError(this.handleError<number>('getAllDevices', -1))
+      );
+  }
+
   // tslint:disable-next-line:typedef
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -117,47 +140,7 @@ export class DataService {
       return of(result as T);
     };
   }
-  //
-  // getBestSellingDishes(): Observable<DishInterface[]> {
-  //   this.messageService.add('DataService: fetched best selling dishes');
-  //   return this.http.get<DishInterface[]>(this.reportsUrl + 'topselling')
-  //     .pipe(
-  //       catchError(this.handleError<DishInterface[]>('getAllDishes', []))
-  //     );
-  // }
-  //
-  // getBestProfitDishes(): Observable<DishInterface[]> {
-  //   this.messageService.add('DataService: fetched best profit dishes');
-  //   return this.http.get<DishInterface[]>(this.reportsUrl + 'topprofit')
-  //     .pipe(
-  //       catchError(this.handleError<DishInterface[]>('getBestProfitDishes', []))
-  //     );
-  // }
-  //
-  // getBestClientsByOrders(): Observable<ClientInterface[]> {
-  //   this.messageService.add('DataService: fetched top clients by amount of orders');
-  //   return this.http.get<ClientInterface[]>(this.reportsUrl + 'topclients')
-  //     .pipe(
-  //       catchError(this.handleError<ClientInterface[]>('getBestClientsByOrders', []))
-  //     );
-  // }
-  //
-  // getOrdersByFeedback(): Observable<OrderInterface[]> {
-  //   this.messageService.add('DataService: fetched top orders by feedback score');
-  //   return this.http.get<OrderInterface[]>(this.reportsUrl + 'toporders')
-  //     .pipe(
-  //       catchError(this.handleError<OrderInterface[]>('getOrdersByFeedback', []))
-  //     );
-  // }
-  //
-  // getLoginCredentials(loginCred: LoginInterface): Observable<LoginInterface>
-  // {
-  //   return this.http.post<LoginInterface>(this.loginUrl, loginCred, this.httpOptions).pipe(
-  //     tap((logCredentials: LoginInterface) => this.log(`usertype logged: ${logCredentials.userType}`)),
-  //     catchError(this.handleError<LoginInterface>('getLoginCredentials'))
-  //   );
-  // }
-  //
+
   // tslint:disable-next-line:typedef
   private log(message: string) {
     this.messageService.add(`DataService: ${message}`);
