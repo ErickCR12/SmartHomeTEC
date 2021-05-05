@@ -14,12 +14,27 @@ export class AppComponent {
   notReport: boolean = false;
   notDeviceType: boolean = false;
   notDevices: boolean = false;
+  ActiveDevices: boolean = false;
+  UsageDevices: boolean = false;
+  UploadDoc: boolean = false;
 
   clickLog() {
     this.notLogged = !this.notLogged
   }
   clickReg() {
     this.notReg = !this.notReg
+  }
+
+  clickSeeDevs() {
+    this.ActiveDevices = !this.ActiveDevices
+  }
+
+  clickUsageDevices() {
+    this.UsageDevices = !this.UsageDevices
+  }
+
+  clickUploadDoc() {
+    this.UploadDoc = !this.UploadDoc
   }
 
   clickProfEdit() {

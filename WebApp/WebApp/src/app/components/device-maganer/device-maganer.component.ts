@@ -13,4 +13,5 @@ export class DeviceMaganerComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
 }

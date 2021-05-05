@@ -9,7 +9,9 @@ import { ShopComponent } from './components/shop/shop.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { DeviceMaganerComponent } from './components/device-maganer/device-maganer.component';
 import { DevicesComponent } from './components/devices/devices.component';
-import { MessagesComponent } from './messages/messages.component';
+import { DeviceTableComponent } from './components/device-table/device-table.component';
+import { UploadpageComponent } from './components/uploadpage/uploadpage.component';
+import { UsageTableComponent } from './components/usage-table/usage-table.component';
 
 import {HttpClientModule} from '@angular/common/http';
 
@@ -23,8 +25,10 @@ import {HttpClientModule} from '@angular/common/http';
     ReportsComponent,
     DeviceMaganerComponent,
     DevicesComponent,
-    MessagesComponent,
-
+    DeviceTableComponent,
+    UploadpageComponent,
+    UsageTableComponent,
+    
   ],
   imports: [
     BrowserModule,
