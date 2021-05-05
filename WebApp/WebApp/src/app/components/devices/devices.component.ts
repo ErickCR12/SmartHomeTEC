@@ -9,17 +9,9 @@ import {DataService} from '../../data.service';
 })
 export class DevicesComponent implements OnInit {
 
-  deviceTypes: DeviceType[];
-
-  constructor(private dataService: DataService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.getAllDeviceTypes();
-    console.log(this.deviceTypes);
-  }
-
-  getAllDeviceTypes(): void{
-    this.dataService.getAllDeviceTypes().subscribe( data => console.log(data));
   }
 
 }
