@@ -6,6 +6,7 @@ namespace API_Service.Data
     public interface ISmartHomeRepo{
 
         IEnumerable<Device> GetAllDevices();
+        IEnumerable<Device> GetAllDevicesByClient(string client_email);
         Device GetDevice(int serialNumber);
         void AddDevice(Device device);
         void UpdateDevice(Device device);

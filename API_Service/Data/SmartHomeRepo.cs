@@ -20,19 +20,49 @@ namespace API_Service.Data
         public IEnumerable<Device> GetAllDevices()
         {
             List<Device> allDevices = new List<Device>();
-            
+
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
                 "SELECT serial_number, brand, electric_usage, device_type_name, client_email " +
-                "FROM devices", 
+                "FROM devices",
                 DBconn
                 );
 
             NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
-            while(DBreader.Read())
+            while (DBreader.Read())
             {
                 Device device = new Device();
-                device.serial_number = Int32.Parse(DBreader[0].ToString());;
+                device.serial_number = Int32.Parse(DBreader[0].ToString()); ;
+                device.brand = DBreader[1].ToString();
+                device.electric_usage = Int32.Parse(DBreader[2].ToString());
+                device.device_type_name = DBreader[3].ToString();
+                device.client_email = DBreader[4].ToString();
+                allDevices.Add(device);
+            }
+            DBconn.Close();
+
+            return allDevices;
+        }
+
+        public IEnumerable<Device> GetAllDevicesByClient(string client_email)
+        {
+            List<Device> allDevices = new List<Device>();
+
+            DBconn.Open();
+            var sqlCmd = new NpgsqlCommand(
+                "SELECT serial_number, brand, electric_usage, device_type_name, client_email " +
+                "FROM devices " +
+                "WHERE client_email = @pCond",
+                DBconn
+                );
+
+            sqlCmd.Parameters.AddWithValue("pCond", client_email);
+
+            NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
+            while (DBreader.Read())
+            {
+                Device device = new Device();
+                device.serial_number = Int32.Parse(DBreader[0].ToString()); ;
                 device.brand = DBreader[1].ToString();
                 device.electric_usage = Int32.Parse(DBreader[2].ToString());
                 device.device_type_name = DBreader[3].ToString();
