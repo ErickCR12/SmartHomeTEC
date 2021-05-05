@@ -9,6 +9,8 @@ namespace API_Service.DTOs
         public string device_type_name {get; set;}
         public string brand {get; set;}
         public int electric_usage {get; set;}
+
+        public string client_email {get; set;}
     }
 
 }

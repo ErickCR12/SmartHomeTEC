@@ -33,7 +33,7 @@ namespace API_Service.Data
 
 
         int GetDevicesPerUser();
-        List<DevicePerRegion> GetDevicesPerRegion();
+        List<Region> GetDevicesPerRegion();
         int GetActiveDevices();
 
     }
