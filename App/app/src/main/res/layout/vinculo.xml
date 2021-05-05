@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:id="@+id/lbltitulo4"
+        android:layout_width="355dp"
+        android:layout_height="57dp"
+        android:gravity="clip_horizontal|center_horizontal|center_vertical"
+        android:text="Vincular dispositivos"
+        android:textColor="#FF071145"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <TextView
+        android:id="@+id/lblapo"
+        android:layout_width="158dp"
+        android:layout_height="55dp"
+        android:gravity="clip_horizontal|center_horizontal|center_vertical"
+        android:text="Aposento"
+        android:textColor="#FF071145"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.42" />
+
+    <Spinner
+        android:id="@+id/spinner_aposentos"
+        android:layout_width="246dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="260dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbldis"
+        android:layout_width="179dp"
+        android:layout_height="46dp"
+        android:gravity="clip_horizontal|center_horizontal|center_vertical"
+        android:text="Dispositivo"
+        android:textColor="#FF071145"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.128" />
+
+    <Button
+        android:id="@+id/btnvincular"
+        android:layout_width="187dp"
+        android:layout_height="63dp"
+        android:background="#FF071145"
+        android:text="Vincular"
+        android:textColor="#f17950"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.752" />
+
+    <Button
+        android:id="@+id/btnsiguie"
+        android:layout_width="187dp"
+        android:layout_height="63dp"
+        android:background="#FF071145"
+        android:text="Regresar"
+        android:textColor="#f17950"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.926" />
+
+    <Spinner
+        android:id="@+id/spinner_dispositivo"
+        android:layout_width="264dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="148dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
