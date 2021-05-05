@@ -31,6 +31,11 @@ namespace API_Service.Data
 
         Admin GetAdmin();
 
+
+        int GetDevicesPerUser();
+        List<DevicePerRegion> GetDevicesPerRegion();
+        int GetActiveDevices();
+
     }
 
 }

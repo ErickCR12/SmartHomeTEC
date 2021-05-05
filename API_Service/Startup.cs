@@ -25,11 +25,6 @@ namespace API_Service
 
             services.AddControllers();
 
-            services.AddDbContext<SmartHomeDbContext>(opts => {
-                opts.EnableDetailedErrors();
-                opts.UseNpgsql(Configuration.GetConnectionString("smarthome.dev"));
-            });
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_Service", Version = "v1" });

@@ -12,16 +12,13 @@ namespace API_Service.Data
 
         private readonly NpgsqlConnection DBconn;
 
-        private readonly SmartHomeDbContext _db;
-        public SmartHomeRepo(SmartHomeDbContext db) 
+        public SmartHomeRepo() 
         {
-            _db = db;
             DBconn = new NpgsqlConnection("Host=localhost;Port=5432;Username=smarthome;Password=emerson;Database=smarthome.dev;");
         }
 
         public IEnumerable<Device> GetAllDevices()
         {
-            // return _db.devices.ToList();
             List<Device> allDevices = new List<Device>();
             
             DBconn.Open();
@@ -48,9 +45,7 @@ namespace API_Service.Data
         }
 
         public Device GetDevice(int serialNumber)
-        {
-            //return _db.devices.Find(serialNumber);
-            
+        {            
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
                 "SELECT serial_number, brand, electric_usage, device_type_name, client_email " +
@@ -80,10 +75,6 @@ namespace API_Service.Data
 
         public void AddDevice(Device device)
         {
-
-            // _db.Add(device);
-            // _db.SaveChanges();
-
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
@@ -103,8 +94,6 @@ namespace API_Service.Data
 
         public void UpdateDevice(Device device)
         {
-            // _db.Update(device);
-            // _db.SaveChanges();
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
@@ -125,9 +114,6 @@ namespace API_Service.Data
 
         public void DeleteDevice(Device device)
         {
-            // _db.Remove(device);
-            // _db.SaveChanges();
-
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
@@ -145,8 +131,6 @@ namespace API_Service.Data
 
         public IEnumerable<DeviceType> GetAllDeviceTypes()
         {
-            //return _db.device_types.ToList();
-
             List<DeviceType> allDeviceTypes = new List<DeviceType>();
             
             DBconn.Open();
@@ -172,8 +156,6 @@ namespace API_Service.Data
 
         public DeviceType GetDeviceType(string name)
         {
-            // return _db.device_types.Find(name);
-
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
                 "SELECT name, description, warranty_months " +
@@ -201,9 +183,6 @@ namespace API_Service.Data
 
         public void AddDeviceType(DeviceType deviceType)
         {
-            // _db.Add(deviceType);
-            //_db.SaveChanges();
-
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
@@ -221,8 +200,6 @@ namespace API_Service.Data
 
         public void UpdateDeviceType(DeviceType deviceType)
         {
-            // _db.Update(deviceType);
-            // _db.SaveChanges();
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
@@ -242,9 +219,6 @@ namespace API_Service.Data
 
         public void DeleteDeviceType(DeviceType deviceType)
         {
-            // _db.Remove(deviceType);
-            // _db.SaveChanges();
-
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
@@ -261,8 +235,6 @@ namespace API_Service.Data
 
         public IEnumerable<Client> GetAllClients()
         {
-            // return _db.clients.ToList();
-
             List<Client> allClients = new List<Client>();
             
             DBconn.Open();
@@ -292,7 +264,6 @@ namespace API_Service.Data
 
         public Client GetClient(string email)
         {
-            // return _db.clients.Find(email);
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
                 "SELECT email, name, password, last_name1, last_name2, country, continent " +
@@ -323,9 +294,6 @@ namespace API_Service.Data
 
         public void AddClient(Client client)
         {
-            // _db.Add(client);
-            // _db.SaveChanges();
-
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
@@ -494,6 +462,83 @@ namespace API_Service.Data
             DBconn.Close();
 
             return admin;
+        }
+
+        public int GetDevicesPerUser()
+        {
+            DBconn.Open();
+            var sqlDeviceCount = new NpgsqlCommand(
+                "SELECT COUNT(serial_number) " +
+                "FROM devices", 
+                DBconn
+                );
+
+            var sqlClientCount = new NpgsqlCommand(
+                "SELECT COUNT(email) " +
+                "FROM clients", 
+                DBconn
+                );
+            
+            NpgsqlDataReader DBreaderClients = sqlClientCount.ExecuteReader();
+            DBreaderClients.Read();
+            int amountClients = Int32.Parse(DBreaderClients[0].ToString());  
+            DBreaderClients.Close();
+            
+            NpgsqlDataReader DBreaderDevices = sqlDeviceCount.ExecuteReader();
+            DBreaderDevices.Read();
+            int amountDevices = Int32.Parse(DBreaderDevices[0].ToString());
+            DBreaderDevices.Close();
+            
+            DBconn.Close();          
+            
+            return amountDevices/amountClients;
+        }
+
+        public List<DevicePerRegion> GetDevicesPerRegion()
+        {
+            List<DevicePerRegion> devicesPerRegion = new List<DevicePerRegion>();
+
+            DBconn.Open();
+            var sqlComm = new NpgsqlCommand(
+                "SELECT     country, continent, COUNT(country) AS devices_per_region " +
+                "FROM	    ((devices JOIN device_distributor ON serial_number = devices_serial_number) " +
+			                "JOIN distributors ON distributors_legal_card = legal_card) " +
+                "GROUP BY   country, continent",
+                DBconn
+                );
+
+            NpgsqlDataReader DBreader = sqlComm.ExecuteReader();
+
+            while(DBreader.Read()){
+                DevicePerRegion devicePerRegion = new DevicePerRegion();
+                devicePerRegion.country = DBreader[0].ToString();
+                devicePerRegion.continent = DBreader[1].ToString();
+                devicePerRegion.amount = Int32.Parse(DBreader[2].ToString());
+                devicesPerRegion.Add(devicePerRegion);
+            }
+
+            DBconn.Close();          
+            
+            return devicesPerRegion;
+        }
+
+        public int GetActiveDevices()
+        {
+            DBconn.Open();
+            var sqlComm = new NpgsqlCommand(
+                "SELECT COUNT(serial_number) " +
+                "FROM devices " +   
+                "WHERE client_email IS NOT NULL",
+                DBconn
+                );
+
+            NpgsqlDataReader DBreader = sqlComm.ExecuteReader();
+            DBreader.Read();
+            int amountDevices = Int32.Parse(DBreader[0].ToString());
+            
+            DBconn.Close();          
+            
+            return amountDevices;
         }
     }
 }

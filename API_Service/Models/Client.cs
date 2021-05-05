@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_Service.Models
 {
@@ -27,7 +26,6 @@ namespace API_Service.Models
 
         public List<Chamber> chambers {get; set;}
 
-        public List<DirectionClient> directions {get; set;}
         public List<Device> devices {get; set;}
         
     }

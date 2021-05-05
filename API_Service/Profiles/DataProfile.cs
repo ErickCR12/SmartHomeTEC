@@ -23,6 +23,7 @@ namespace WebServiceResTEC.Profiles
                 opt => opt.MapFrom(src => ((DateTime)src.purchase_date).ToShortDateString())).ReverseMap();
 
             CreateMap<LoginProfile, LoginDto>().ReverseMap();
+            CreateMap<DevicePerRegion, DevicePerRegionDto>().ReverseMap();
         }
     }
 
