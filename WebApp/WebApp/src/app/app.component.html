@@ -1,11 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <div class="navbar">
       <a class="navbar-brand" href="#">ResTEC</a>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-1 mb-sm-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" (click)="clickLog()">{{notLogged? "Hide Log In":"Log In"}}</a>
         </li>
@@ -27,10 +24,21 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" (click)="clickDevices()">{{notDevices? "Hide Devices":"Devices"}}</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickSeeDevs()">{{ActiveDevices? "Hide Active Devices":"Active Devices"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickUsageDevices()">{{UsageDevices? "Hide Total Devices":"Total Devices"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickUploadDoc()">{{UploadDoc? "Hide Excel Tab":"Excel Table"}}</a>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
+
+
 
 
 <loginScreen *ngIf="notLogged; else elseBlock"></loginScreen>
@@ -54,5 +62,11 @@
 <app-devices *ngIf="notDevices; else elseNotDevice"></app-devices>
 <ng-template #elseNotDevice></ng-template>
 
+<app-device-table *ngIf="ActiveDevices; else elseActiveDevices"></app-device-table>
+<ng-template #elseActiveDevices></ng-template>
 
-<app-messages></app-messages>
+<app-uploadpage *ngIf="UploadDoc; else elseUploadDoc"></app-uploadpage>
+<ng-template #elseUploadDoc></ng-template>
+
+<app-usage-table *ngIf="UsageDevices; else elseUsageDevices"></app-usage-table>
+<ng-template #elseUsageDevices></ng-template>
