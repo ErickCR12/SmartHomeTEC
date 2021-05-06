@@ -1,17 +1,22 @@
 package com.example.app.Funciones_Pantallas
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.app.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import org.json.JSONObject
 import kotlin.collections.ArrayList
 
 
@@ -24,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     //Se crea un lista de contraseña segistradas
     val contrasenas_registradas = mutableListOf("rest", "web", "mobil", "Contraseña")
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -34,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         val usuario_input = findViewById<EditText>(R.id.inputusuario) as EditText
         val contrasena_inpurt = findViewById<EditText>(R.id.inputcontrasena) as EditText
 
+        val url = "http://192.168.1.3/API_Service/api/"
+        val queue = Volley.newRequestQueue(this)
+        val jsonObject = JSONObject()
 
         //Botón de acceso a la ventana de Administrar Carrito
         btningresar.setOnClickListener {
@@ -43,9 +52,29 @@ class MainActivity : AppCompatActivity() {
             //Se toma el valor de la contraseña registrada
             var contrasena = contrasena_inpurt.text.toString()
 
-            Log.i("log", "$usuario - $contrasena")
+            //Envio del usuario y contraseña en formato JSON
+            jsonObject.put("username",usuario)
+            jsonObject.put("password",contrasena)
+
             //Validaciones para continuar en la aplicación
 
+            val stringRequest = JsonObjectRequest(Request.Method.POST,
+                    "${url}login/", jsonObject, { response ->
+                        if(response != null){
+                            response.get("username")
+                            response.get("password")
+                            response.get("userType")
+                        }
+                else{
+                            Toast.makeText(this,"DATOS INVÁLIDOS", Toast.LENGTH_LONG).show()
+                        }
+
+            },
+                    {
+                            Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()})
+            queue.add(stringRequest)
+
+            /**
             //Si el usuario no ha ingresado ningún dato de entrada
             if (usuario_input.text.toString().isNullOrEmpty() || contrasena_inpurt.text.toString().isNullOrEmpty() ){
                 //Se despliega un mensaje de alerta solicitando datos válidos para el ingreso
@@ -60,9 +89,10 @@ class MainActivity : AppCompatActivity() {
                 else{
                     Toast.makeText(this, "Datos ingresados no registrados", Toast.LENGTH_LONG).show()
                 }
+            **/
             }
         }
-    }
+
 
     /**
     * Función Corroborar
