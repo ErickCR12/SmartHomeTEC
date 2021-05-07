@@ -510,8 +510,10 @@ namespace API_Service.Data
             return admin;
         }
 
-        public int GetDevicesPerUser()
+        public DevicesPerUser GetDevicesPerUser()
         {
+            DevicesPerUser devicesPerUser = new DevicesPerUser();
+
             DBconn.Open();
             var sqlDeviceCount = new NpgsqlCommand(
                 "SELECT COUNT(serial_number) " +
@@ -527,17 +529,19 @@ namespace API_Service.Data
             
             NpgsqlDataReader DBreaderClients = sqlClientCount.ExecuteReader();
             DBreaderClients.Read();
-            int amountClients = Int32.Parse(DBreaderClients[0].ToString());  
+            devicesPerUser.amountClients = Int32.Parse(DBreaderClients[0].ToString());  
             DBreaderClients.Close();
             
             NpgsqlDataReader DBreaderDevices = sqlDeviceCount.ExecuteReader();
             DBreaderDevices.Read();
-            int amountDevices = Int32.Parse(DBreaderDevices[0].ToString());
+            devicesPerUser.amountDevices = Int32.Parse(DBreaderDevices[0].ToString());
             DBreaderDevices.Close();
+
+            devicesPerUser.amountDevicesPerUser = Math.Round(devicesPerUser.amountDevices/devicesPerUser.amountClients, 2);
             
             DBconn.Close();          
             
-            return amountDevices/amountClients;
+            return devicesPerUser;
         }
 
         public List<Region> GetDevicesPerRegion()

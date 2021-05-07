@@ -10,6 +10,7 @@ import {Client} from './models/client';
 import {Distributor} from './models/distributor';
 import {Region} from './models/region';
 import {DirectionClient} from './models/direction-client';
+import {DevicesPerUser} from './models/devices-per-user';
 @Injectable({
   providedIn: 'root'
 })
@@ -130,6 +131,14 @@ export class DataService {
     return this.http.get<number>(this.dashboardUrl + 'activeDevices')
       .pipe(
         catchError(this.handleError<number>('getAllDevices', -1))
+      );
+  }
+
+  getDevicesPerUser(): Observable<DevicesPerUser> {
+    this.messageService.add('DataService: fetched DevicesPerUser');
+    return this.http.get<DevicesPerUser>(this.dashboardUrl + 'devicesPerUser')
+      .pipe(
+        catchError(this.handleError<DevicesPerUser>('getDevicesPerUser', null))
       );
   }
 
