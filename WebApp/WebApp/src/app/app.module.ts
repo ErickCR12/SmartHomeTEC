@@ -15,6 +15,7 @@ import { UsageTableComponent } from './components/usage-table/usage-table.compon
 
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {MessagesComponent} from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {FormsModule} from '@angular/forms';
     DeviceTableComponent,
     UploadpageComponent,
     UsageTableComponent,
+    MessagesComponent,
 
   ],
     imports: [

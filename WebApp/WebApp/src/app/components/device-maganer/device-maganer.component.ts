@@ -32,4 +32,15 @@ export class DeviceMaganerComponent implements OnInit {
     });
   }
 
+  deleteDeviceType(name: string, index: number): void{
+    this.deviceTypes.splice(index, 1);
+    this.dataService.deleteDeviceType(name).subscribe();
+  }
+
+  updateDeviceType(name: string, description: string, warranty_months_str: string): void{
+    let warranty_months = Number(warranty_months_str);
+    let updated_device_type = {name, description, warranty_months} as DeviceType;
+    this.dataService.updateDeviceType(updated_device_type).subscribe();
+  }
+
 }

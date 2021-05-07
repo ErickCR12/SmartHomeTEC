@@ -42,7 +42,6 @@ export class DataService {
 
   updateDeviceType(deviceType: DeviceType): Observable<DeviceType> {
     return this.http.put<DeviceType>(this.deviceTypesUrl + deviceType.name, deviceType, this.httpOptions).pipe(
-      tap((updatedDeviceType: DeviceType) => this.log(`updated deviceType w/ name=${updatedDeviceType.name}`)),
       catchError(this.handleError<DeviceType>('updateDish'))
     );
   }
