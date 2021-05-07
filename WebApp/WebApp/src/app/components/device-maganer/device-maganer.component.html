@@ -1,4 +1,4 @@
-<body class="text-center">
+<body class="text-center" xmlns="http://www.w3.org/1999/html">
   <div class="container">
 
     <div class="row">
@@ -7,16 +7,18 @@
           <h1 class="h3 mb-3 fw-normal">Create new</h1>
 
           <label for="inputName" class="visually-hidden">Name</label>
-          <input id="inputName" class="form-control" placeholder="Name">
+          <input id="inputName" class="form-control" placeholder="Name" #name>
 
           <label for="Description" class="visually-hidden">Description</label>
-          <input id="Description" class="form-control" placeholder="Description">
+          <input id="Description" class="form-control" placeholder="Description" #description>
 
-          <label for="Garantia" class="visually-hidden">Garantia</label>
-          <input id="Garantia" class="form-control" placeholder="Garantia">
+          <label for="Garantia" class="visually-hidden" >Garantia</label>
+          <input id="Garantia" class="form-control" placeholder="Garantia" #warranty_months>
 
           <!--Upload data to loging with this button -->
-          <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!">Create</button>
+          <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!"
+                  (click)="addDeviceType(name.value, description.value, warranty_months.value)">Create
+          </button>
           <a>-or-</a>
           <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!">Clear</button>
         </form>
@@ -27,20 +29,16 @@
     <div fxLayout="row-overflow-auto" fxLayoutGap="10px grid">
 
       <!--Cambiar el NGFOR a lo que se pida de la listam esa lista es para yo probar las varas-->
-      <div fxFlex="25%" class="Items" *ngFor="let num of [1,2,3,4,5]">
+      <div fxFlex="25%" class="Items" *ngFor="let deviceType of deviceTypes">
         <main class="form-DeviceTypeCreated">
           <form>
-            <h1 class="h3 mb-3 fw-normal">Created {{num}}</h1>
+            <h1 class="h3 mb-3 fw-normal">{{deviceType.name}}</h1>
 
-            <label for="inputName" class="visually-hidden">Name</label>
-            <!-- poner en "Name" sin las comillas, lo quite para probar que se vieran los numeros{{deviceTypes[0].name}}-->
-            <input id="inputName" class="form-control" placeholder="Name">
+            <label for="Description">Description</label>
+            <input id="Description" class="form-control" value="{{deviceType.description}}">
 
-            <label for="Description" class="visually-hidden">Description</label>
-            <input id="Description" class="form-control" placeholder="Description">
-
-            <label for="Garantia" class="visually-hidden">Garantia</label>
-            <input id="Garantia" class="form-control" placeholder="Garantia">
+            <label for="Garantia">Garantia</label>
+            <input id="Garantia" class="form-control" value="{{deviceType.warranty_months}}">
 
             <!--Upload data to loging with this button -->
             <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!">Edit</button>

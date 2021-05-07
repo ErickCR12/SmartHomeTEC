@@ -22,4 +22,14 @@ export class DeviceMaganerComponent implements OnInit {
     this.dataService.getAllDeviceTypes().subscribe( data => this.deviceTypes = data);
   }
 
+  addDeviceType(name: string, description: string, warranty_months_str: string): void{
+    let warranty_months = Number(warranty_months_str);
+    let new_device_type = {name, description, warranty_months} as DeviceType;
+    this.dataService.addDeviceType(new_device_type).subscribe(data => {
+      if (data){
+        this.deviceTypes.push(new_device_type);
+      }
+    });
+  }
+
 }
