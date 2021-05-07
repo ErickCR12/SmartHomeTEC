@@ -23,16 +23,16 @@ namespace API_Service.Controllers
             _mapper = mapper;
         }        
 
-        //GET api/onlineStore
+        //POST api/onlineStore/distributors
         //This request returns a list of Distributor entities in a JSON format representing the device_distributor database.
-        [HttpGet]
+        [HttpPost("distributors")]
         public ActionResult <IEnumerable<DistributorDto>> GetOnlineStore(RegionDto regionDto)
         {
             var onlineStore = _repository.GetOnlineStore(regionDto.continent, regionDto.country);
             return Ok(_mapper.Map<IEnumerable<DistributorDto>>(onlineStore));
         }
 
-        //POST api/devicetypes
+        //POST api/onlineStore
         //This request receives all the needed info to create new entries in device_distributor database.
         [HttpPost(Name = "CreateOnlineStore")]
         public ActionResult <IEnumerable<DeviceTypeDto>> CreateOnlineStore(IEnumerable<DistributorDto> onlineStoreDto)

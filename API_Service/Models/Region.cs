@@ -1,18 +1,17 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace API_Service.Models
 {
 
-    public class DevicePerRegion
+    public class Region
     {
 
         [Required]
         public string continent {get; set;}
-
         [Required]
         public string country {get; set;}
 
-        [Required]
         public int amount {get; set;}
         
     }

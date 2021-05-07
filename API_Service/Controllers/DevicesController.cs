@@ -22,14 +22,23 @@ namespace API_Service.Controllers
         {
             _repository = repository;
             _mapper = mapper;
-        }        
+        }
 
         //GET api/devices
         //This request returns a list of Device entities in a JSON format representing the chef database.
         [HttpGet]
-        public ActionResult <IEnumerable<DeviceDto>> GetAllDevices()
+        public ActionResult<IEnumerable<DeviceDto>> GetAllDevices()
         {
             var devicesItem = _repository.GetAllDevices();
+            return Ok(_mapper.Map<IEnumerable<DeviceDto>>(devicesItem));
+        }
+
+        //GET api/devices/byclient/{client_email}
+        //This request returns a list of Device entities in a JSON format representing the chef database.
+        [HttpGet("byclient/{client_email}")]
+        public ActionResult<IEnumerable<DeviceDto>> GetAllDevicesByClient(string client_email)
+        {
+            var devicesItem = _repository.GetAllDevicesByClient(client_email);
             return Ok(_mapper.Map<IEnumerable<DeviceDto>>(devicesItem));
         }
 
