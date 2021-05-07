@@ -11,7 +11,6 @@ export class DeviceMaganerComponent implements OnInit {
 
   deviceTypes: DeviceType[];
 
-
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
