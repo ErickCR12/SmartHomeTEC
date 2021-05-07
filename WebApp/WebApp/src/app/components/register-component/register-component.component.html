@@ -42,7 +42,18 @@
         <label for="inputPassword" class="visually-hidden">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required #passwordInput>
         <!--Upload data to loging with this button -->
-        <button class="w-100 btn btn-lg btn-warn" type="submit" href="welcome!">Registrarse</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!"
+        (click)="addClient(usernameInput.value, nameInput.value, passwordInput.value, flastnameInput.value,
+        slastnameInput.value, countryInput.value, continentInput.value, direccionInput.value)">Registrarse</button>
+
+        <a>Si desea agregar más direcciones:</a>
+
+        <label for="inputAnotherDirection" class="visually-hidden"></label>
+        <input id="inputAnotherDirection" class="form-control" placeholder="Direccion"
+               required #anotherDirectionInput>
+        <!--Upload data to loging with this button -->
+        <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!"
+                (click)="addDirectionClient(anotherDirectionInput.value)">Agregar dirección</button>
       </form>
     </main>
 

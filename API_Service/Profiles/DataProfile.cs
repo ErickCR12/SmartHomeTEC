@@ -23,6 +23,7 @@ namespace WebServiceResTEC.Profiles
 
             CreateMap<LoginProfile, LoginDto>().ReverseMap();
             CreateMap<Region, RegionDto>().ReverseMap();
+            CreateMap<DirectionClient, DirectionClientDto>().ReverseMap();
         }
     }
 

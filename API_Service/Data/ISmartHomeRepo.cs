@@ -21,6 +21,7 @@ namespace API_Service.Data
         IEnumerable<Client> GetAllClients();
         Client GetClient(string email);
         void AddClient(Client client);
+        void AddDirection(DirectionClient directionClient);
         
         IEnumerable<Distributor> GetOnlineStore(string continent, string country);
         void AddOnlineStore(IEnumerable<Distributor> distributors);

@@ -6,4 +6,5 @@ export interface Client {
   last_name2: string;
   country: string;
   continent: string;
+  direction: string;
 }

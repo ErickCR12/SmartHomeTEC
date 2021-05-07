@@ -326,19 +326,36 @@ namespace API_Service.Data
         {
             DBconn.Open();
 
-            var sqlCmd = new NpgsqlCommand(
+            var sqlAddClient = new NpgsqlCommand(
                 "INSERT INTO clients (email, name, password, last_name1, last_name2, country, continent) " +
                 "VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7)", DBconn
                 );
 
-            sqlCmd.Parameters.AddWithValue("p1", client.email);
-            sqlCmd.Parameters.AddWithValue("p2", client.name);
-            sqlCmd.Parameters.AddWithValue("p3", client.password);
-            sqlCmd.Parameters.AddWithValue("p4", client.last_name1);
-            sqlCmd.Parameters.AddWithValue("p5", client.last_name2);
-            sqlCmd.Parameters.AddWithValue("p6", client.country);
-            sqlCmd.Parameters.AddWithValue("p7", client.continent);
-            sqlCmd.ExecuteNonQuery();
+            sqlAddClient.Parameters.AddWithValue("p1", client.email);
+            sqlAddClient.Parameters.AddWithValue("p2", client.name);
+            sqlAddClient.Parameters.AddWithValue("p3", client.password);
+            sqlAddClient.Parameters.AddWithValue("p4", client.last_name1);
+            sqlAddClient.Parameters.AddWithValue("p5", client.last_name2);
+            sqlAddClient.Parameters.AddWithValue("p6", client.country);
+            sqlAddClient.Parameters.AddWithValue("p7", client.continent);
+            sqlAddClient.ExecuteNonQuery();
+
+            DBconn.Close();
+
+        }
+
+        public void AddDirection(DirectionClient directionClient){
+            DBconn.Open();
+
+            var sqlAddDirection = new NpgsqlCommand(
+                "INSERT INTO directions_clients (direction, client_email) " +
+                "VALUES (@p1, @p2)", DBconn
+                );
+
+            sqlAddDirection.Parameters.AddWithValue("p1", directionClient.direction);
+            sqlAddDirection.Parameters.AddWithValue("p2", directionClient.client_email);
+            sqlAddDirection.ExecuteNonQuery();
+            
             DBconn.Close();
         }
 

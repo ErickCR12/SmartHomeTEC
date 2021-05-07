@@ -9,6 +9,7 @@ import {Login} from './models/login';
 import {Client} from './models/client';
 import {Distributor} from './models/distributor';
 import {Region} from './models/region';
+import {DirectionClient} from './models/direction-client';
 @Injectable({
   providedIn: 'root'
 })
@@ -92,6 +93,13 @@ export class DataService {
     return this.http.put<Client>(this.clientsUrl + client.email, client, this.httpOptions).pipe(
       tap((newClient: Client) => this.log(`updated device w/ email=${newClient.email}`)),
       catchError(this.handleError<Client>('updateClient'))
+    );
+  }
+
+  addDirectionClient(directionClient: DirectionClient): Observable<DirectionClient> {
+    return this.http.post<DirectionClient>(this.clientsUrl + 'direction', directionClient, this.httpOptions).pipe(
+      tap((newDirectionClient: DirectionClient) => this.log(`added directionClient w/ email=${newDirectionClient.client_email}`)),
+      catchError(this.handleError<DirectionClient>('addDirectionClient'))
     );
   }
 
