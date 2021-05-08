@@ -9,8 +9,10 @@
         <label for="NSerie" class="visually-hidden">NSerie</label>
         <input id="NSerie" class="form-control" placeholder="Numero de serie" #serialNumber>
 
-        <label for="deviceType" class="visually-hidden">Tipo de dispositivo</label>
-        <input id="deviceType" class="form-control" placeholder="Tipo de dispositivo" #deviceType>
+        <select name="miselect" #deviceType class="caja" >
+          <option value="" selected disabled hidden>Tipo de dispositivo</option>
+          <option [value]=deviceType.name *ngFor="let deviceType of deviceTypes">{{deviceType.name}} </option>
+        </select>
 
         <label for="electricUsage" class="visually-hidden">Uso electrico</label>
         <input id="electricUsage" class="form-control" placeholder="Uso electrico" #electricUsage>
@@ -35,7 +37,10 @@
           <h1 class="h3 mb-3 fw-normal" #serialNumber>{{device.serial_number}}</h1>
 
           <label for="deviceType">Tipo de dispositivo</label>
-          <input id="deviceType" class="form-control" value="{{device.device_type_name}}" #deviceType>
+          <select id="deviceType" #deviceType class="caja">
+            <option value="" selected disabled hidden>{{device.device_type_name}}</option>
+            <option [value]="deviceType.name" *ngFor="let deviceType of deviceTypes">{{deviceType.name}}</option>
+          </select>
 
           <label for="electricUsage">Uso eléctrico</label>
           <input id="electricUsage" class="form-control" value="{{device.electric_usage}}" #electricUsage>

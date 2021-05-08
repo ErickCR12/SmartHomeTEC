@@ -29,6 +29,7 @@ export class DevicesComponent implements OnInit {
   }
 
   addDevice(serialNumberStr: string, brand: string, electricUsageStr: string, device_type_name: string): void{
+    console.log(device_type_name);
     const serial_number = Number(serialNumberStr);
     const electric_usage = Number(electricUsageStr);
     const new_device = {serial_number, brand, electric_usage, device_type_name} as Device;
