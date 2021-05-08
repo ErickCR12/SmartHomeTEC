@@ -65,7 +65,7 @@ namespace API_Service.Controllers
 
             var newDeviceDto = _mapper.Map<DeviceDto>(deviceModel);
 
-            return CreatedAtRoute(nameof(GetDeviceBySerialNumber), new {SerialNumber = newDeviceDto.serial_number}, 
+            return CreatedAtRoute(nameof(GetDeviceBySerialNumber), new {serial_number = newDeviceDto.serial_number}, 
                                 newDeviceDto);
         }
 

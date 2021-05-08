@@ -23,8 +23,9 @@ namespace API_Service.Data
 
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
-                "SELECT serial_number, brand, electric_usage, device_type_name, client_email " +
-                "FROM devices",
+                "SELECT serial_number, brand, electric_usage, device_type_name " +
+                "FROM devices " +
+                "WHERE client_email IS NULL",
                 DBconn
                 );
 
@@ -36,7 +37,6 @@ namespace API_Service.Data
                 device.brand = DBreader[1].ToString();
                 device.electric_usage = Int32.Parse(DBreader[2].ToString());
                 device.device_type_name = DBreader[3].ToString();
-                device.client_email = DBreader[4].ToString();
                 allDevices.Add(device);
             }
             DBconn.Close();

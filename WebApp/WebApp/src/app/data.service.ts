@@ -77,8 +77,7 @@ export class DataService {
   }
 
   deleteDevice(deviceSerialNumber: number): Observable<{}> {
-    // @ts-ignore
-    return this.http.delete(this.menusUrl + deviceSerialNumber, this.httpOptions).pipe(
+    return this.http.delete(this.devicesUrl + deviceSerialNumber, this.httpOptions).pipe(
       catchError(this.handleError('deleteDevice'))
     );
   }
