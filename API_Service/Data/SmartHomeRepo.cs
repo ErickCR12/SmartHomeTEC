@@ -23,7 +23,7 @@ namespace API_Service.Data
 
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
-                "SELECT serial_number, brand, electric_usage, device_type_name " +
+                "SELECT serial_number, brand, electric_usage, price, device_type_name " +
                 "FROM devices " +
                 "WHERE client_email IS NULL",
                 DBconn
@@ -36,7 +36,8 @@ namespace API_Service.Data
                 device.serial_number = Int32.Parse(DBreader[0].ToString()); ;
                 device.brand = DBreader[1].ToString();
                 device.electric_usage = Int32.Parse(DBreader[2].ToString());
-                device.device_type_name = DBreader[3].ToString();
+                device.price = Int32.Parse(DBreader[3].ToString());
+                device.device_type_name = DBreader[4].ToString();
                 allDevices.Add(device);
             }
             DBconn.Close();
@@ -50,7 +51,7 @@ namespace API_Service.Data
 
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
-                "SELECT serial_number, brand, electric_usage, device_type_name, client_email " +
+                "SELECT serial_number, brand, electric_usage, price, device_type_name, client_email " +
                 "FROM devices " +
                 "WHERE client_email = @pCond",
                 DBconn
@@ -65,8 +66,9 @@ namespace API_Service.Data
                 device.serial_number = Int32.Parse(DBreader[0].ToString()); ;
                 device.brand = DBreader[1].ToString();
                 device.electric_usage = Int32.Parse(DBreader[2].ToString());
-                device.device_type_name = DBreader[3].ToString();
-                device.client_email = DBreader[4].ToString();
+                device.price = Int32.Parse(DBreader[3].ToString());
+                device.device_type_name = DBreader[4].ToString();
+                device.client_email = DBreader[5].ToString();
                 allDevices.Add(device);
             }
             DBconn.Close();
@@ -78,7 +80,7 @@ namespace API_Service.Data
         {            
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
-                "SELECT serial_number, brand, electric_usage, device_type_name, client_email " +
+                "SELECT serial_number, brand, electric_usage, price, device_type_name, client_email " +
                 "FROM devices " + 
                 "WHERE serial_number = @pCond", 
                 DBconn
@@ -93,8 +95,9 @@ namespace API_Service.Data
                 device.serial_number = Int32.Parse(DBreader[0].ToString());;
                 device.brand = DBreader[1].ToString();
                 device.electric_usage = Int32.Parse(DBreader[2].ToString());
-                device.device_type_name = DBreader[3].ToString();
-                device.client_email = DBreader[4].ToString();
+                device.price = Int32.Parse(DBreader[3].ToString());
+                device.device_type_name = DBreader[4].ToString();
+                device.client_email = DBreader[5].ToString();
                 DBconn.Close();
                 return device;
             }
@@ -108,15 +111,16 @@ namespace API_Service.Data
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
-                "INSERT INTO devices (serial_number, brand, electric_usage, device_type_name) " +
-                "VALUES (@p1, @p2, @p3, @p4)", 
+                "INSERT INTO devices (serial_number, brand, electric_usage, price, device_type_name) " +
+                "VALUES (@p1, @p2, @p3, @p4, @p5)", 
                 DBconn
                 );
 
             sqlCmd.Parameters.AddWithValue("p1", device.serial_number);
             sqlCmd.Parameters.AddWithValue("p2", device.brand);
             sqlCmd.Parameters.AddWithValue("p3", device.electric_usage);
-            sqlCmd.Parameters.AddWithValue("p4", device.device_type_name);
+            sqlCmd.Parameters.AddWithValue("p4", device.price);
+            sqlCmd.Parameters.AddWithValue("p5", device.device_type_name);
             sqlCmd.ExecuteNonQuery();
 
             DBconn.Close();
@@ -128,7 +132,7 @@ namespace API_Service.Data
 
             var sqlCmd = new NpgsqlCommand(
                 "UPDATE devices " +
-                "SET brand = @p1, electric_usage = @p2, device_type_name = @p3 " +
+                "SET brand = @p1, electric_usage = @p2, price = @p3, device_type_name = @p4 " +
                 "WHERE serial_number = @cond", 
                 DBconn
                 );
@@ -136,7 +140,8 @@ namespace API_Service.Data
             sqlCmd.Parameters.AddWithValue("cond", device.serial_number);
             sqlCmd.Parameters.AddWithValue("p1", device.brand);
             sqlCmd.Parameters.AddWithValue("p2", device.electric_usage);
-            sqlCmd.Parameters.AddWithValue("p3", device.device_type_name);
+            sqlCmd.Parameters.AddWithValue("p3", device.price);
+            sqlCmd.Parameters.AddWithValue("p4", device.device_type_name);
             sqlCmd.ExecuteNonQuery();
 
             DBconn.Close();
@@ -153,6 +158,23 @@ namespace API_Service.Data
                 );
 
             sqlCmd.Parameters.AddWithValue("cond", device.serial_number);
+            sqlCmd.ExecuteNonQuery();
+
+            DBconn.Close();
+        }
+
+        private void AddClientToDevice(int device_serial_number, string client_email){
+            DBconn.Open();
+
+            var sqlCmd = new NpgsqlCommand(
+                "UPDATE devices " +
+                "SET client_email = @p1 " +
+                "WHERE serial_number = @cond", 
+                DBconn
+                );
+
+            sqlCmd.Parameters.AddWithValue("cond", device_serial_number);
+            sqlCmd.Parameters.AddWithValue("p1", client_email);
             sqlCmd.ExecuteNonQuery();
 
             DBconn.Close();
@@ -446,22 +468,48 @@ namespace API_Service.Data
         {
             DBconn.Open();
 
+            AddClientToDevice(order.device_serial_number, order.client_email);
+
+            int orderConsecutive = GetAmountOrdersByClient(order.client_email) + 1;
+
             var sqlCmd = new NpgsqlCommand(
-                "INSERT INTO orders (price, purchase_date, purchase_time, client_email, device_serial_number) " +
-                "VALUES (@p1, @p2, @p3, @p4, @p5) RETURNING consecutive, bill_number", DBconn
+                "INSERT INTO orders (consecutive, price, purchase_date, purchase_time, client_email, device_serial_number) " +
+                "VALUES (@p1, @p2, @p3, @p4, @p5, @p6) RETURNING bill_number", DBconn
                 );
 
-            sqlCmd.Parameters.AddWithValue("p1", order.price);
-            sqlCmd.Parameters.AddWithValue("p2", order.purchase_date);
-            sqlCmd.Parameters.AddWithValue("p3", order.purchase_time);
-            sqlCmd.Parameters.AddWithValue("p4", order.client_email);
-            sqlCmd.Parameters.AddWithValue("p5", order.device_serial_number);
+            sqlCmd.Parameters.AddWithValue("p1", orderConsecutive);
+            sqlCmd.Parameters.AddWithValue("p2", order.price);
+            sqlCmd.Parameters.AddWithValue("p3", order.purchase_date);
+            sqlCmd.Parameters.AddWithValue("p4", order.purchase_time);
+            sqlCmd.Parameters.AddWithValue("p5", order.client_email);
+            sqlCmd.Parameters.AddWithValue("p6", order.device_serial_number);
             NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
 
+            order.consecutive = orderConsecutive;
             DBreader.Read();
-            order.consecutive = Int32.Parse(DBreader[0].ToString());
-            order.bill_number = Int32.Parse(DBreader[1].ToString());
+            order.bill_number = Int32.Parse(DBreader[0].ToString());
             DBconn.Close();
+        }
+
+        private int GetAmountOrdersByClient(string client_email){
+            DBconn.Open();
+            var sqlCmd = new NpgsqlCommand(
+                "SELECT COUNT(client_email) " +
+                "FROM orders " +
+                "WHERE client_email = @cond", 
+                DBconn
+                );
+            
+            sqlCmd.Parameters.AddWithValue("cond", client_email);
+            
+            NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
+            DBreader.Read();
+            int amountOrders = Int32.Parse(DBreader[0].ToString());  
+            DBreader.Close();
+            
+            DBconn.Close();          
+            
+            return amountOrders;
         }
 
         public LoginProfile CheckCredentials(LoginProfile loginProfile)

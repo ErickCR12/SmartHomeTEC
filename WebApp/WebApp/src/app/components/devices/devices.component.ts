@@ -28,11 +28,12 @@ export class DevicesComponent implements OnInit {
     this.dataService.getAllDeviceTypes().subscribe( data => this.deviceTypes = data);
   }
 
-  addDevice(serialNumberStr: string, brand: string, electricUsageStr: string, device_type_name: string): void{
+  addDevice(serialNumberStr: string, brand: string, electricUsageStr: string, priceStr: string, device_type_name: string): void{
     console.log(device_type_name);
     const serial_number = Number(serialNumberStr);
     const electric_usage = Number(electricUsageStr);
-    const new_device = {serial_number, brand, electric_usage, device_type_name} as Device;
+    const price = Number(priceStr);
+    const new_device = {serial_number, brand, electric_usage, price, device_type_name} as Device;
     this.dataService.addDevice(new_device).subscribe(data => {
       if (data){
         this.devices.push(new_device);
@@ -46,10 +47,11 @@ export class DevicesComponent implements OnInit {
     this.dataService.deleteDevice(serial_number).subscribe();
   }
 
-  updateDevice(serialNumberStr: string, brand: string, electricUsageStr: string, device_type_name: string): void{
+  updateDevice(serialNumberStr: string, brand: string, electricUsageStr: string, priceStr: string, device_type_name: string): void{
     const serial_number = Number(serialNumberStr);
     const electric_usage = Number(electricUsageStr);
-    const updated_device = {serial_number, brand, electric_usage, device_type_name} as Device;
+    const price = Number(priceStr);
+    const updated_device = {serial_number, brand, electric_usage, price, device_type_name} as Device;
     this.dataService.updateDevice(updated_device).subscribe();
   }
 

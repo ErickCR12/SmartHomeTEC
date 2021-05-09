@@ -71,7 +71,6 @@ export class DataService {
 
   updateDevice(device: Device): Observable<Device> {
     return this.http.put<Device>(this.devicesUrl + device.serial_number, device, this.httpOptions).pipe(
-      tap((newDevice: Device) => this.log(`updated device w/ serial_number=${newDevice.serial_number}`)),
       catchError(this.handleError<Device>('updateDevice'))
     );
   }
