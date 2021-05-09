@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DataService} from '../../data.service';
 import {Client} from '../../models/client';
 import {DirectionClient} from '../../models/direction-client';
+import {Region} from '../../models/region';
 
 @Component({
   selector: 'app-register-component',
@@ -11,10 +12,13 @@ import {DirectionClient} from '../../models/direction-client';
 export class RegisterComponent implements OnInit {
 
   registeredClient: Client;
+  continents: Region[];
+  countries: Region[];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.getAllContinents();
   }
 
   addClient(email: string, name: string, password: string, last_name1: string, last_name2: string, country: string,
@@ -28,6 +32,14 @@ export class RegisterComponent implements OnInit {
     if (!this.registeredClient) { return; }
     const client_email = this.registeredClient.email;
     this.dataService.addDirectionClient({direction, client_email} as DirectionClient).subscribe();
+  }
+
+  getAllContinents(): void{
+    this.dataService.getAllContinents().subscribe(data => this.continents = data);
+  }
+
+  getAllCountries(continent: string): void{
+    this.dataService.getCountriesByContinent(continent).subscribe(data => this.countries = data);
   }
 
 }

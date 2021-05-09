@@ -27,12 +27,14 @@ namespace API_Service.Data
         void AddOnlineStore(IEnumerable<Distributor> distributors);
         void DeleteOnlineStore();
 
+        IEnumerable<Region> GetAllContinents();
+        IEnumerable<Region> GetCountriesByContinent(string continent);
+
         void AddOrder(Order order);
 
         LoginProfile CheckCredentials(LoginProfile loginProfile);
 
         Admin GetAdmin();
-
 
         DevicesPerUser GetDevicesPerUser();
         List<Region> GetDevicesPerRegion();

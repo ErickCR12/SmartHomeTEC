@@ -22,6 +22,7 @@ export class DataService {
   private onlineStoreUrl = 'api/onlinestore/';
   private dashboardUrl = 'api/dashboard/';
   private loginUrl = 'api/login/';
+  private regionsUrl = 'api/regions/';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -122,6 +123,22 @@ export class DataService {
       tap((newOnlineStore: Distributor[]) => this.log(`created new online store`)),
       catchError(this.handleError<Distributor[]>('addClient'))
     );
+  }
+
+  getAllContinents(): Observable<Region[]> {
+    this.messageService.add('DataService: fetched continents');
+    return this.http.get<Region[]>(this.regionsUrl + 'continents')
+      .pipe(
+        catchError(this.handleError<Region[]>('getAllContinents', []))
+      );
+  }
+
+  getCountriesByContinent(continent: string): Observable<Region[]> {
+    this.messageService.add('DataService: fetched countriesByContinent');
+    return this.http.get<Region[]>(this.regionsUrl + 'countries/' + continent)
+      .pipe(
+        catchError(this.handleError<Region[]>('getAllContinents', []))
+      );
   }
 
   getActiveDevices(): Observable<number> {

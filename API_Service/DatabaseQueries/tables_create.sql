@@ -79,10 +79,21 @@ CREATE TABLE orders
     PRIMARY KEY (consecutive, bill_number)
 );
 
+CREATE TABLE regions
+(
+    country 	VARCHAR (255) NOT NULL,
+    continent 	VARCHAR (255) NOT NULL,
+    PRIMARY KEY (country, continent)
+);
+
 
 ALTER TABLE chambers
 ADD CONSTRAINT CHAMBERS_CLIENTS_FK FOREIGN KEY (client_email)
 REFERENCES clients (email);
+
+ALTER TABLE clients
+ADD CONSTRAINT CLIENTS_REGIONS_FK FOREIGN KEY (continent, country)
+REFERENCES regions (continent, country);
 
 ALTER TABLE device_distributor
 ADD CONSTRAINT DEVICE_DISTRIBUTOR_SDEVICES_FK FOREIGN KEY (devices_serial_number)
@@ -103,6 +114,10 @@ REFERENCES clients (email);
 ALTER TABLE directions_clients
 ADD CONSTRAINT DIRECTIONS_CLIENTS_CLIENTS_FK FOREIGN KEY (client_email)
 REFERENCES clients (email);
+
+ALTER TABLE distributors
+ADD CONSTRAINT DISTRIBUTORS_REGIONS_FK FOREIGN KEY (continent, country)
+REFERENCES regions (continent, country);
 
 ALTER TABLE orders
 ADD CONSTRAINT ORDERS_DEVICES_FK FOREIGN KEY (device_serial_number)

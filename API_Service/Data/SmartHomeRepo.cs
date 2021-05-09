@@ -464,6 +464,57 @@ namespace API_Service.Data
             DBconn.Close();
         }
 
+        public IEnumerable<Region> GetAllContinents(){
+            
+            List<Region> allContinents = new List<Region>();
+
+            DBconn.Open();
+            var sqlCmd = new NpgsqlCommand(
+                "SELECT DISTINCT continent " +
+                "FROM regions",
+                DBconn
+                );
+
+            NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
+            while (DBreader.Read())
+            {
+                Region region = new Region();
+                region.continent = DBreader[0].ToString();
+                allContinents.Add(region);
+            }
+            DBconn.Close();
+
+            return allContinents;
+        }
+
+        public IEnumerable<Region> GetCountriesByContinent(string continent){
+            
+            List<Region> allCountries = new List<Region>();
+
+            DBconn.Open();
+            var sqlCmd = new NpgsqlCommand(
+                "SELECT country " +
+                "FROM regions " +
+                "WHERE continent = @cond",
+                DBconn
+                );
+
+            sqlCmd.Parameters.AddWithValue("cond", continent);
+
+            NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
+            while (DBreader.Read())
+            {
+                Region region = new Region();
+                region.continent = continent;
+                region.country = DBreader[0].ToString();
+                allCountries.Add(region);
+            }
+            DBconn.Close();
+
+            return allCountries;
+        }
+
+
         public void AddOrder(Order order)
         {
             DBconn.Open();
