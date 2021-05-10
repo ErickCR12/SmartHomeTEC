@@ -26,10 +26,8 @@
     </div>
     <div class="b-example-divider"></div>
 
-    <div fxLayout="row-overflow-auto" fxLayoutGap="10px grid">
-
-      <!--Cambiar el NGFOR a lo que se pida de la listam esa lista es para yo probar las varas-->
-      <div fxFlex="25%" class="Items" *ngFor="let deviceType of deviceTypes; let i = index">
+    <div class="row g-5 py-5">
+      <div class="col-md-4 d-flex align-items-start" *ngFor="let deviceType of deviceTypes; let i = index">
         <main class="form-DeviceTypeCreated">
           <form>
             <h1 class="h3 mb-3 fw-normal" #name>{{deviceType.name}}</h1>
@@ -48,14 +46,8 @@
                     (click)="deleteDeviceType(name.textContent, i)">Delete</button>
           </form>
         </main>
-
       </div>
-
-
-
     </div>
   </div>
-
-
 </body>
 

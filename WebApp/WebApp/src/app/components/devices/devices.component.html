@@ -33,8 +33,8 @@
   </div>
   <div class="b-example-divider"></div>
 
-  <div fxLayout="row-overflow-auto" fxLayoutGap="10px grid">
-    <div fxFlex="25%" class="Items" *ngFor="let device of devices; let i = index">
+  <div class="row g-5 py-5">
+    <div class="col-md-4 d-flex align-items-start" *ngFor="let device of devices; let i = index">
       <main class="form-DeviceTypeCreated">
         <form>
           <h1 class="h3 mb-3 fw-normal" #serialNumber>{{device.serial_number}}</h1>
