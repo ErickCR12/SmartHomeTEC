@@ -15,6 +15,18 @@
         </li>
       </ul>
 
+      <ul class="navbar-nav me-auto mb-1 mb-sm-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickAdmin()">Admin</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav me-auto mb-1 mb-sm-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickClient()">Client</a>
+        </li>
+      </ul>
+
       <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf="(this.usersService.isAdmin && this.usersService.isLogged);
       else elseClient">
 

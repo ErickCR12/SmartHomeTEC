@@ -49,6 +49,27 @@ export class AppComponent {
   clickBack() {
     this.usersService.isLogged = false;
     this.isReg = false;
+    this.isEditProf = false;
+    this.isShop = false;
+    this.isReport = false;
+
+    this.isDeviceType = false;
+    this.isDevices  = false;
+    this.isActiveDevices  = false;
+    this.isUsageDevices = false;
+    this.isUploadDoc = false;
+  }
+
+  clickAdmin() {
+    this.usersService.isLogged = true;
+    this.usersService.isAdmin = true;
+    this.isReg = false;
+  }
+
+  clickClient() {
+    this.usersService.isLogged = true;
+    this.usersService.isAdmin = false;
+    this.isReg = false;
   }
 
   clickReg() {
