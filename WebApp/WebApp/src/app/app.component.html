@@ -5,17 +5,17 @@
 
       <ul class="navbar-nav me-auto mb-1 mb-sm-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickLog()">{{notLogged? "Log Out":"Log In"}}</a>
+          <a class="nav-link active" aria-current="page" (click)="clickLog()">{{isLogged? "Log Out":"Log In"}}</a>
         </li>
       </ul>
 
-      <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf="notLogged===false">
+      <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf="isLogged===false">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" (click)="clickReg()">{{notReg? "Hide Register":"Register"}}</a>
         </li>
       </ul>
 
-      <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf="(isAdmin && notLogged); else elseClient">
+      <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf="(isAdmin && isLogged); else elseClient">
 
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" (click)="clickDeviceManager()">{{notDeviceType? "Hide DeviceType":"DeviceType"}}</a>
@@ -35,7 +35,7 @@
       </ul>
 
       <ng-template #elseClient>
-        <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf=" notLogged;">
+        <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf=" isLogged;">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" (click)="clickProfEdit()">{{notEditProf? "Hide Edit Profile":"EditProfile"}}</a>
           </li>
@@ -53,7 +53,7 @@
 </nav>
 
 
-<loginScreen *ngIf="notLogged===false && notReg===false; else elseBlock"></loginScreen>
+<loginScreen (isAdmin)="changeAdmin($event)" (isLogged)="changeLogged($event)" *ngIf="isLogged===false || notReg===false; else elseBlock"></loginScreen>
 <ng-template #elseBlock></ng-template>
 
 <app-register-component *ngIf="notReg; else elseReg"></app-register-component>
@@ -86,5 +86,3 @@
 
 <app-usage-table *ngIf="UsageDevices; else elseUsageDevices"></app-usage-table>
 <ng-template #elseUsageDevices></ng-template>
-
-<app-messages></app-messages>

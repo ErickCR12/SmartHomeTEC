@@ -22,13 +22,8 @@ export class UsersService {
   }
 
   admin: Admin;
-  public Logged: boolean;
-  public Register: boolean;
   private _client: Client;
   private _userType: string;
-  public isAdmin: boolean;
   constructor() { }
-
-  askReg() { this.Register = true; console.log("hola"); }
 
 }

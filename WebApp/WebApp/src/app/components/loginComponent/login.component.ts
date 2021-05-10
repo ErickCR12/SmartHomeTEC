@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {DataService} from '../../data.service';
 import {Login} from '../../models/login';
 import {UsersService} from '../../users.service';
@@ -14,28 +14,37 @@ import {Admin} from '../../models/admin';
 // tslint:disable-next-line:component-class-suffix
 export class LoginScreen {
 
+  @Output() isAdmin = new EventEmitter<boolean>();
+  @Output() isLogged = new EventEmitter<boolean>();
+
   constructor(private dataService: DataService, private usersService: UsersService) { }
+
+  setAdmin(value: boolean){
+    this.isAdmin.emit(value);
+  }
+
+  setLogged(value: boolean){
+    this.isLogged.emit(value);
+  }
 
   checkCredentials(username: string, password: string): void{
     this.dataService.getLoginCredentials({username, password} as Login).subscribe(
       data =>
       {
-        /**if (data.userType === 'Client'){
-          
-        }
-        else if (data.userType === 'Admin'){
-          
-        }*/
         switch (data.userType) {
           case 'Client':
             this.getClientByEmail(username);
-            this.usersService.isAdmin = false;
+            this.setAdmin(false);
+            this.setLogged(true);
+            break;
           case 'Admin':
             this.usersService.admin = { username, password } as Admin;
-            this.usersService.isAdmin = true;
+            this.setAdmin(true);
+            this.setLogged(true);
+            break;
           case 'Invalid':
-            this.usersService.Logged = false;
-
+            this.setLogged(false);
+            break;
         }
       });
   }

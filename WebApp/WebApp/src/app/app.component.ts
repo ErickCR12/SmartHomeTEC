@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {UsersService} from './users.service';
 
 @Component({
@@ -10,17 +10,11 @@ export class AppComponent {
   title = 'WebApp';
 
   //________/No Users\______
-  isAdmin: boolean;
-  notLogged: boolean = false;
+  isAdmin: boolean = false;
+  isLogged: boolean = false;
   notReg: boolean = false;
 
-  constructor(private usersService: UsersService) {
-
-    this.isAdmin = usersService.isAdmin;
-    this.notLogged = usersService.Logged;
-    this.notReg = usersService.Register;
-
-  }
+  constructor() { }
 
   //________/Client\_______
   notEditProf: boolean = false;
@@ -34,44 +28,51 @@ export class AppComponent {
   UsageDevices: boolean = false;
   UploadDoc: boolean = false;
 
-  
+
+
+  changeAdmin(val: boolean){
+    this.isAdmin = val;
+  }
+
+  changeLogged(val: boolean){
+    this.isLogged = val;
+  }
 
   //____________________/Client Tabs\_____________________
   clickProfEdit() {
     this.notEditProf = !this.notEditProf;
     this.notShop = false;
-    this.notReport = false
+    this.notReport = false;
   }
 
   clickShop() {
     this.notShop = !this.notShop;
     this.notEditProf = false;
-    this.notReport = false
+    this.notReport = false;
   }
 
   clickReports() {
     this.notReport = !this.notReport;
     this.notEditProf = false;
-    this.notShop = false
+    this.notShop = false;
   }
 
   //___________________/No User Tabs\______________________
   clickLog() {
-    this.notLogged = false;
+    this.isLogged = false;
     this.clickSeeDevs();
     this.clickShop();
     this.notShop = false;
     this.ActiveDevices = false;
-
-
   }
 
   clickADMN() {
-    this.isAdmin = !this.isAdmin
+    this.isAdmin = !this.isAdmin;
   }
 
   clickReg() {
-    this.notReg = !this.notReg
+    this.notReg = !this.notReg;
+    this.isLogged = !this.isLogged;
   }
 
   //____________________/Admin Tabs\______________________
