@@ -22,6 +22,7 @@ export class UsersService {
   }
 
   admin: Admin;
+  public Logged: boolean;
   private _client: Client;
   private _userType: string;
   public isAdmin: boolean;

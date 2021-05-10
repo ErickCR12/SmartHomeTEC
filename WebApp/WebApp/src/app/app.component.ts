@@ -10,9 +10,16 @@ export class AppComponent {
   title = 'WebApp';
 
   //________/No Users\______
-  isAdmin: boolean = false;
+  isAdmin: boolean;
   notLogged: boolean = false;
   notReg: boolean = false;
+
+  constructor(private usersService: UsersService) {
+
+    this.isAdmin = usersService.isAdmin;
+    this.notLogged = usersService.Logged;
+
+  }
 
   //________/Client\_______
   notEditProf: boolean = false;
@@ -26,8 +33,7 @@ export class AppComponent {
   UsageDevices: boolean = false;
   UploadDoc: boolean = false;
 
-  constructor(private usersService: UsersService) {
-  }
+  
 
   //____________________/Client Tabs\_____________________
   clickProfEdit() {
@@ -50,7 +56,13 @@ export class AppComponent {
 
   //___________________/No User Tabs\______________________
   clickLog() {
-    this.notLogged = !this.notLogged
+    this.notLogged = false;
+    this.clickSeeDevs();
+    this.clickShop();
+    this.notShop = false;
+    this.ActiveDevices = false;
+
+
   }
 
   clickADMN() {

@@ -20,13 +20,22 @@ export class LoginScreen {
     this.dataService.getLoginCredentials({username, password} as Login).subscribe(
       data =>
       {
-        if (data.userType === 'Client'){
-          this.getClientByEmail(username);
-          this.usersService.isAdmin = false;
+        /**if (data.userType === 'Client'){
+          
         }
         else if (data.userType === 'Admin'){
-          this.usersService.admin = {username, password} as Admin;
-          this.usersService.isAdmin = true;
+          
+        }*/
+        switch (data.userType) {
+          case 'Client':
+            this.getClientByEmail(username);
+            this.usersService.isAdmin = false;
+          case 'Admin':
+            this.usersService.admin = { username, password } as Admin;
+            this.usersService.isAdmin = true;
+          case 'Invalid':
+            this.usersService.Logged = false;
+
         }
       });
   }
