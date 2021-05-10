@@ -7,6 +7,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.app.DataBase.Registro
+import com.example.app.DataBase.RegistroDBHelper
 import com.example.app.R
 import kotlinx.android.synthetic.main.dispositivos.*
 
@@ -57,7 +59,7 @@ class Gestion_Dispositivos: AppCompatActivity() {
             disp_nombre.setText("")
             disp_tipo.setText("")
             disp_marca.setText("")
-            disp_serie.setText("")
+            disp_serie.setText("0")
             disp_consumo.setText("")
 
             //Esta sección de códgio sireve para mostrar la información de fecha y hora
@@ -71,6 +73,21 @@ class Gestion_Dispositivos: AppCompatActivity() {
             /** AQUÍ SE TENDRÍA QUE RECIBIR EL MES DE GARANTÍA QUE VIENE DEL API PARA HACER EL CÁLCULO*/
             val garantia = mes + 1
 
+            //BASES DE DATOS
+
+            val baseDatos = RegistroDBHelper(this)
+            deleteDatabase(RegistroDBHelper.DATABASE_NAME)
+            baseDatos.crearRegistro(
+                    baseDatos.readableDatabase, Registro(
+                        0,
+                        "Joshua",
+                        disp_nombre_ing,
+                        //disp_tipo_ing,
+                        disp_marca_ing,
+                        disp_serie_ing.toInt()
+                        //disp_nombre_ing
+                    )
+            )
         }
 
         btnsiguiente.setOnClickListener {

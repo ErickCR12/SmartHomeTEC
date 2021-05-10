@@ -15,6 +15,7 @@ class Menu: AppCompatActivity() {
 
         //Se recibe la información de los aposentos registrados de al ventana anterior
         val intent = getIntent()
+        val usuario = intent.getStringExtra("usuario")
         var aposentos_informacion = intent.getStringArrayListExtra("aposentos")
         var dispositivos_informacion = intent.getStringArrayListExtra("dispositivos")
         var vinculaciones = intent.getStringArrayListExtra("vinculados")
@@ -26,6 +27,7 @@ class Menu: AppCompatActivity() {
 
         btnmenu1.setOnClickListener {
             val intent2 = Intent(this, Gestion_Dispositivos::class.java)
+            intent2.putExtra("usuario", usuario)
             intent2.putExtra("aposentos", aposentos_informacion)
             startActivity(intent2)
         }
@@ -41,7 +43,5 @@ class Menu: AppCompatActivity() {
             intent4.putExtra("vinculados", vinculaciones)
             startActivity(intent4)
         }
-
     }
-
 }
