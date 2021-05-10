@@ -388,10 +388,11 @@ namespace API_Service.Data
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
-                "SELECT legal_card, serial_number, brand, electric_usage, device_type_name " +
+                "SELECT legal_card, serial_number, brand, electric_usage, device_type_name, price " +
                 "FROM public.device_distributor, distributors, devices " + 
                 "WHERE 	legal_card = distributors_legal_card AND " +
                 "serial_number = devices_serial_number AND " +
+                "client_email IS NULL AND " +
                 "continent = @p1 AND " + 
                 "country = @p2", 
                 DBconn
@@ -419,6 +420,7 @@ namespace API_Service.Data
                 device.brand = DBreader[2].ToString();
                 device.electric_usage = Int32.Parse(DBreader[3].ToString());
                 device.device_type_name = DBreader[4].ToString();
+                device.price = Int32.Parse(DBreader[5].ToString());
 
                 distributor.devices_.Add(device);                    
             }
