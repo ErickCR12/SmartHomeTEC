@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { Device } from '../../models/device';
 import { Distributor } from '../../models/distributor';
+import {DataService} from '../../data.service';
 
 @Component({
   selector: 'app-uploadpage',
@@ -12,8 +13,10 @@ export class UploadpageComponent implements OnInit {
 
   data: [][][];
   devicesOffered: Device[];
-  constructor() { }
   distributorsRegs: Distributor[];
+
+  constructor(private dataService: DataService) { }
+
 
   ngOnInit(): void {
   }
@@ -43,12 +46,12 @@ export class UploadpageComponent implements OnInit {
 
         this.devicesOffered = [];
 
-        //se crea un un device por cada numero de serie:      
-        for (let j in this.data[i].slice(1)) {//por cada intem despues del primero     
+        //se crea un un device por cada numero de serie:
+        for (let j in this.data[i].slice(1)) {//por cada intem despues del primero
           var serial_number = this.data[i].slice(1)[j].toString();//se convierte a string el item
           const new_device = { serial_number: Number(serial_number) } as Device;
           //Se agrega el device a la lista de Devices del distro
-          var cache = this.devicesOffered.push(new_device);          
+          var cache = this.devicesOffered.push(new_device);
         };
         const new_Distro = { legal_card: Number(legal_id), devices: this.devicesOffered } as Distributor;
 
@@ -58,16 +61,13 @@ export class UploadpageComponent implements OnInit {
 
       console.log(this.distributorsRegs);
 
-    };    
+    };
     reader.readAsBinaryString(target.files[0]);
   }
 
 
   uploadDocs() {
-
-    console.log(this.distributorsRegs);
-
-
+    this.dataService.addOnlineStore(this.distributorsRegs).subscribe();
   }
 
 

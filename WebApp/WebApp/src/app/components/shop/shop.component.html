@@ -77,18 +77,18 @@
 
   <div class="container py-5" id="hanging-icons">
     <h2 class="pb-2 border-bottom">Items Disponibles</h2>
-    <div class="row g-5 py-5">
-      <div class="col-md-4 d-flex align-items-start">
+    <div class="row g-5 py-5" *ngFor="let distributor of distributors">
+      <div class="col-md-4 d-flex align-items-start" *ngFor="let device of distributor.devices">
         <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
           <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2" /></svg>
         </div>
-        <div>
-          <h2>Featured item 1</h2>
-          <p>Imagine un rasta, bomboclat!</p>
-          <a href="#" class="btn btn-primary">
-            Buy
-          </a>
-        </div>
+            <div>
+              <h2>{{device.serial_number}}</h2>
+              <p>Imagine un rasta, bomboclat!</p>
+              <a href="#" class="btn btn-primary">
+                Buy
+              </a>
+            </div>
       </div>
 
 

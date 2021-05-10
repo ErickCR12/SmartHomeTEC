@@ -22,9 +22,11 @@ export class LoginScreen {
       {
         if (data.userType === 'Client'){
           this.getClientByEmail(username);
+          this.usersService.isAdmin = false;
         }
         else if (data.userType === 'Admin'){
           this.usersService.admin = {username, password} as Admin;
+          this.usersService.isAdmin = true;
         }
       });
   }

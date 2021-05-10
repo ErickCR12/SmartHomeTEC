@@ -24,5 +24,6 @@ export class UsersService {
   admin: Admin;
   private _client: Client;
   private _userType: string;
+  public isAdmin: boolean;
   constructor() { }
 }

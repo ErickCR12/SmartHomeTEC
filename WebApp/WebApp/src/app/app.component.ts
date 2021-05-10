@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {UsersService} from './users.service';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,8 @@ export class AppComponent {
   UsageDevices: boolean = false;
   UploadDoc: boolean = false;
 
+  constructor(private usersService: UsersService) {
+  }
 
   //____________________/Client Tabs\_____________________
   clickProfEdit() {
