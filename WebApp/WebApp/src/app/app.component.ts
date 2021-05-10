@@ -9,112 +9,92 @@ import {UsersService} from './users.service';
 export class AppComponent {
   title = 'WebApp';
 
-  //________/No Users\______
-  isAdmin: boolean = false;
-  isLogged: boolean = false;
-  notReg: boolean = false;
+  // ________/No Users\______
+  isReg = false;
 
-  constructor() { }
+  constructor(public usersService: UsersService) { }
 
-  //________/Client\_______
-  notEditProf: boolean = false;
-  notShop: boolean = false;
-  notReport: boolean = false;
+  // ________/Client\_______
+  isEditProf = false;
+  isShop = false;
+  isReport = false;
 
-  //________/Admin \_______
-  notDeviceType: boolean = false;
-  notDevices: boolean = false;
-  ActiveDevices: boolean = false;
-  UsageDevices: boolean = false;
-  UploadDoc: boolean = false;
+  // ________/Admin \_______
+  isDeviceType = false;
+  isDevices  = false;
+  isActiveDevices  = false;
+  isUsageDevices = false;
+  isUploadDoc = false;
 
-
-
-  changeAdmin(val: boolean){
-    this.isAdmin = val;
-  }
-
-  changeLogged(val: boolean){
-    this.isLogged = val;
-  }
-
-  //____________________/Client Tabs\_____________________
+  // ____________________/Client Tabs\_____________________
   clickProfEdit() {
-    this.notEditProf = !this.notEditProf;
-    this.notShop = false;
-    this.notReport = false;
+    this.isEditProf = !this.isEditProf;
+    this.isShop = false;
+    this.isReport = false;
   }
 
   clickShop() {
-    this.notShop = !this.notShop;
-    this.notEditProf = false;
-    this.notReport = false;
+    this.isShop = !this.isShop;
+    this.isEditProf = false;
+    this.isReport = false;
   }
 
   clickReports() {
-    this.notReport = !this.notReport;
-    this.notEditProf = false;
-    this.notShop = false;
+    this.isReport = !this.isReport;
+    this.isEditProf = false;
+    this.isShop = false;
   }
 
-  //___________________/No User Tabs\______________________
-  clickLog() {
-    this.isLogged = false;
-    this.clickSeeDevs();
-    this.clickShop();
-    this.notShop = false;
-    this.ActiveDevices = false;
-  }
-
-  clickADMN() {
-    this.isAdmin = !this.isAdmin;
+  // ___________________/No User Tabs\______________________
+  clickBack() {
+    this.usersService.isLogged = false;
+    this.isReg = false;
   }
 
   clickReg() {
-    this.notReg = !this.notReg;
-    this.isLogged = !this.isLogged;
+    this.isReg = !this.isReg;
   }
 
-  //____________________/Admin Tabs\______________________
+  // ____________________/Admin Tabs\______________________
   clickSeeDevs() {
-    this.ActiveDevices = !this.ActiveDevices
-    this.UsageDevices = false;
-    this.notDevices = false;
-    this.notDeviceType = false;
-    this.UploadDoc = false
+    this.isActiveDevices = !this.isActiveDevices;
+    this.isUsageDevices = false;
+    this.isDevices = false;
+    this.isDeviceType = false;
+    this.isUploadDoc = false;
   }
 
   clickUsageDevices() {
-    this.UsageDevices = !this.UsageDevices;
-    this.ActiveDevices = false;
-    this.notDevices = false;
-    this.notDeviceType = false;
-    this.UploadDoc = false
+    this.isUsageDevices = !this.isUsageDevices;
+    this.isActiveDevices = false;
+    this.isDevices = false;
+    this.isDeviceType = false;
+    this.isUploadDoc = false;
   }
 
   clickUploadDoc() {
-    this.UploadDoc = !this.UploadDoc
-    this.UsageDevices = false;
-    this.ActiveDevices = false;
-    this.notDevices = false;
-    this.notDeviceType = false
+    this.isUploadDoc = !this.isUploadDoc;
+    this.isUsageDevices = false;
+    this.isActiveDevices = false;
+    this.isDevices = false;
+    this.isDeviceType = false;
   }
 
-  //type devices
+  // type devices
   clickDeviceManager() {
-    this.notDeviceType = !this.notDeviceType;
-    this.UsageDevices = false;
-    this.ActiveDevices = false;
-    this.notDevices = false;
-    this.UploadDoc = false
+    this.isDeviceType = !this.isDeviceType;
+    this.isUsageDevices = false;
+    this.isActiveDevices = false;
+    this.isDevices = false;
+    this.isUploadDoc = false;
   }
 
   clickDevices() {
-    this.notDevices = !this.notDevices;
-    this.UsageDevices = false;
-    this.ActiveDevices = false;
-    this.notDeviceType = false;
-    this.UploadDoc = false
+    this.isDevices = !this.isDevices;
+    this.isUsageDevices = false;
+    this.isActiveDevices = false;
+    this.isDeviceType = false;
+    this.isUploadDoc = false;
   }
 
 }
