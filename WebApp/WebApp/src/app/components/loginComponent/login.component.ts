@@ -44,5 +44,4 @@ export class LoginScreen {
     this.dataService.getClientByEmail(email).subscribe(data => this.usersService.client = data);
   }
 
-
 }

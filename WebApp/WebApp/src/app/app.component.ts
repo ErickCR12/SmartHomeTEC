@@ -18,6 +18,7 @@ export class AppComponent {
 
     this.isAdmin = usersService.isAdmin;
     this.notLogged = usersService.Logged;
+    this.notReg = usersService.Register;
 
   }
 

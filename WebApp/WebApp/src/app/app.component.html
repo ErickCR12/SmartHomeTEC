@@ -53,7 +53,7 @@
 </nav>
 
 
-<loginScreen *ngIf="notLogged===false; else elseBlock"></loginScreen>
+<loginScreen *ngIf="notLogged===false && notReg===false; else elseBlock"></loginScreen>
 <ng-template #elseBlock></ng-template>
 
 <app-register-component *ngIf="notReg; else elseReg"></app-register-component>
