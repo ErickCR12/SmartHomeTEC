@@ -14,6 +14,9 @@ import { UploadpageComponent } from './components/uploadpage/uploadpage.componen
 import { UsageTableComponent } from './components/usage-table/usage-table.component';
 
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
+import {MessagesComponent} from './messages/messages.component';
+import {UsersService} from './users.service';
 
 @NgModule({
   declarations: [
@@ -28,13 +31,15 @@ import {HttpClientModule} from '@angular/common/http';
     DeviceTableComponent,
     UploadpageComponent,
     UsageTableComponent,
-    
+    MessagesComponent,
+
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule
-  ],
-  providers: [],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        FormsModule
+    ],
+  providers: [UsersService],
   bootstrap: [AppComponent, LoginScreen]
 })
 export class AppModule { }

@@ -1,44 +1,53 @@
-<body class="text-center">
+<body class="text-center" xmlns="http://www.w3.org/1999/html">
+  <div class="container">
 
-  <main class="form-DeviceType">
-    <form>
-      <h1 class="h3 mb-3 fw-normal">Create new</h1>
+    <div class="row">
+      <main class="form-DeviceType">
+        <form>
+          <h1 class="h3 mb-3 fw-normal">Create new</h1>
 
-      <label for="inputName" class="visually-hidden">Name</label>
-      <input id="inputName" class="form-control" placeholder="Name">
+          <label for="inputName" class="visually-hidden">Name</label>
+          <input id="inputName" class="form-control" placeholder="Name" #name>
 
-      <label for="Description" class="visually-hidden">Description</label>
-      <input id="Description" class="form-control" placeholder="Description">
+          <label for="Description" class="visually-hidden">Description</label>
+          <input id="Description" class="form-control" placeholder="Description" #description>
 
-      <label for="Garantia" class="visually-hidden">Garantia</label>
-      <input id="Garantia" class="form-control" placeholder="{{deviceTypes[0].name}}">
+          <label for="Garantia" class="visually-hidden" >Garantia</label>
+          <input id="Garantia" class="form-control" placeholder="Garantia" #warranty_months>
 
-      <!--Upload data to loging with this button -->
-      <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!">Create</button>
-      <a>-or-</a>
-      <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!">Clear</button>
-    </form>
-  </main>
+          <!--Upload data to loging with this button -->
+          <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!"
+                  (click)="addDeviceType(name.value, description.value, warranty_months.value)">Create
+          </button>
+          <a>-or-</a>
+          <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!">Clear</button>
+        </form>
+      </main>
+    </div>
+    <div class="b-example-divider"></div>
 
-  <!-- FOR con uno extra-->
-  <main class="form-DeviceType">
-    <form>
-      <h1 class="h3 mb-3 fw-normal">Created One</h1>
+    <div class="row g-5 py-5">
+      <div class="col-md-4 d-flex align-items-start" *ngFor="let deviceType of deviceTypes; let i = index">
+        <main class="form-DeviceTypeCreated">
+          <form>
+            <h1 class="h3 mb-3 fw-normal" #name>{{deviceType.name}}</h1>
 
-      <label for="inputName" class="visually-hidden">Name</label>
-      <input id="inputName" class="form-control" placeholder="Name">
+            <label for="Description">Description</label>
+            <input id="Description" class="form-control" value="{{deviceType.description}}" #description>
 
-      <label for="Description" class="visually-hidden">Description</label>
-      <input id="Description" class="form-control" placeholder="Description">
+            <label for="Garantia">Garantia</label>
+            <input id="Garantia" class="form-control" value="{{deviceType.warranty_months}}" #warranty_months>
 
-      <label for="Garantia" class="visually-hidden">Garantia</label>
-      <input id="Garantia" class="form-control" placeholder="Garantia">
-
-      <!--Upload data to loging with this button -->
-      <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!">Edit</button>
-      <a>-or-</a>
-      <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!">Delete</button>
-    </form>
-  </main>
-
+            <!--Upload data to loging with this button -->
+            <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!"
+                    (click)="updateDeviceType(name.textContent, description.value, warranty_months.value)">Edit</button>
+            <a>-or-</a>
+            <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!"
+                    (click)="deleteDeviceType(name.textContent, i)">Delete</button>
+          </form>
+        </main>
+      </div>
+    </div>
+  </div>
 </body>
+

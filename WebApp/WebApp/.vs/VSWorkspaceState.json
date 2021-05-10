@@ -5,11 +5,11 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\components",
-    "\\src\\app\\components\\loginComponent",
+    "\\src\\app\\components\\device-maganer",
     "\\src\\app\\components\\shop",
     "\\src\\assets",
     "\\src\\assets\\img"
   ],
-  "SelectedNode": "\\src\\app\\components\\shop\\shop.component.html",
+  "SelectedNode": "\\src\\app\\components\\device-maganer\\device-maganer.component.css",
   "PreviewInSolutionExplorer": false
 }

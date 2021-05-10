@@ -28,10 +28,8 @@ namespace API_Service.Controllers
         [HttpGet("devicesPerUser")]
         public ActionResult <NumericalDto> GetDevicePerUser()
         {
-            var devicesPerUserValue = _repository.GetDevicesPerUser();
-            NumericalDto devicePerUserDto = new NumericalDto();
-            devicePerUserDto.numerical_value = devicesPerUserValue;
-            return Ok(devicePerUserDto);
+            var devicesPerUser = _repository.GetDevicesPerUser();
+            return Ok(_mapper.Map<DevicesPerUserDto>(devicesPerUser));
         }
 
         //GET api/dashboard/devicePerUser

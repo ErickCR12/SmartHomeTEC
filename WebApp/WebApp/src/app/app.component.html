@@ -1,72 +1,69 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <div class="container-fluid">
     <div class="navbar">
-      <a class="navbar-brand" href="#">ResTEC</a>
-      <ul class="navbar-nav me-auto mb-1 mb-sm-0">
+      <a class="navbar-brand" href="#">SmartHome</a>
+
+      <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf="this.usersService.isLogged || isReg">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickLog()">{{notLogged? "Hide Log In":"Log In"}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickReg()">{{notReg? "Hide Register":"Register"}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickProfEdit()">{{notEditProf? "Hide Edit Profile":"EditProfile"}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickShop()">{{notShop? "Hide Shop":"Shop"}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickReports()">{{notReport? "Hide Report":"Report"}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickDeviceManager()">{{notDeviceType? "Hide DeviceType":"DeviceType"}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickDevices()">{{notDevices? "Hide Devices":"Devices"}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickSeeDevs()">{{ActiveDevices? "Hide Active Devices":"Active Devices"}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickUsageDevices()">{{UsageDevices? "Hide Total Devices":"Total Devices"}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickUploadDoc()">{{UploadDoc? "Hide Excel Tab":"Excel Table"}}</a>
+          <a class="nav-link active" aria-current="page" (click)="clickBack()">Go Back</a>
         </li>
       </ul>
+
+      <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf="!isReg && !this.usersService.isLogged">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickReg()">Register</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf="(this.usersService.isAdmin && this.usersService.isLogged);
+      else elseClient">
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickDeviceManager()">{{isDeviceType? "Hide DeviceType":"DeviceType"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickDevices()">{{isDevices? "Hide Devices":"Devices"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickSeeDevs()">{{isActiveDevices? "Hide Devices Per User":"Active Devices Per User"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickUsageDevices()">{{isUsageDevices? "Hide Total Devices":"Total Devices"}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickUploadDoc()">{{isUploadDoc? "Hide Excel Tab":"Excel Table"}}</a>
+        </li>
+      </ul>
+
+      <ng-template #elseClient>
+        <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf="this.usersService.isLogged">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" (click)="clickProfEdit()">{{isEditProf? "Hide Edit Profile":"EditProfile"}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" (click)="clickShop()">{{isShop? "Hide Shop":"Shop"}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" (click)="clickReports()">{{isReport? "Hide Report":"Report"}}</a>
+          </li>
+        </ul>
+      </ng-template>
+
     </div>
   </div>
 </nav>
 
+<app-login *ngIf="!this.usersService.isLogged && !isReg"></app-login>
+<app-register-component *ngIf="isReg"></app-register-component>
 
+<!-- Client Tabs-->
+<app-edit-profile *ngIf="isEditProf"></app-edit-profile>
+<app-shop *ngIf="isShop"></app-shop>
+<app-reports *ngIf="isReport"></app-reports>
 
-
-<loginScreen *ngIf="notLogged; else elseBlock"></loginScreen>
-<ng-template #elseBlock></ng-template>
-
-<app-register-component *ngIf="notReg; else elseReg"></app-register-component>
-<ng-template #elseReg></ng-template>
-
-<app-edit-profile *ngIf="notEditProf; else elseEditProf"></app-edit-profile>
-<ng-template #elseEditProf></ng-template>
-
-<app-shop *ngIf="notShop; else elseShop"></app-shop>
-<ng-template #elseShop></ng-template>
-
-<app-reports *ngIf="notReport; else elseReport"></app-reports>
-<ng-template #elseReport></ng-template>
-
-<app-device-maganer *ngIf="notDeviceType; else elseNotType"></app-device-maganer>
-<ng-template #elseNotType></ng-template>
-
-<app-devices *ngIf="notDevices; else elseNotDevice"></app-devices>
-<ng-template #elseNotDevice></ng-template>
-
-<app-device-table *ngIf="ActiveDevices; else elseActiveDevices"></app-device-table>
-<ng-template #elseActiveDevices></ng-template>
-
-<app-uploadpage *ngIf="UploadDoc; else elseUploadDoc"></app-uploadpage>
-<ng-template #elseUploadDoc></ng-template>
-
-<app-usage-table *ngIf="UsageDevices; else elseUsageDevices"></app-usage-table>
-<ng-template #elseUsageDevices></ng-template>
+<!-- Admin Tabs-->
+<app-device-maganer *ngIf="isDeviceType"></app-device-maganer>
+<app-devices *ngIf="isDevices"></app-devices>
+<app-device-table *ngIf="isActiveDevices"></app-device-table>
+<app-uploadpage *ngIf="isUploadDoc"></app-uploadpage>
+<app-usage-table *ngIf="isUsageDevices"></app-usage-table>

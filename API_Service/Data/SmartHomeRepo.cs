@@ -23,8 +23,9 @@ namespace API_Service.Data
 
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
-                "SELECT serial_number, brand, electric_usage, device_type_name, client_email " +
-                "FROM devices",
+                "SELECT serial_number, brand, electric_usage, price, device_type_name " +
+                "FROM devices " +
+                "WHERE client_email IS NULL",
                 DBconn
                 );
 
@@ -35,8 +36,8 @@ namespace API_Service.Data
                 device.serial_number = Int32.Parse(DBreader[0].ToString()); ;
                 device.brand = DBreader[1].ToString();
                 device.electric_usage = Int32.Parse(DBreader[2].ToString());
-                device.device_type_name = DBreader[3].ToString();
-                device.client_email = DBreader[4].ToString();
+                device.price = Int32.Parse(DBreader[3].ToString());
+                device.device_type_name = DBreader[4].ToString();
                 allDevices.Add(device);
             }
             DBconn.Close();
@@ -50,7 +51,7 @@ namespace API_Service.Data
 
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
-                "SELECT serial_number, brand, electric_usage, device_type_name, client_email " +
+                "SELECT serial_number, brand, electric_usage, price, device_type_name, client_email " +
                 "FROM devices " +
                 "WHERE client_email = @pCond",
                 DBconn
@@ -65,8 +66,9 @@ namespace API_Service.Data
                 device.serial_number = Int32.Parse(DBreader[0].ToString()); ;
                 device.brand = DBreader[1].ToString();
                 device.electric_usage = Int32.Parse(DBreader[2].ToString());
-                device.device_type_name = DBreader[3].ToString();
-                device.client_email = DBreader[4].ToString();
+                device.price = Int32.Parse(DBreader[3].ToString());
+                device.device_type_name = DBreader[4].ToString();
+                device.client_email = DBreader[5].ToString();
                 allDevices.Add(device);
             }
             DBconn.Close();
@@ -78,7 +80,7 @@ namespace API_Service.Data
         {            
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
-                "SELECT serial_number, brand, electric_usage, device_type_name, client_email " +
+                "SELECT serial_number, brand, electric_usage, price, device_type_name, client_email " +
                 "FROM devices " + 
                 "WHERE serial_number = @pCond", 
                 DBconn
@@ -93,8 +95,9 @@ namespace API_Service.Data
                 device.serial_number = Int32.Parse(DBreader[0].ToString());;
                 device.brand = DBreader[1].ToString();
                 device.electric_usage = Int32.Parse(DBreader[2].ToString());
-                device.device_type_name = DBreader[3].ToString();
-                device.client_email = DBreader[4].ToString();
+                device.price = Int32.Parse(DBreader[3].ToString());
+                device.device_type_name = DBreader[4].ToString();
+                device.client_email = DBreader[5].ToString();
                 DBconn.Close();
                 return device;
             }
@@ -108,15 +111,16 @@ namespace API_Service.Data
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
-                "INSERT INTO devices (serial_number, brand, electric_usage, device_type_name) " +
-                "VALUES (@p1, @p2, @p3, @p4)", 
+                "INSERT INTO devices (serial_number, brand, electric_usage, price, device_type_name) " +
+                "VALUES (@p1, @p2, @p3, @p4, @p5)", 
                 DBconn
                 );
 
             sqlCmd.Parameters.AddWithValue("p1", device.serial_number);
             sqlCmd.Parameters.AddWithValue("p2", device.brand);
             sqlCmd.Parameters.AddWithValue("p3", device.electric_usage);
-            sqlCmd.Parameters.AddWithValue("p4", device.device_type_name);
+            sqlCmd.Parameters.AddWithValue("p4", device.price);
+            sqlCmd.Parameters.AddWithValue("p5", device.device_type_name);
             sqlCmd.ExecuteNonQuery();
 
             DBconn.Close();
@@ -128,7 +132,7 @@ namespace API_Service.Data
 
             var sqlCmd = new NpgsqlCommand(
                 "UPDATE devices " +
-                "SET brand = @p1, electric_usage = @p2, device_type_name = @p3 " +
+                "SET brand = @p1, electric_usage = @p2, price = @p3, device_type_name = @p4 " +
                 "WHERE serial_number = @cond", 
                 DBconn
                 );
@@ -136,7 +140,8 @@ namespace API_Service.Data
             sqlCmd.Parameters.AddWithValue("cond", device.serial_number);
             sqlCmd.Parameters.AddWithValue("p1", device.brand);
             sqlCmd.Parameters.AddWithValue("p2", device.electric_usage);
-            sqlCmd.Parameters.AddWithValue("p3", device.device_type_name);
+            sqlCmd.Parameters.AddWithValue("p3", device.price);
+            sqlCmd.Parameters.AddWithValue("p4", device.device_type_name);
             sqlCmd.ExecuteNonQuery();
 
             DBconn.Close();
@@ -153,6 +158,23 @@ namespace API_Service.Data
                 );
 
             sqlCmd.Parameters.AddWithValue("cond", device.serial_number);
+            sqlCmd.ExecuteNonQuery();
+
+            DBconn.Close();
+        }
+
+        private void AddClientToDevice(int device_serial_number, string client_email){
+            DBconn.Open();
+
+            var sqlCmd = new NpgsqlCommand(
+                "UPDATE devices " +
+                "SET client_email = @p1 " +
+                "WHERE serial_number = @cond", 
+                DBconn
+                );
+
+            sqlCmd.Parameters.AddWithValue("cond", device_serial_number);
+            sqlCmd.Parameters.AddWithValue("p1", client_email);
             sqlCmd.ExecuteNonQuery();
 
             DBconn.Close();
@@ -322,23 +344,63 @@ namespace API_Service.Data
             return null;
         }
 
+        public void UpdateClient(Client client){
+            DBconn.Open();
+
+            var sqlCmd = new NpgsqlCommand(
+                "UPDATE clients " +
+                "SET name = @p1, password = @p2, last_name1 = @p3, last_name2 = @p4, country = @p5, continent = @p6 " +
+                "WHERE email = @cond", 
+                DBconn
+                );
+
+            sqlCmd.Parameters.AddWithValue("cond", client.email);
+            sqlCmd.Parameters.AddWithValue("p1", client.name);
+            sqlCmd.Parameters.AddWithValue("p2", client.password);
+            sqlCmd.Parameters.AddWithValue("p3", client.last_name1);
+            sqlCmd.Parameters.AddWithValue("p4", client.last_name2);
+            sqlCmd.Parameters.AddWithValue("p5", client.country);
+            sqlCmd.Parameters.AddWithValue("p6", client.continent);
+            sqlCmd.ExecuteNonQuery();
+
+            DBconn.Close();
+            
+        }
+
         public void AddClient(Client client)
         {
             DBconn.Open();
 
-            var sqlCmd = new NpgsqlCommand(
+            var sqlAddClient = new NpgsqlCommand(
                 "INSERT INTO clients (email, name, password, last_name1, last_name2, country, continent) " +
                 "VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7)", DBconn
                 );
 
-            sqlCmd.Parameters.AddWithValue("p1", client.email);
-            sqlCmd.Parameters.AddWithValue("p2", client.name);
-            sqlCmd.Parameters.AddWithValue("p3", client.password);
-            sqlCmd.Parameters.AddWithValue("p4", client.last_name1);
-            sqlCmd.Parameters.AddWithValue("p5", client.last_name2);
-            sqlCmd.Parameters.AddWithValue("p6", client.country);
-            sqlCmd.Parameters.AddWithValue("p7", client.continent);
-            sqlCmd.ExecuteNonQuery();
+            sqlAddClient.Parameters.AddWithValue("p1", client.email);
+            sqlAddClient.Parameters.AddWithValue("p2", client.name);
+            sqlAddClient.Parameters.AddWithValue("p3", client.password);
+            sqlAddClient.Parameters.AddWithValue("p4", client.last_name1);
+            sqlAddClient.Parameters.AddWithValue("p5", client.last_name2);
+            sqlAddClient.Parameters.AddWithValue("p6", client.country);
+            sqlAddClient.Parameters.AddWithValue("p7", client.continent);
+            sqlAddClient.ExecuteNonQuery();
+
+            DBconn.Close();
+
+        }
+
+        public void AddDirection(DirectionClient directionClient){
+            DBconn.Open();
+
+            var sqlAddDirection = new NpgsqlCommand(
+                "INSERT INTO directions_clients (direction, client_email) " +
+                "VALUES (@p1, @p2)", DBconn
+                );
+
+            sqlAddDirection.Parameters.AddWithValue("p1", directionClient.direction);
+            sqlAddDirection.Parameters.AddWithValue("p2", directionClient.client_email);
+            sqlAddDirection.ExecuteNonQuery();
+            
             DBconn.Close();
         }
 
@@ -349,10 +411,11 @@ namespace API_Service.Data
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
-                "SELECT legal_card, serial_number, brand, electric_usage, device_type_name " +
+                "SELECT legal_card, serial_number, brand, electric_usage, device_type_name, price, name " +
                 "FROM public.device_distributor, distributors, devices " + 
                 "WHERE 	legal_card = distributors_legal_card AND " +
                 "serial_number = devices_serial_number AND " +
+                "client_email IS NULL AND " +
                 "continent = @p1 AND " + 
                 "country = @p2", 
                 DBconn
@@ -370,6 +433,7 @@ namespace API_Service.Data
                 {
                     distributor = new Distributor();
                     distributor.devices_ = new List<Device>();
+                    distributor.name = DBreader[6].ToString();
                     onlineStoreByRegion.Add(distributor);
                 }
 
@@ -380,6 +444,7 @@ namespace API_Service.Data
                 device.brand = DBreader[2].ToString();
                 device.electric_usage = Int32.Parse(DBreader[3].ToString());
                 device.device_type_name = DBreader[4].ToString();
+                device.price = Int32.Parse(DBreader[5].ToString());
 
                 distributor.devices_.Add(device);                    
             }
@@ -425,26 +490,102 @@ namespace API_Service.Data
             DBconn.Close();
         }
 
+        public IEnumerable<Region> GetAllContinents(){
+            
+            List<Region> allContinents = new List<Region>();
+
+            DBconn.Open();
+            var sqlCmd = new NpgsqlCommand(
+                "SELECT DISTINCT continent " +
+                "FROM regions",
+                DBconn
+                );
+
+            NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
+            while (DBreader.Read())
+            {
+                Region region = new Region();
+                region.continent = DBreader[0].ToString();
+                allContinents.Add(region);
+            }
+            DBconn.Close();
+
+            return allContinents;
+        }
+
+        public IEnumerable<Region> GetCountriesByContinent(string continent){
+            
+            List<Region> allCountries = new List<Region>();
+
+            DBconn.Open();
+            var sqlCmd = new NpgsqlCommand(
+                "SELECT country " +
+                "FROM regions " +
+                "WHERE continent = @cond",
+                DBconn
+                );
+
+            sqlCmd.Parameters.AddWithValue("cond", continent);
+
+            NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
+            while (DBreader.Read())
+            {
+                Region region = new Region();
+                region.continent = continent;
+                region.country = DBreader[0].ToString();
+                allCountries.Add(region);
+            }
+            DBconn.Close();
+
+            return allCountries;
+        }
+
+
         public void AddOrder(Order order)
         {
+            AddClientToDevice(order.device_serial_number, order.client_email);
+            int orderConsecutive = GetAmountOrdersByClient(order.client_email) + 1;
+
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
-                "INSERT INTO orders (price, purchase_date, purchase_time, client_email, device_serial_number) " +
-                "VALUES (@p1, @p2, @p3, @p4, @p5) RETURNING consecutive, bill_number", DBconn
+                "INSERT INTO orders (consecutive, price, purchase_date, purchase_time, client_email, device_serial_number) " +
+                "VALUES (@p1, @p2, @p3, @p4, @p5, @p6) RETURNING bill_number", DBconn
                 );
 
-            sqlCmd.Parameters.AddWithValue("p1", order.price);
-            sqlCmd.Parameters.AddWithValue("p2", order.purchase_date);
-            sqlCmd.Parameters.AddWithValue("p3", order.purchase_time);
-            sqlCmd.Parameters.AddWithValue("p4", order.client_email);
-            sqlCmd.Parameters.AddWithValue("p5", order.device_serial_number);
+            sqlCmd.Parameters.AddWithValue("p1", orderConsecutive);
+            sqlCmd.Parameters.AddWithValue("p2", order.price);
+            sqlCmd.Parameters.AddWithValue("p3", order.purchase_date);
+            sqlCmd.Parameters.AddWithValue("p4", order.purchase_time);
+            sqlCmd.Parameters.AddWithValue("p5", order.client_email);
+            sqlCmd.Parameters.AddWithValue("p6", order.device_serial_number);
             NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
 
+            order.consecutive = orderConsecutive;
             DBreader.Read();
-            order.consecutive = Int32.Parse(DBreader[0].ToString());
-            order.bill_number = Int32.Parse(DBreader[1].ToString());
+            order.bill_number = Int32.Parse(DBreader[0].ToString());
             DBconn.Close();
+        }
+
+        private int GetAmountOrdersByClient(string client_email){
+            DBconn.Open();
+            var sqlCmd = new NpgsqlCommand(
+                "SELECT COUNT(client_email) " +
+                "FROM orders " +
+                "WHERE client_email = @cond", 
+                DBconn
+                );
+            
+            sqlCmd.Parameters.AddWithValue("cond", client_email);
+            
+            NpgsqlDataReader DBreader = sqlCmd.ExecuteReader();
+            DBreader.Read();
+            int amountOrders = Int32.Parse(DBreader[0].ToString());  
+            DBreader.Close();
+            
+            DBconn.Close();          
+            
+            return amountOrders;
         }
 
         public LoginProfile CheckCredentials(LoginProfile loginProfile)
@@ -493,8 +634,10 @@ namespace API_Service.Data
             return admin;
         }
 
-        public int GetDevicesPerUser()
+        public DevicesPerUser GetDevicesPerUser()
         {
+            DevicesPerUser devicesPerUser = new DevicesPerUser();
+
             DBconn.Open();
             var sqlDeviceCount = new NpgsqlCommand(
                 "SELECT COUNT(serial_number) " +
@@ -510,17 +653,19 @@ namespace API_Service.Data
             
             NpgsqlDataReader DBreaderClients = sqlClientCount.ExecuteReader();
             DBreaderClients.Read();
-            int amountClients = Int32.Parse(DBreaderClients[0].ToString());  
+            devicesPerUser.amountClients = Int32.Parse(DBreaderClients[0].ToString());  
             DBreaderClients.Close();
             
             NpgsqlDataReader DBreaderDevices = sqlDeviceCount.ExecuteReader();
             DBreaderDevices.Read();
-            int amountDevices = Int32.Parse(DBreaderDevices[0].ToString());
+            devicesPerUser.amountDevices = Int32.Parse(DBreaderDevices[0].ToString());
             DBreaderDevices.Close();
+
+            devicesPerUser.amountDevicesPerUser = Math.Round(devicesPerUser.amountDevices/devicesPerUser.amountClients, 2);
             
             DBconn.Close();          
             
-            return amountDevices/amountClients;
+            return devicesPerUser;
         }
 
         public List<Region> GetDevicesPerRegion()

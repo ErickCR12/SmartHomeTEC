@@ -20,11 +20,17 @@ namespace API_Service.Data
 
         IEnumerable<Client> GetAllClients();
         Client GetClient(string email);
+        void UpdateClient(Client client);
+
         void AddClient(Client client);
+        void AddDirection(DirectionClient directionClient);
         
         IEnumerable<Distributor> GetOnlineStore(string continent, string country);
         void AddOnlineStore(IEnumerable<Distributor> distributors);
         void DeleteOnlineStore();
+
+        IEnumerable<Region> GetAllContinents();
+        IEnumerable<Region> GetCountriesByContinent(string continent);
 
         void AddOrder(Order order);
 
@@ -32,8 +38,7 @@ namespace API_Service.Data
 
         Admin GetAdmin();
 
-
-        int GetDevicesPerUser();
+        DevicesPerUser GetDevicesPerUser();
         List<Region> GetDevicesPerRegion();
         int GetActiveDevices();
 

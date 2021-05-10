@@ -9,6 +9,9 @@ import {Login} from './models/login';
 import {Client} from './models/client';
 import {Distributor} from './models/distributor';
 import {Region} from './models/region';
+import {DirectionClient} from './models/direction-client';
+import {DevicesPerUser} from './models/devices-per-user';
+import {Order} from './models/order';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,6 +23,8 @@ export class DataService {
   private onlineStoreUrl = 'api/onlinestore/';
   private dashboardUrl = 'api/dashboard/';
   private loginUrl = 'api/login/';
+  private regionsUrl = 'api/regions/';
+  private orderUrl = 'api/orders/';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -42,7 +47,6 @@ export class DataService {
 
   updateDeviceType(deviceType: DeviceType): Observable<DeviceType> {
     return this.http.put<DeviceType>(this.deviceTypesUrl + deviceType.name, deviceType, this.httpOptions).pipe(
-      tap((updatedDeviceType: DeviceType) => this.log(`updated deviceType w/ name=${updatedDeviceType.name}`)),
       catchError(this.handleError<DeviceType>('updateDish'))
     );
   }
@@ -70,16 +74,22 @@ export class DataService {
 
   updateDevice(device: Device): Observable<Device> {
     return this.http.put<Device>(this.devicesUrl + device.serial_number, device, this.httpOptions).pipe(
-      tap((newDevice: Device) => this.log(`updated device w/ serial_number=${newDevice.serial_number}`)),
       catchError(this.handleError<Device>('updateDevice'))
     );
   }
 
   deleteDevice(deviceSerialNumber: number): Observable<{}> {
-    // @ts-ignore
-    return this.http.delete(this.menusUrl + deviceSerialNumber, this.httpOptions).pipe(
+    return this.http.delete(this.devicesUrl + deviceSerialNumber, this.httpOptions).pipe(
       catchError(this.handleError('deleteDevice'))
     );
+  }
+
+  getClientByEmail(email: string): Observable<Client> {
+    this.messageService.add('DataService: fetched deviceTypes');
+    return this.http.get<Client>(this.clientsUrl + email)
+      .pipe(
+        catchError(this.handleError<Client>('getClientByEmail', null))
+      );
   }
 
   addClient(client: Client): Observable<Client> {
@@ -91,8 +101,14 @@ export class DataService {
 
   updateClient(client: Client): Observable<Client> {
     return this.http.put<Client>(this.clientsUrl + client.email, client, this.httpOptions).pipe(
-      tap((newClient: Client) => this.log(`updated device w/ email=${newClient.email}`)),
       catchError(this.handleError<Client>('updateClient'))
+    );
+  }
+
+  addDirectionClient(directionClient: DirectionClient): Observable<DirectionClient> {
+    return this.http.post<DirectionClient>(this.clientsUrl + 'direction', directionClient, this.httpOptions).pipe(
+      tap((newDirectionClient: DirectionClient) => this.log(`added directionClient w/ email=${newDirectionClient.client_email}`)),
+      catchError(this.handleError<DirectionClient>('addDirectionClient'))
     );
   }
 
@@ -118,11 +134,42 @@ export class DataService {
     );
   }
 
+  addOrder(order: Order): Observable<Order> {
+    return this.http.post<Order>(this.orderUrl, order, this.httpOptions).pipe(
+      tap((newOrder: Order) => this.log(`added order w/ consecutive=${order.consecutive} and bill_number=${order.bill_number}`)),
+      catchError(this.handleError<Order>('addClient'))
+    );
+  }
+
+  getAllContinents(): Observable<Region[]> {
+    this.messageService.add('DataService: fetched continents');
+    return this.http.get<Region[]>(this.regionsUrl + 'continents')
+      .pipe(
+        catchError(this.handleError<Region[]>('getAllContinents', []))
+      );
+  }
+
+  getCountriesByContinent(continent: string): Observable<Region[]> {
+    this.messageService.add('DataService: fetched countriesByContinent');
+    return this.http.get<Region[]>(this.regionsUrl + 'countries/' + continent)
+      .pipe(
+        catchError(this.handleError<Region[]>('getAllContinents', []))
+      );
+  }
+
   getActiveDevices(): Observable<number> {
     this.messageService.add('DataService: fetched ActiveDevices');
     return this.http.get<number>(this.dashboardUrl + 'activeDevices')
       .pipe(
         catchError(this.handleError<number>('getAllDevices', -1))
+      );
+  }
+
+  getDevicesPerUser(): Observable<DevicesPerUser> {
+    this.messageService.add('DataService: fetched DevicesPerUser');
+    return this.http.get<DevicesPerUser>(this.dashboardUrl + 'devicesPerUser')
+      .pipe(
+        catchError(this.handleError<DevicesPerUser>('getDevicesPerUser', null))
       );
   }
 

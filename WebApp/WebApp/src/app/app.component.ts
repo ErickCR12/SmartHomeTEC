@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {UsersService} from './users.service';
 
 @Component({
   selector: 'app-root',
@@ -7,53 +8,93 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'WebApp';
-  notLogged: boolean = false;
-  notReg: boolean = false;
-  notEditProf: boolean = false;
-  notShop: boolean = false;
-  notReport: boolean = false;
-  notDeviceType: boolean = false;
-  notDevices: boolean = false;
-  ActiveDevices: boolean = false;
-  UsageDevices: boolean = false;
-  UploadDoc: boolean = false;
 
-  clickLog() {
-    this.notLogged = !this.notLogged
-  }
-  clickReg() {
-    this.notReg = !this.notReg
-  }
+  // ________/No Users\______
+  isReg = false;
 
-  clickSeeDevs() {
-    this.ActiveDevices = !this.ActiveDevices
-  }
+  constructor(public usersService: UsersService) { }
 
-  clickUsageDevices() {
-    this.UsageDevices = !this.UsageDevices
-  }
+  // ________/Client\_______
+  isEditProf = false;
+  isShop = false;
+  isReport = false;
 
-  clickUploadDoc() {
-    this.UploadDoc = !this.UploadDoc
-  }
+  // ________/Admin \_______
+  isDeviceType = false;
+  isDevices  = false;
+  isActiveDevices  = false;
+  isUsageDevices = false;
+  isUploadDoc = false;
 
+  // ____________________/Client Tabs\_____________________
   clickProfEdit() {
-    this.notEditProf = !this.notEditProf
+    this.isEditProf = !this.isEditProf;
+    this.isShop = false;
+    this.isReport = false;
   }
 
   clickShop() {
-    this.notShop = !this.notShop
+    this.isShop = !this.isShop;
+    this.isEditProf = false;
+    this.isReport = false;
   }
 
   clickReports() {
-    this.notReport = !this.notReport
+    this.isReport = !this.isReport;
+    this.isEditProf = false;
+    this.isShop = false;
   }
-  //type devices
+
+  // ___________________/No User Tabs\______________________
+  clickBack() {
+    this.usersService.isLogged = false;
+    this.isReg = false;
+  }
+
+  clickReg() {
+    this.isReg = !this.isReg;
+  }
+
+  // ____________________/Admin Tabs\______________________
+  clickSeeDevs() {
+    this.isActiveDevices = !this.isActiveDevices;
+    this.isUsageDevices = false;
+    this.isDevices = false;
+    this.isDeviceType = false;
+    this.isUploadDoc = false;
+  }
+
+  clickUsageDevices() {
+    this.isUsageDevices = !this.isUsageDevices;
+    this.isActiveDevices = false;
+    this.isDevices = false;
+    this.isDeviceType = false;
+    this.isUploadDoc = false;
+  }
+
+  clickUploadDoc() {
+    this.isUploadDoc = !this.isUploadDoc;
+    this.isUsageDevices = false;
+    this.isActiveDevices = false;
+    this.isDevices = false;
+    this.isDeviceType = false;
+  }
+
+  // type devices
   clickDeviceManager() {
-    this.notDeviceType = !this.notDeviceType
+    this.isDeviceType = !this.isDeviceType;
+    this.isUsageDevices = false;
+    this.isActiveDevices = false;
+    this.isDevices = false;
+    this.isUploadDoc = false;
   }
 
   clickDevices() {
-    this.notDevices = !this.notDevices
+    this.isDevices = !this.isDevices;
+    this.isUsageDevices = false;
+    this.isActiveDevices = false;
+    this.isDeviceType = false;
+    this.isUploadDoc = false;
   }
+
 }

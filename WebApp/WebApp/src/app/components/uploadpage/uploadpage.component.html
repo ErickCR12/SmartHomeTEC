@@ -1,4 +1,6 @@
 <div class="overflow-auto">
+  <input type="file" (change)="onFileChange($event)" multiple ="false"/>
+  <button type="submit" class="btn btn-primary mb-2"(click)="uploadDocs()">Subir a la base</button>
 
   <table class="table table-responsive-sm table-hover table-striped" cellspacing="0"
          width="100%">
@@ -13,8 +15,6 @@
   </table>
 
   <h5>Las tablas que aparecen en la tabla de abajo deben matchear con las tablas del servidor para que no de error</h5>
-  <button type="submit" class="btn btn-primary mb-2">Subir Documento</button>
-  <button type="submit" class="btn btn-primary mb-2">Subir a la base</button>
   <table class="table table-responsive-sm table-hover table-striped" cellspacing="0"
          width="100%">
     <thead>

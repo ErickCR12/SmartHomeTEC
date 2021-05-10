@@ -13,29 +13,31 @@ namespace API_Service.Controllers
     //This Controller allows a  a POST request to create a new Order.
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class RegionsController : ControllerBase
     {
         private readonly ISmartHomeRepo _repository;
         private readonly IMapper _mapper;
 
-        public OrdersController (ISmartHomeRepo repository, IMapper mapper)
+        public RegionsController (ISmartHomeRepo repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }        
 
-        //POST api/orders
+        //GET api/clients
         //This request receives all the needed info to create a new Client in the clients database.
-        [HttpPost(Name = "CreateOrder")]
-        public ActionResult <OrderDto> CreateOrder(OrderDto orderDto)
+        [HttpGet("continents")]
+        public ActionResult <IEnumerable<RegionDto>> GetAllContinents()
         {
-            var orderModel = _mapper.Map<Order>(orderDto);
-            _repository.AddOrder(orderModel);
+            var regionsItem = _repository.GetAllContinents();
+            return Ok(_mapper.Map<IEnumerable<RegionDto>>(regionsItem));
+        }
 
-            var newOrderDto = _mapper.Map<OrderDto>(orderModel);
-
-            return CreatedAtRoute(nameof(CreateOrder), new {consecutive = newOrderDto.consecutive}, 
-                                newOrderDto);
+        [HttpGet("countries/{continent}")]
+        public ActionResult <IEnumerable<RegionDto>> GetCountriesByContinent(string continent)
+        {
+            var regionsItem = _repository.GetCountriesByContinent(continent);
+            return Ok(_mapper.Map<IEnumerable<RegionDto>>(regionsItem));
         }
 
     }

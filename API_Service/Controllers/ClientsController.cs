@@ -54,10 +54,43 @@ namespace API_Service.Controllers
             var clientModel = _mapper.Map<Client>(clientDto);
             _repository.AddClient(clientModel);
 
+            var directionClientModel = new DirectionClient();
+            directionClientModel.client_email = clientDto.email;
+            directionClientModel.direction = clientDto.direction;
+            _repository.AddDirection(directionClientModel);
+
             var newClientDto = _mapper.Map<ClientDto>(clientModel);
 
             return CreatedAtRoute(nameof(GetClientByEmail), new {email = newClientDto.email}, 
                                 newClientDto);
+        }
+
+        [HttpPost("direction")]
+        public ActionResult <DirectionClientDto> AddDirection(DirectionClientDto directionClientDto)
+        {
+            var directionClientModel = _mapper.Map<DirectionClient>(directionClientDto);
+            _repository.AddDirection(directionClientModel);
+
+            var newDirectionClientDto = _mapper.Map<DirectionClientDto>(directionClientModel);
+
+            return CreatedAtRoute(nameof(GetClientByEmail), new {email = newDirectionClientDto.client_email}, 
+                                newDirectionClientDto);
+        }
+
+        [HttpPut("{client_email}")]
+        public ActionResult UpdateClient(string client_email, ClientDto clientDto)
+        {
+            var clientFromRepo = _repository.GetClient(client_email);
+            clientDto.email = clientFromRepo.email;
+            if(clientFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(clientDto, clientFromRepo);
+            _repository.UpdateClient(clientFromRepo);
+
+            return NoContent();
         }
 
     }

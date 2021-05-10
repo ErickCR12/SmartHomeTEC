@@ -14,6 +14,8 @@ namespace API_Service.Models
         public string brand {get; set;}
         [Required]
         public int electric_usage {get; set;}
+        [Required]
+        public int price {get; set;}
 
 
         public string device_type_name { get; set; }
