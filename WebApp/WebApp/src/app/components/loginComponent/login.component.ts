@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import {DataService} from '../../data.service';
 import {Login} from '../../models/login';
+import {UsersService} from '../../users.service';
+import {Client} from '../../models/client';
+import {Admin} from '../../models/admin';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -11,12 +14,23 @@ import {Login} from '../../models/login';
 // tslint:disable-next-line:component-class-suffix
 export class LoginScreen {
 
-  loginModel: Login;
-
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private usersService: UsersService) { }
 
   checkCredentials(username: string, password: string): void{
-    this.dataService.getLoginCredentials({username, password} as Login).subscribe( data => this.loginModel = data);
+    this.dataService.getLoginCredentials({username, password} as Login).subscribe(
+      data =>
+      {
+        if (data.userType === 'Client'){
+          this.getClientByEmail(username);
+        }
+        else if (data.userType === 'Admin'){
+          this.usersService.admin = {username, password} as Admin;
+        }
+      });
+  }
+
+  getClientByEmail(email: string): void{
+    this.dataService.getClientByEmail(email).subscribe(data => this.usersService.client = data);
   }
 
 

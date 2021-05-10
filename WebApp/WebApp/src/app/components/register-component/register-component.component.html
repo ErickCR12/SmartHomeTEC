@@ -23,7 +23,7 @@
         <label for="inputSLastName" class="visually-hidden">SLastName</label>
         <input id="inputSLastName" class="form-control" placeholder="Second Lastname" required #slastnameInput>
 
-        <a>De que region es? </a>
+        <a>De que region es?: </a>
 
         <label for="inputContinent" class="visually-hidden">Continente</label>
         <select #continentInput id="inputContinent" class="caja" (change)="getAllCountries(continentInput.value)">
@@ -37,7 +37,7 @@
           <option [value]="country.country" *ngFor="let country of countries">{{country.country}}</option>
         </select>
 
-        <label for="inputDireccion" class="visually-hidden">Direccion</label>
+        <br><label for="inputDireccion" class="visually-hidden">Direccion</label>
         <input id="inputDireccion" class="form-control" placeholder="Direccion de entrega" required #direccionInput>
 
         <a>Ingrese sus credenciales:</a>

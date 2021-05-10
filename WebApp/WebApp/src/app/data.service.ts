@@ -82,6 +82,14 @@ export class DataService {
     );
   }
 
+  getClientByEmail(email: string): Observable<Client> {
+    this.messageService.add('DataService: fetched deviceTypes');
+    return this.http.get<Client>(this.clientsUrl + email)
+      .pipe(
+        catchError(this.handleError<Client>('getClientByEmail', null))
+      );
+  }
+
   addClient(client: Client): Observable<Client> {
     return this.http.post<Client>(this.clientsUrl, client, this.httpOptions).pipe(
       tap((newClient: Client) => this.log(`added client w/ email=${newClient.email}`)),

@@ -8,32 +8,49 @@
 
       <a>Update Personal Data</a>
       <label for="inputName" class="visually-hidden">Name</label>
-      <input id="inputName" class="form-control" placeholder="Name">
+      <input id="inputName" class="form-control" placeholder="{{client.name}}" #inputName [value]="client.name">
 
       <label for="inputLastName" class="visually-hidden">LastName</label>
-      <input id="inputLastName" class="form-control" placeholder="First Lastnamet">
+      <input id="inputLastName" class="form-control" placeholder="{{client.last_name1}}" #inputLastName
+             [value]="client.last_name1">
 
       <label for="inputSLastName" class="visually-hidden">SLastName</label>
-      <input id="inputSLastName" class="form-control" placeholder="Second Lastname">
+      <input id="inputSLastName" class="form-control" placeholder="{{client.last_name2}}" #inputSLastName
+             [value]="client.last_name2">
 
-      <label for="inputDireccion" class="visually-hidden">Direccion</label>
-      <input id="inputDireccion" class="form-control" placeholder="Direccion de entrega">
+      <a>Si desea cambiar la region: </a>
 
-      <a>Changing Region</a>
+      <label for="inputContinent" class="visually-hidden">Continente</label>
+      <select #continentInput id="inputContinent" class="caja" (change)="getAllCountries(continentInput.value)">
+        <option [value]="client.continent" selected disabled hidden>{{client.continent}}</option>
+        <option [value]="continent.continent" *ngFor="let continent of continents">{{continent.continent}}</option>
+      </select>
 
-      <label for="inputContinet" class="visually-hidden">Continente</label>
-      <input id="inputContinet" class="form-control" placeholder="Continente">
+      <label for="inputCountry" class="visually-hidden">Pais</label>
+      <select #countryInput id="inputCountry" class="caja">
+        <option [value]="client.country" selected disabled hidden>{{client.country}}</option>
+        <option [value]="country.country" *ngFor="let country of countries">{{country.country}}</option>
+      </select>
 
-      <label for="inputCountry" class="visually-hidden">Direccion</label>
-      <input id="inputCountry" class="form-control" placeholder="Country">
-
-      <a>New Password:</a>
+      <a>Nueva contraseña:</a>
 
       <label for="inputPassword" class="visually-hidden">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" #passwordInput
+             [value]="client.password">
       <h6>Your email cannot be changed</h6>
       <!--Upload data to loging with this button -->
-      <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!">Save Changes</button>
+      <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!"
+      (click)="updateClient(inputName.value, inputLastName.value, inputSLastName.value, continentInput.value,
+      countryInput.value, passwordInput.value)">Save Changes</button>
+
+      <br><a>Si desea agregar más direcciones de entrega:</a>
+
+      <label for="inputAnotherDirection" class="visually-hidden"></label>
+      <input id="inputAnotherDirection" class="form-control" placeholder="Direccion"
+             required #anotherDirectionInput>
+      <!--Upload data to loging with this button -->
+      <button class="w-100 btn btn-lg btn-primary" type="submit" href="welcome!"
+              (click)="addDirectionClient(anotherDirectionInput.value)">Agregar dirección</button>
     </form>
   </main>
 

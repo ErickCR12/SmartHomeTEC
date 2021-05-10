@@ -16,6 +16,7 @@ import { UsageTableComponent } from './components/usage-table/usage-table.compon
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {MessagesComponent} from './messages/messages.component';
+import {UsersService} from './users.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import {MessagesComponent} from './messages/messages.component';
         HttpClientModule,
         FormsModule
     ],
-  providers: [],
+  providers: [UsersService],
   bootstrap: [AppComponent, LoginScreen]
 })
 export class AppModule { }

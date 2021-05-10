@@ -3,6 +3,8 @@ import {Region} from '../../models/region';
 import {DataService} from '../../data.service';
 import {Distributor} from '../../models/distributor';
 import {Device} from '../../models/device';
+import {UsersService} from '../../users.service';
+import {Client} from '../../models/client';
 
 @Component({
   selector: 'app-shop',
@@ -12,11 +14,14 @@ import {Device} from '../../models/device';
 export class ShopComponent implements OnInit {
 
   distributors: Distributor[];
+  client: Client;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private usersService: UsersService) {
   }
 
   ngOnInit(): void {
+    this.client = this.usersService.client;
+    this.getOnlineStore(this.client.country, this.client.continent);
   }
 
   getOnlineStore(country: string, continent: string): void {
