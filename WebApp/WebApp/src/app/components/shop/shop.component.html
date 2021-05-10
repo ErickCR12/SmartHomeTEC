@@ -77,18 +77,20 @@
 
   <div class="container py-5" id="hanging-icons">
     <h2 class="pb-2 border-bottom">Items Disponibles</h2>
-    <div class="row g-5 py-5" *ngFor="let distributor of distributors">
-      <div class="col-md-4 d-flex align-items-start" *ngFor="let device of distributor.devices">
+    <div class="row g-5 py-5" *ngFor="let distributor of distributors; let i = index">
+      <div class="col-md-4 d-flex align-items-start" *ngFor="let device of distributor.devices let j = index">
         <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
           <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2" /></svg>
         </div>
             <div>
               <h2>{{device.device_type_name}}</h2>
-              <p>Número de serie: {{device.serial_number}}</p>
+              <span>Numero de serie: </span><span #serialNumber [textContent]="device.serial_number">Número de serie:
+              {{device.serial_number}}</span>
               <p>Marca: {{device.brand}}</p>
-              <p>Precio: ${{device.price}}</p>
+              <span>Precio: </span><span #price [textContent]="device.price">Precio: ${{device.price}}</span>
+              <p>Distribuidor: {{distributor.name}}</p>
               <p>Uso eléctrico: {{device.electric_usage}}</p>
-              <a href="#" class="btn btn-primary">
+              <a href="#" class="btn btn-primary" (click)="addOrder(serialNumber.textContent, price.textContent, i, j)">
                 Buy
               </a>
             </div>

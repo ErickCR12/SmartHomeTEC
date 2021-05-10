@@ -24,7 +24,7 @@ namespace API_Service.Controllers
             _mapper = mapper;
         }        
 
-        //POST api/clients
+        //POST api/orders
         //This request receives all the needed info to create a new Client in the clients database.
         [HttpPost(Name = "CreateOrder")]
         public ActionResult <OrderDto> CreateOrder(OrderDto orderDto)

@@ -344,6 +344,29 @@ namespace API_Service.Data
             return null;
         }
 
+        public void UpdateClient(Client client){
+            DBconn.Open();
+
+            var sqlCmd = new NpgsqlCommand(
+                "UPDATE clients " +
+                "SET name = @p1, password = @p2, last_name1 = @p3, last_name2 = @p4, country = @p5, continent = @p6 " +
+                "WHERE email = @cond", 
+                DBconn
+                );
+
+            sqlCmd.Parameters.AddWithValue("cond", client.email);
+            sqlCmd.Parameters.AddWithValue("p1", client.name);
+            sqlCmd.Parameters.AddWithValue("p2", client.password);
+            sqlCmd.Parameters.AddWithValue("p3", client.last_name1);
+            sqlCmd.Parameters.AddWithValue("p4", client.last_name2);
+            sqlCmd.Parameters.AddWithValue("p5", client.country);
+            sqlCmd.Parameters.AddWithValue("p6", client.continent);
+            sqlCmd.ExecuteNonQuery();
+
+            DBconn.Close();
+            
+        }
+
         public void AddClient(Client client)
         {
             DBconn.Open();
@@ -388,7 +411,7 @@ namespace API_Service.Data
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
-                "SELECT legal_card, serial_number, brand, electric_usage, device_type_name, price " +
+                "SELECT legal_card, serial_number, brand, electric_usage, device_type_name, price, name " +
                 "FROM public.device_distributor, distributors, devices " + 
                 "WHERE 	legal_card = distributors_legal_card AND " +
                 "serial_number = devices_serial_number AND " +
@@ -410,6 +433,7 @@ namespace API_Service.Data
                 {
                     distributor = new Distributor();
                     distributor.devices_ = new List<Device>();
+                    distributor.name = DBreader[6].ToString();
                     onlineStoreByRegion.Add(distributor);
                 }
 
@@ -519,11 +543,10 @@ namespace API_Service.Data
 
         public void AddOrder(Order order)
         {
-            DBconn.Open();
-
             AddClientToDevice(order.device_serial_number, order.client_email);
-
             int orderConsecutive = GetAmountOrdersByClient(order.client_email) + 1;
+
+            DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
                 "INSERT INTO orders (consecutive, price, purchase_date, purchase_time, client_email, device_serial_number) " +

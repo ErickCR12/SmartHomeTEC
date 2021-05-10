@@ -18,7 +18,6 @@ namespace API_Service.Models
         public int price {get; set;}
 
 
-
         public string device_type_name { get; set; }
         [ForeignKey("device_type_name")]
         public DeviceType device_type {get; set;}

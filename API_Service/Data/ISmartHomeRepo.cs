@@ -20,6 +20,8 @@ namespace API_Service.Data
 
         IEnumerable<Client> GetAllClients();
         Client GetClient(string email);
+        void UpdateClient(Client client);
+
         void AddClient(Client client);
         void AddDirection(DirectionClient directionClient);
         

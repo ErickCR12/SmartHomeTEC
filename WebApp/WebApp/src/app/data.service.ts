@@ -11,6 +11,7 @@ import {Distributor} from './models/distributor';
 import {Region} from './models/region';
 import {DirectionClient} from './models/direction-client';
 import {DevicesPerUser} from './models/devices-per-user';
+import {Order} from './models/order';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +24,7 @@ export class DataService {
   private dashboardUrl = 'api/dashboard/';
   private loginUrl = 'api/login/';
   private regionsUrl = 'api/regions/';
+  private orderUrl = 'api/orders/';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -99,7 +101,6 @@ export class DataService {
 
   updateClient(client: Client): Observable<Client> {
     return this.http.put<Client>(this.clientsUrl + client.email, client, this.httpOptions).pipe(
-      tap((newClient: Client) => this.log(`updated device w/ email=${newClient.email}`)),
       catchError(this.handleError<Client>('updateClient'))
     );
   }
@@ -130,6 +131,13 @@ export class DataService {
     return this.http.post<Distributor[]>(this.onlineStoreUrl, distributors, this.httpOptions).pipe(
       tap((newOnlineStore: Distributor[]) => this.log(`created new online store`)),
       catchError(this.handleError<Distributor[]>('addClient'))
+    );
+  }
+
+  addOrder(order: Order): Observable<Order> {
+    return this.http.post<Order>(this.orderUrl, order, this.httpOptions).pipe(
+      tap((newOrder: Order) => this.log(`added order w/ consecutive=${order.consecutive} and bill_number=${order.bill_number}`)),
+      catchError(this.handleError<Order>('addClient'))
     );
   }
 

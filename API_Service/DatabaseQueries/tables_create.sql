@@ -5,13 +5,6 @@ CREATE TABLE admin
     PRIMARY KEY (username)
 );
 
-CREATE TABLE chambers
-(
-    name 			VARCHAR (255) NOT NULL,
-    client_email 	VARCHAR (255) NOT NULL,
-    PRIMARY KEY (name)
-);
-
 CREATE TABLE clients
 (
     email 		VARCHAR (255) NOT NULL,
@@ -86,11 +79,6 @@ CREATE TABLE regions
     PRIMARY KEY (country, continent)
 );
 
-
-ALTER TABLE chambers
-ADD CONSTRAINT CHAMBERS_CLIENTS_FK FOREIGN KEY (client_email)
-REFERENCES clients (email);
-
 ALTER TABLE clients
 ADD CONSTRAINT CLIENTS_REGIONS_FK FOREIGN KEY (continent, country)
 REFERENCES regions (continent, country);
@@ -128,5 +116,38 @@ ADD CONSTRAINT ORDERS_CLIENTS_FK FOREIGN KEY (client_email)
 REFERENCES clients (email);
 
 
+INSERT INTO admin(username, password)
+	VALUES ('admin', 'admin123');
+	
+INSERT INTO regions(country, continent)
+	VALUES ('Costa Rica', 'America');
+INSERT INTO regions(country, continent)
+	VALUES ('Panama', 'America');
+INSERT INTO regions(country, continent)
+	VALUES ('España', 'Europa');
+	
+INSERT INTO clients(email, name, password, last_name1, last_name2, country, continent)
+	VALUES('erick.barrantes12@gmail.com', 'Erick', 'cliente1', 'Barrantes', 'Cerdas', 'Costa Rica', 'America');	
+INSERT INTO clients(email, name, password, last_name1, last_name2, country, continent)
+	VALUES('joshuag@gmail.com', 'Joshua', 'cliente2', 'Guzmán', 'Quesada', 'Panama', 'America');
+	
+INSERT INTO device_types(name, description, warranty_months)
+	VALUES ('Refrigeradoras doble puerta', 'Refrigeradoras inteligentes con dos puertas', 24);
+INSERT INTO device_types(name, description, warranty_months)
+	VALUES ('SmartTV Android', 'Televisores inteligentes con sistema Android', 12);
+	
+INSERT INTO devices( serial_number, brand, electric_usage, price, device_type_name)
+	VALUES (54345, 'LG', 800, 649, 'Refrigeradoras doble puerta');
+INSERT INTO devices( serial_number, brand, electric_usage, price, device_type_name)
+	VALUES (45267, 'Frigidaire', 800, 649, 'Refrigeradoras doble puerta');	
+INSERT INTO devices( serial_number, brand, electric_usage, price, device_type_name)
+	VALUES (71458, 'Samsumg', 400, 499, 'SmartTV Android');
+INSERT INTO devices( serial_number, brand, electric_usage, price, device_type_name)
+	VALUES (11858, 'Sony', 450, 599, 'SmartTV Android');
+	
 
+INSERT INTO distributors(legal_card, name, country, continent)
+	VALUES (3001, 'DistriRefri', 'Costa Rica', 'America');
+INSERT INTO distributors(legal_card, name, country, continent)
+	VALUES (4002, 'Electro Star', 'Panama', 'America');
 

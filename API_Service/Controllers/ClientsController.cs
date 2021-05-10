@@ -77,5 +77,21 @@ namespace API_Service.Controllers
                                 newDirectionClientDto);
         }
 
+        [HttpPut("{client_email}")]
+        public ActionResult UpdateClient(string client_email, ClientDto clientDto)
+        {
+            var clientFromRepo = _repository.GetClient(client_email);
+            clientDto.email = clientFromRepo.email;
+            if(clientFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(clientDto, clientFromRepo);
+            _repository.UpdateClient(clientFromRepo);
+
+            return NoContent();
+        }
+
     }
 }

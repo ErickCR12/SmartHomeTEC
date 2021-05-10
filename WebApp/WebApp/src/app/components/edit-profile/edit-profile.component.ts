@@ -39,6 +39,9 @@ export class EditProfileComponent implements OnInit {
 
   updateClient(name: string, last_name1: string, last_name2: string, continent: string,
                country: string, password: string): void{
-    this.dataService.updateClient({name, last_name1, last_name2, continent, country, password} as Client);
+    const email = this.client.email;
+    const updatedClient = {email, name, last_name1, last_name2, continent, country, password} as Client;
+    this.usersService.client = updatedClient;
+    this.dataService.updateClient(updatedClient).subscribe();
   }
 }

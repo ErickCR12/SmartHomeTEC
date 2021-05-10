@@ -74,7 +74,7 @@ namespace API_Service.Controllers
         //This request receives a JSON representing Device Entity to be updated. This JSON is mapped to a Device Data Model 
         //and with the serial_number received in the header of the request, the matching entity will be replaced with the new info.
         [HttpPut("{serial_number}")]
-        public ActionResult UpdateDish(int serial_number, DeviceDto deviceDto)
+        public ActionResult UpdateDevice(int serial_number, DeviceDto deviceDto)
         {
             var deviceFromRepo = _repository.GetDevice(serial_number);
             deviceDto.serial_number = deviceFromRepo.serial_number;
