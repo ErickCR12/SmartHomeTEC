@@ -52,7 +52,8 @@ class MainActivity : AppCompatActivity() {
             //Se toma el valor de la contraseña registrada
             var contrasena = contrasena_inpurt.text.toString()
 
-            /**
+
+         /**
 
             //ESTA PARTE SE COMENTA PARA HACER PRUEBAS DE BASES DE DATOS
 
@@ -65,9 +66,16 @@ class MainActivity : AppCompatActivity() {
             val stringRequest = JsonObjectRequest(Request.Method.POST,
             "${url}login/", jsonObject, { response ->
             if(response != null){
-            response.get("username")
-            response.get("password")
-            response.get("userType")
+                response.get("username")
+                response.get("password")
+                response.get("userType")
+
+                Toast.makeText(this,"Bienvenido ", Toast.LENGTH_LONG).show()
+
+                val intent = Intent(this, Menu::class.java)
+                intent.putExtra("usuario", response.get("username").toString())
+
+                startActivity(intent)
             }
             else{
             Toast.makeText(this,"DATOS INVÁLIDOS", Toast.LENGTH_LONG).show()
@@ -80,7 +88,12 @@ class MainActivity : AppCompatActivity() {
 
             //HASTA ESTA PARTE LLEGA LO DE HACER REQUEST PARA EL API
 
-             **/
+
+            **/
+
+
+            //SIN HACER REQUEST DEL API
+
 
 
             //Si el usuario no ha ingresado ningún dato de entrada
@@ -90,7 +103,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 if (Corroborar(usuario, usuarios_registrados) && Corroborar(contrasena, contrasenas_registradas)) {
 
-                    Log.i("info", "REGISTRO Existoso")
                     Toast.makeText(this, "Bienvenido $usuario", Toast.LENGTH_LONG).show()
 
                     val intent = Intent(this, Menu::class.java)
@@ -102,8 +114,12 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "Datos ingresados no registrados", Toast.LENGTH_LONG).show()
                 }
-
             }
+
+
+
+
+
         }
     }
 

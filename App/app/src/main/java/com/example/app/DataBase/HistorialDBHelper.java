@@ -8,6 +8,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class HistorialDBHelper extends SQLiteOpenHelper {
                 + HistorialDB.RegistroHistorial.DISPOSITIVO + " TEXT NOT NULL,"
                 + HistorialDB.RegistroHistorial.TIEMPO + " TEXT NOT NULL,"
                 + HistorialDB.RegistroHistorial.FECHA + " TEXT NOT NULL,"
+                + HistorialDB.RegistroHistorial.ESTADO + "BOOLEAN NOT NULL,"
                 + "UNIQUE (" + HistorialDB.RegistroHistorial.TIEMPO+ "))"
         );
     }
@@ -59,7 +61,8 @@ public class HistorialDBHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex("nombreDispositivo")),
                         cursor.getInt(cursor.getColumnIndex("tiempo")),
                         //Dispositivo
-                        cursor.getString(cursor.getColumnIndex("fecha"))
+                        LocalDateTime.parse(cursor.getString(cursor.getColumnIndex("fecha"))),
+                        Boolean.valueOf(cursor.getString(cursor.getColumnIndex("estado")))
                 );
                 lista.add(historial);
             }while (cursor.moveToNext());

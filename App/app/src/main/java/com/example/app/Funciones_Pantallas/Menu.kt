@@ -20,14 +20,14 @@ class Menu: AppCompatActivity() {
         var dispositivos_informacion = intent.getStringArrayListExtra("dispositivos")
         var vinculaciones = intent.getStringArrayListExtra("vinculados")
 
-
         btnmenu.setOnClickListener {
-            startActivity(Intent(this, Gestion_Aposentos::class.java))
+            val intentt = Intent(this, Gestion_Aposentos::class.java)
+            intentt.putExtra("usuario", usuario)
+            startActivity(intentt)
         }
 
         btnmenu1.setOnClickListener {
             val intent2 = Intent(this, Gestion_Dispositivos::class.java)
-            intent2.putExtra("usuario", usuario)
             intent2.putExtra("aposentos", aposentos_informacion)
             startActivity(intent2)
         }

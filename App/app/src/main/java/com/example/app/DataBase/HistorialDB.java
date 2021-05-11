@@ -11,6 +11,7 @@ class HistorialDB {
         public static final String DISPOSITIVO = "nombreDispositivo";
         public static final String TIEMPO = "tiempo";
         public static final String FECHA = "fecha";
+        public static final String ESTADO = "estado";
 
 
 
