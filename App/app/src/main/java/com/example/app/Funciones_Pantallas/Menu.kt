@@ -3,6 +3,7 @@ package com.example.app.Funciones_Pantallas
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.app.R
 import kotlinx.android.synthetic.main.menu.*
@@ -27,21 +28,36 @@ class Menu: AppCompatActivity() {
         }
 
         btnmenu1.setOnClickListener {
-            val intent2 = Intent(this, Gestion_Dispositivos::class.java)
-            intent2.putExtra("aposentos", aposentos_informacion)
-            startActivity(intent2)
+            if (aposentos_informacion.size == 0 || aposentos_informacion == null){
+                Toast.makeText(this, "Favor seleccionar los aposentos", Toast.LENGTH_LONG).show()
+            }
+            else {
+                val intent2 = Intent(this, Gestion_Dispositivos::class.java)
+                intent2.putExtra("aposentos", aposentos_informacion)
+                startActivity(intent2)
+            }
         }
 
         btnmenu2.setOnClickListener {
-            val intent3 = Intent(this, Vincular::class.java)
-            intent3.putExtra("dispositivos", dispositivos_informacion)
-            startActivity(intent3)
+            if (dispositivos_informacion.size == 0 || dispositivos_informacion == null){
+                Toast.makeText(this, "Favor seleccionar los dispositivos", Toast.LENGTH_LONG).show()
+            }
+            else {
+                val intent3 = Intent(this, Vincular::class.java)
+                intent3.putExtra("dispositivos", dispositivos_informacion)
+                startActivity(intent3)
+            }
         }
 
         btnmenu3.setOnClickListener {
-            val intent4 = Intent(this, Control::class.java)
-            intent4.putExtra("vinculados", vinculaciones)
-            startActivity(intent4)
+            if (vinculaciones.size == 0 || vinculaciones == null){
+                Toast.makeText(this, "Debe vincular dispositivos", Toast.LENGTH_LONG).show()
+            }
+            else {
+                val intent4 = Intent(this, Control::class.java)
+                intent4.putExtra("vinculados", vinculaciones)
+                startActivity(intent4)
+            }
         }
     }
 }

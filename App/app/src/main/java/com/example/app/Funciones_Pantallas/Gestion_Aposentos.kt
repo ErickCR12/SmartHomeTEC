@@ -16,15 +16,17 @@ class Gestion_Aposentos: AppCompatActivity() {
     //Se crea un list de aposentos registrados
     val aposentos_registrados = arrayListOf<String>()
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.aposentos)
-
 
         //Se recibe la información de los aposentos registrados de al ventana anterior
         val intent = getIntent()
         val usuario_re = intent.getStringExtra("usuario")
 
+
+        Log.i("USER", usuario_re.toString())
 
         //Variables para recibir los datos de entrada de los aposentos
         val aposento_nombre = findViewById<EditText>(R.id.txtaposentonombre) as EditText
@@ -57,19 +59,29 @@ class Gestion_Aposentos: AppCompatActivity() {
         btnanadir.setOnClickListener {
             //Se muestra la función que se esté ejecutando en el momento
             label.setText("Añadir Aposento")
+
+            aposento_nombre.visibility = View.VISIBLE
+            editar_aposento.visibility = View.INVISIBLE
+            aposentos_disponibles.visibility = View.INVISIBLE
         }
 
         //Botón para eliminar aposentos a la aplicación
         btneliminar2.setOnClickListener {
             //Se muestra la función que se esté ejecutando en el momento
             label.setText("Eliminar Aposento")
+
+            aposento_nombre.visibility = View.VISIBLE
+            editar_aposento.visibility = View.INVISIBLE
+            aposentos_disponibles.visibility = View.INVISIBLE
         }
 
         btneditar.setOnClickListener {
             //Se muestra la función que se esté ejecutando en el momento
             label.setText("Editar Aposento")
 
+            aposento_nombre.visibility = View.VISIBLE
             editar_aposento.visibility = View.VISIBLE
+            aposentos_disponibles.visibility = View.INVISIBLE
         }
 
         //Botón para consultar los aposentos de la aplicación
@@ -111,6 +123,11 @@ class Gestion_Aposentos: AppCompatActivity() {
                     aposentos_registrados.add("sala")
                     aposentos_registrados.add("comedor")
                     Log.i("infoA", aposentos_registrados.toString())
+
+                    aposento_nombre.visibility = View.VISIBLE
+                    editar_aposento.visibility = View.INVISIBLE
+                    aposentos_disponibles.visibility = View.INVISIBLE
+
                 } else {
                     //Si el usuario ingresa un aposento válido se añade a la lista vacia
                     aposentos_registrados.add(aposento)
@@ -119,11 +136,11 @@ class Gestion_Aposentos: AppCompatActivity() {
                     aposentos_registrados.add("sala")
                     aposentos_registrados.add("comedor")
                     Log.i("infoA", aposentos_registrados.toString())
-                }
 
-                aposento_nombre.visibility = View.VISIBLE
-                editar_aposento.visibility = View.INVISIBLE
-                aposentos_disponibles.visibility = View.INVISIBLE
+                    aposento_nombre.visibility = View.VISIBLE
+                    editar_aposento.visibility = View.INVISIBLE
+                    aposentos_disponibles.visibility = View.INVISIBLE
+                }
             }
 
             /**
