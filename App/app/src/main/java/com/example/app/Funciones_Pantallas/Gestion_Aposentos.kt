@@ -16,10 +16,15 @@ class Gestion_Aposentos: AppCompatActivity() {
     //Se crea un list de aposentos registrados
     val aposentos_registrados = arrayListOf<String>()
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.aposentos)
+
+
+        //Se recibe la información de los aposentos registrados de al ventana anterior
+        val intent = getIntent()
+        val usuario_re = intent.getStringExtra("usuario")
+
 
         //Variables para recibir los datos de entrada de los aposentos
         val aposento_nombre = findViewById<EditText>(R.id.txtaposentonombre) as EditText
@@ -107,12 +112,12 @@ class Gestion_Aposentos: AppCompatActivity() {
                     aposentos_registrados.add("comedor")
                     Log.i("infoA", aposentos_registrados.toString())
                 } else {
+                    //Si el usuario ingresa un aposento válido se añade a la lista vacia
+                    aposentos_registrados.add(aposento)
                     aposentos_registrados.add("dormitorio")
                     aposentos_registrados.add("cocina")
                     aposentos_registrados.add("sala")
                     aposentos_registrados.add("comedor")
-                    //Si el usuario ingresa un aposento válido se añade a la lista vacia
-                    aposentos_registrados.add(aposento)
                     Log.i("infoA", aposentos_registrados.toString())
                 }
 
@@ -184,7 +189,7 @@ class Gestion_Aposentos: AppCompatActivity() {
         //Se envía toda la información a la ventana de gestión de dispositivos
         btnvisualizar2.setOnClickListener {
 
-            //val intent = Intent(this, Gestion_Dispositivos::class.java)
+            aposentos_registrados.add(usuario_re)
 
             val intent = Intent(this, Menu::class.java)
             intent.putExtra("aposentos", aposentos_registrados)

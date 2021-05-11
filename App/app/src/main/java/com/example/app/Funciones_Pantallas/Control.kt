@@ -34,6 +34,14 @@ class Control: AppCompatActivity() {
         //Variable para llevar el control de las posiciones en el array
         var item = 0
 
+        //Esta sección de códgio sireve para mostrar la información de fecha y hora
+        val calendario:java.util.Calendar = java.util.Calendar.getInstance()
+
+        //El formato es Día-Mes-Año la garantía
+        val dia = calendario.get(java.util.Calendar.DAY_OF_MONTH)
+        val mes = calendario.get(java.util.Calendar.MONTH)
+        val ano = calendario.get(java.util.Calendar.YEAR)
+
         //Se muestra la información de los labels
         label_aposento.setText(aposentos_vinculados.get(item))
         label_dispositivo.setText(dispositivos_vinculados.get(item))
