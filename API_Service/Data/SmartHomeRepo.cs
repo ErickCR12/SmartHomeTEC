@@ -641,7 +641,8 @@ namespace API_Service.Data
             DBconn.Open();
             var sqlDeviceCount = new NpgsqlCommand(
                 "SELECT COUNT(serial_number) " +
-                "FROM devices", 
+                "FROM devices " +
+                "WHERE client_email IS NOT NULL", 
                 DBconn
                 );
 

@@ -8,12 +8,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.app.DataBase.Registro
 import com.example.app.DataBase.RegistroDBHelper
 import com.example.app.R
 import kotlinx.android.synthetic.main.dispositivos.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.util.ArrayList
 
@@ -28,7 +30,7 @@ class Gestion_Dispositivos: AppCompatActivity() {
     val consumo_registrados = arrayListOf<String>()
     val garantias_registrados = arrayListOf<String>()
 
-    val dispostivos_del_server = arrayListOf<String>()
+    val tipos_del_server = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +42,13 @@ class Gestion_Dispositivos: AppCompatActivity() {
 
         val usuario_re = aposentos_re.get(aposentos_re.size - 1 )
 
-        val url = "http://192.168.1.3/API_Service/api/devices/"
+        val urlTipos = "http://192.168.1.40/API_Service/api/deviceTypes/"
+        TiposDispositivos(urlTipos)
+        Log.i("tipos", tipos_del_server.toString())
 
-        //val tomar_dispositivos = Dispositivos(url, dispostivos_del_server, usuario_re)
+//        val url = "http://192.168.1.40/API_Service/api/devices/byclient/"
+//        val tomar_dispositivos = Dispositivos(url, dispostivos_del_server, usuario_re)
+//        Log.i("dispositivos", tomar_dispositivos.toString()
 
 
         //Variables para recibir los datos de entrada de los dispositivos y sus características
@@ -52,6 +58,8 @@ class Gestion_Dispositivos: AppCompatActivity() {
         val disp_serie = findViewById<EditText>(R.id.txtseries) as EditText
         val disp_consumo = findViewById<EditText>(R.id.txtconsumo) as EditText
         val disp_gatantia = findViewById<EditText>(R.id.txtgarantia) as EditText
+
+        disp_tipo.setText(tipos_del_server[0])
 
         btnagregadis.setOnClickListener {
 
@@ -136,21 +144,49 @@ class Gestion_Dispositivos: AppCompatActivity() {
         val queue = Volley.newRequestQueue(this)
         val jsonObject = JSONObject()
 
-        jsonObject.put("username",usuario)
+        jsonObject.put("client_email",usuario)
 
         //Validaciones para continuar en la aplicación
 
-        val stringRequest = JsonObjectRequest(Request.Method.POST,
-                url, jsonObject, { response ->
+        val stringRequest = JsonArrayRequest(Request.Method.GET,
+                url + usuario, null, { response ->
 
             for (i in 0 until (response.length())) {
-                val disp = response.get("device_type_name")
-                dispositivo.add(disp.toString())
-           }
+                val disp: JSONObject = response.getJSONObject(i)
+
+                dispositivo.add(disp.getString("device_type_name"))
+                Log.i("for", dispositivo.toString());
+            }
         },
-            {
-                Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()})
-         queue.add(stringRequest)
-         return dispositivo
+                {
+                    Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()
+                })
+
+        queue.add(stringRequest)
+        return dispositivo
+
+    }
+
+    private fun TiposDispositivos(url: String) {
+
+        val queue = Volley.newRequestQueue(this)
+
+        //Validaciones para continuar en la aplicación
+
+        val stringRequest = JsonArrayRequest(Request.Method.GET,
+                url, null, { response ->
+
+            for (i in 0 until (response.length())) {
+                val tipo: JSONObject = response.getJSONObject(i)
+
+                tipos_del_server.add(tipo.getString("name"))
+                Log.i("for", tipos_del_server.toString());
+            }
+        },
+                {
+                    Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()
+                })
+
+        queue.add(stringRequest)
     }
 }

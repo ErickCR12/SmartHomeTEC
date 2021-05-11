@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val usuario_input = findViewById<EditText>(R.id.inputusuario) as EditText
         val contrasena_inpurt = findViewById<EditText>(R.id.inputcontrasena) as EditText
 
-        val url = "http://192.168.1.3/API_Service/api/"
+        val url = "http://192.168.1.40/API_Service/api/"
         val queue = Volley.newRequestQueue(this)
         val jsonObject = JSONObject()
 
@@ -53,8 +53,6 @@ class MainActivity : AppCompatActivity() {
             var contrasena = contrasena_inpurt.text.toString()
 
 
-         /**
-
             //ESTA PARTE SE COMENTA PARA HACER PRUEBAS DE BASES DE DATOS
 
             //Envio del usuario y contraseña en formato JSON
@@ -65,12 +63,13 @@ class MainActivity : AppCompatActivity() {
 
             val stringRequest = JsonObjectRequest(Request.Method.POST,
             "${url}login/", jsonObject, { response ->
-            if(response != null){
+            if(response != null && response.get("userType").toString() == "Client"){
                 response.get("username")
                 response.get("password")
                 response.get("userType")
 
-                Toast.makeText(this,"Bienvenido ", Toast.LENGTH_LONG).show()
+
+                Toast.makeText(this, "BIENVENIDO",  Toast.LENGTH_LONG).show()
 
                 val intent = Intent(this, Menu::class.java)
                 intent.putExtra("usuario", response.get("username").toString())
@@ -89,33 +88,31 @@ class MainActivity : AppCompatActivity() {
             //HASTA ESTA PARTE LLEGA LO DE HACER REQUEST PARA EL API
 
 
-            **/
-
 
             //SIN HACER REQUEST DEL API
 
 
-
-            //Si el usuario no ha ingresado ningún dato de entrada
-            if (usuario_input.text.toString().isNullOrEmpty() || contrasena_inpurt.text.toString().isNullOrEmpty()) {
-                //Se despliega un mensaje de alerta solicitando datos válidos para el ingreso
-                Toast.makeText(this, "Favor ingresar datos válidos", Toast.LENGTH_LONG).show()
-            } else {
-                if (Corroborar(usuario, usuarios_registrados) && Corroborar(contrasena, contrasenas_registradas)) {
-
-                    Toast.makeText(this, "Bienvenido $usuario", Toast.LENGTH_LONG).show()
-
-                    val intent = Intent(this, Menu::class.java)
-                    intent.putExtra("usuario", usuario)
-
-                    startActivity(intent)
-
-                    //startActivity(Intent(this, Menu::class.java))
-                } else {
-                    Toast.makeText(this, "Datos ingresados no registrados", Toast.LENGTH_LONG).show()
-                }
-            }
-
+//
+//            //Si el usuario no ha ingresado ningún dato de entrada
+//            if (usuario_input.text.toString().isNullOrEmpty() || contrasena_inpurt.text.toString().isNullOrEmpty()) {
+//                //Se despliega un mensaje de alerta solicitando datos válidos para el ingreso
+//                Toast.makeText(this, "Favor ingresar datos válidos", Toast.LENGTH_LONG).show()
+//            } else {
+//                if (Corroborar(usuario, usuarios_registrados) && Corroborar(contrasena, contrasenas_registradas)) {
+//
+//                    Toast.makeText(this, "Bienvenido $usuario", Toast.LENGTH_LONG).show()
+//
+//                    val intent = Intent(this, Menu::class.java)
+//                    intent.putExtra("usuario", usuario)
+//
+//                    startActivity(intent)
+//
+//                    //startActivity(Intent(this, Menu::class.java))
+//                } else {
+//                    Toast.makeText(this, "Datos ingresados no registrados", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//
 
 
 
