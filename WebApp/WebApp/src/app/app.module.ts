@@ -12,11 +12,13 @@ import { DevicesComponent } from './components/devices/devices.component';
 import { DeviceTableComponent } from './components/device-table/device-table.component';
 import { UploadpageComponent } from './components/uploadpage/uploadpage.component';
 import { UsageTableComponent } from './components/usage-table/usage-table.component';
+import { DasboardComponent } from './components/dasboard/dasboard.component';
 
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {MessagesComponent} from './messages/messages.component';
 import {UsersService} from './users.service';
+
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import {UsersService} from './users.service';
     UploadpageComponent,
     UsageTableComponent,
     MessagesComponent,
+    DasboardComponent,
 
   ],
     imports: [
