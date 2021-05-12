@@ -87,11 +87,9 @@ class MainActivity : AppCompatActivity() {
 
             //HASTA ESTA PARTE LLEGA LO DE HACER REQUEST PARA EL API
 
-
-
             //SIN HACER REQUEST DEL API
-
-
+//
+//
 //
 //            //Si el usuario no ha ingresado ningún dato de entrada
 //            if (usuario_input.text.toString().isNullOrEmpty() || contrasena_inpurt.text.toString().isNullOrEmpty()) {
@@ -112,7 +110,7 @@ class MainActivity : AppCompatActivity() {
 //                    Toast.makeText(this, "Datos ingresados no registrados", Toast.LENGTH_LONG).show()
 //                }
 //            }
-//
+
 
 
 

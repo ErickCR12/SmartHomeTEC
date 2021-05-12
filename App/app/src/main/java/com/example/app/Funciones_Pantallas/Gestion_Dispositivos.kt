@@ -43,8 +43,8 @@ class Gestion_Dispositivos: AppCompatActivity() {
         val usuario_re = aposentos_re.get(aposentos_re.size - 1 )
 
         val urlTipos = "http://192.168.1.40/API_Service/api/deviceTypes/"
-        TiposDispositivos(urlTipos)
-        Log.i("tipos", tipos_del_server.toString())
+        //TiposDispositivos(urlTipos)
+        //Log.i("tipos", tipos_del_server.toString())
 
 //        val url = "http://192.168.1.40/API_Service/api/devices/byclient/"
 //        val tomar_dispositivos = Dispositivos(url, dispostivos_del_server, usuario_re)
@@ -59,7 +59,7 @@ class Gestion_Dispositivos: AppCompatActivity() {
         val disp_consumo = findViewById<EditText>(R.id.txtconsumo) as EditText
         val disp_gatantia = findViewById<EditText>(R.id.txtgarantia) as EditText
 
-        disp_tipo.setText(tipos_del_server[0])
+        //disp_tipo.setText(tipos_del_server[0])
 
         btnagregadis.setOnClickListener {
 
@@ -121,14 +121,41 @@ class Gestion_Dispositivos: AppCompatActivity() {
 
             val intent = Intent(this, Menu::class.java)
 
-            dispositivos_registrados.add("*$usuario_re")
+            val urlTipos = "http://192.168.1.40/API_Service/api/deviceTypes/"
 
-            for (registro in 0 until aposentos_re.size) {
-                dispositivos_registrados.add(aposentos_re[registro])
-                }
+            val queue = Volley.newRequestQueue(this)
 
-            intent.putExtra("dispositivos", dispositivos_registrados)
-            startActivity(intent)
+            //Validaciones para continuar en la aplicación
+
+            val stringRequest = JsonArrayRequest(Request.Method.GET,
+                urlTipos, null, { response ->
+
+                    for (i in 0 until (response.length())) {
+                        val tipo: JSONObject = response.getJSONObject(i)
+
+                        dispositivos_registrados.add(tipo.getString("name"))
+                        Log.i("for", dispositivos_registrados.toString());
+                    }
+
+                    dispositivos_registrados.add("*$usuario_re")
+
+                    for (registro in 0 until aposentos_re.size) {
+                        dispositivos_registrados.add(aposentos_re[registro])
+                    }
+
+
+                    intent.putExtra("dispositivos", dispositivos_registrados)
+                    startActivity(intent)
+
+
+                },
+                {
+                    Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()
+                })
+
+            queue.add(stringRequest)
+
+            
 
             //intent.putExtra("aposentos", aposentos_re)
             //intent.putExtra("marcas", marcas_registrados)
@@ -154,7 +181,7 @@ class Gestion_Dispositivos: AppCompatActivity() {
             for (i in 0 until (response.length())) {
                 val disp: JSONObject = response.getJSONObject(i)
 
-                dispositivo.add(disp.getString("device_type_name"))
+                dispositivo.add(disp.getString("serial_number"))
                 Log.i("for", dispositivo.toString());
             }
         },
