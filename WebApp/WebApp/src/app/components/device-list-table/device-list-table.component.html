@@ -1,0 +1,19 @@
+<div class="overflow-auto">
+  <table class="table table-responsive-sm table-hover table-striped" cellspacing="0"
+         width="100%">
+    <thead>
+      <tr>
+        <th scope="col">Numero de serie</th>
+        <th scope="col">Tipo de dispositivo</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Pertenece a algún cliente</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let device of devices">
+      <td>{{device.serial_number}}</td>
+      <td>{{device.device_type_name}}</td>
+      <td>{{device.brand}}</td>
+      <td>{{device.client_email === ""? "NO":"SI"}}</td>
+    </tbody>
+  </table>
+</div>

@@ -13,7 +13,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:text="SmartHomeTEC"
-        android:textColor="#f17950"
+        android:textColor="#E91E63"
         android:textSize="60sp"
         android:textStyle="bold"
         app:fontFamily="monospace"
@@ -33,5 +33,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.159"
-        app:srcCompat="@drawable/food_image" />
+        app:srcCompat="@drawable/logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

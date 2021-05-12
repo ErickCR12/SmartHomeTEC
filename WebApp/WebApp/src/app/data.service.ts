@@ -12,6 +12,7 @@ import {Region} from './models/region';
 import {DirectionClient} from './models/direction-client';
 import {DevicesPerUser} from './models/devices-per-user';
 import {Order} from './models/order';
+import {NumberDto} from './models/number-dto';
 @Injectable({
   providedIn: 'root'
 })
@@ -157,11 +158,11 @@ export class DataService {
       );
   }
 
-  getActiveDevices(): Observable<number> {
+  getActiveDevices(): Observable<NumberDto> {
     this.messageService.add('DataService: fetched ActiveDevices');
-    return this.http.get<number>(this.dashboardUrl + 'activeDevices')
+    return this.http.get<NumberDto>(this.dashboardUrl + 'activeDevices')
       .pipe(
-        catchError(this.handleError<number>('getAllDevices', -1))
+        catchError(this.handleError<NumberDto>('getAllDevices', null))
       );
   }
 
@@ -170,6 +171,14 @@ export class DataService {
     return this.http.get<DevicesPerUser>(this.dashboardUrl + 'devicesPerUser')
       .pipe(
         catchError(this.handleError<DevicesPerUser>('getDevicesPerUser', null))
+      );
+  }
+
+  getDevicesPerRegion(): Observable<Region[]> {
+    this.messageService.add('DataService: fetched DevicesPerRegion');
+    return this.http.get<Region[]>(this.dashboardUrl + 'DevicesPerRegion')
+      .pipe(
+        catchError(this.handleError<Region[]>('DevicesPerRegion', null))
       );
   }
 

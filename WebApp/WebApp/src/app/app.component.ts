@@ -21,9 +21,8 @@ export class AppComponent {
 
   // ________/Admin \_______
   isDeviceType = false;
-  isDevices  = false;
-  isActiveDevices  = false;
-  isUsageDevices = false;
+  isDevices = false;
+  isDashboard = false;
   isUploadDoc = false;
 
   // ____________________/Client Tabs\_____________________
@@ -49,6 +48,26 @@ export class AppComponent {
   clickBack() {
     this.usersService.isLogged = false;
     this.isReg = false;
+    this.isEditProf = false;
+    this.isShop = false;
+    this.isReport = false;
+
+    this.isDeviceType = false;
+    this.isDevices  = false;
+    this.isUploadDoc = false;
+    this.isDashboard = false;
+  }
+
+  clickAdmin() {
+    this.usersService.isLogged = true;
+    this.usersService.isAdmin = true;
+    this.isReg = false;
+  }
+
+  clickClient() {
+    this.usersService.isLogged = true;
+    this.usersService.isAdmin = false;
+    this.isReg = false;
   }
 
   clickReg() {
@@ -56,17 +75,9 @@ export class AppComponent {
   }
 
   // ____________________/Admin Tabs\______________________
-  clickSeeDevs() {
-    this.isActiveDevices = !this.isActiveDevices;
-    this.isUsageDevices = false;
-    this.isDevices = false;
-    this.isDeviceType = false;
-    this.isUploadDoc = false;
-  }
 
-  clickUsageDevices() {
-    this.isUsageDevices = !this.isUsageDevices;
-    this.isActiveDevices = false;
+  clickDashboard() {
+    this.isDashboard = !this.isDashboard;
     this.isDevices = false;
     this.isDeviceType = false;
     this.isUploadDoc = false;
@@ -74,8 +85,6 @@ export class AppComponent {
 
   clickUploadDoc() {
     this.isUploadDoc = !this.isUploadDoc;
-    this.isUsageDevices = false;
-    this.isActiveDevices = false;
     this.isDevices = false;
     this.isDeviceType = false;
   }
@@ -83,16 +92,12 @@ export class AppComponent {
   // type devices
   clickDeviceManager() {
     this.isDeviceType = !this.isDeviceType;
-    this.isUsageDevices = false;
-    this.isActiveDevices = false;
     this.isDevices = false;
     this.isUploadDoc = false;
   }
 
   clickDevices() {
     this.isDevices = !this.isDevices;
-    this.isUsageDevices = false;
-    this.isActiveDevices = false;
     this.isDeviceType = false;
     this.isUploadDoc = false;
   }

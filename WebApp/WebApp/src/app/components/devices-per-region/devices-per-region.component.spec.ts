@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UsageTableComponent } from './usage-table.component';
+import { DevicesPerRegionComponent } from './devices-per-region.component';
 
-describe('UsageTableComponent', () => {
-  let component: UsageTableComponent;
-  let fixture: ComponentFixture<UsageTableComponent>;
+describe('DevicesPerRegionComponent', () => {
+  let component: DevicesPerRegionComponent;
+  let fixture: ComponentFixture<DevicesPerRegionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UsageTableComponent ]
+      declarations: [ DevicesPerRegionComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsageTableComponent);
+    fixture = TestBed.createComponent(DevicesPerRegionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

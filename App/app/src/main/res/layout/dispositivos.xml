@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <EditText
-        android:id="@+id/txtmarca"
-        android:layout_width="349dp"
-        android:layout_height="55dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Marca"
-        android:textColor="#FF071145"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.387"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.417" />
-
     <Button
         android:id="@+id/btnagregadis"
         android:layout_width="147dp"
@@ -34,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.939"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.974" />
+        app:layout_constraintVertical_bias="0.975" />
 
     <Button
         android:id="@+id/btnsiguiente"
@@ -49,37 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
-
-    <TextView
-        android:id="@+id/lblserie"
-        android:layout_width="113dp"
-        android:layout_height="55dp"
-        android:gravity="clip_horizontal|center_horizontal|center_vertical"
-        android:text="Serie"
-        android:textColor="#FF071145"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.547" />
-
-    <EditText
-        android:id="@+id/txtconsumo"
-        android:layout_width="221dp"
-        android:layout_height="58dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textColor="#FF071145"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.684" />
 
     <TextView
         android:id="@+id/lbltitulo3"
@@ -97,92 +50,92 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.024" />
 
-    <TextView
-        android:id="@+id/lblmostrar_g"
-        android:layout_width="217dp"
-        android:layout_height="51dp"
-        android:gravity="clip_horizontal|center_horizontal|center_vertical"
-        android:text="Garantía"
-        android:textColor="#FF071145"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.804"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.805" />
-
-    <EditText
-        android:id="@+id/txtseries"
-        android:layout_width="221dp"
-        android:layout_height="58dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textColor="#FF071145"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.551" />
-
     <EditText
         android:id="@+id/txttipo"
         android:layout_width="349dp"
         android:layout_height="55dp"
         android:ems="10"
+        android:hint="Serie"
         android:inputType="textPersonName"
-        android:text="Tipo"
         android:textColor="#FF071145"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.419"
+        app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.284" />
+        app:layout_constraintVertical_bias="0.31" />
 
-    <TextView
-        android:id="@+id/lblconsumo"
-        android:layout_width="113dp"
-        android:layout_height="55dp"
-        android:gravity="clip_horizontal|center_horizontal|center_vertical"
-        android:text="Consumo"
+    <EditText
+        android:id="@+id/txtseries"
+        android:layout_width="157dp"
+        android:layout_height="61dp"
+        android:ems="10"
+        android:hint="Serie"
+        android:inputType="number"
         android:textColor="#FF071145"
-        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.811"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.68" />
+        app:layout_constraintVertical_bias="0.628" />
 
-    <TextView
-        android:id="@+id/lblgarantia"
-        android:layout_width="113dp"
-        android:layout_height="55dp"
-        android:gravity="clip_horizontal|center_horizontal|center_vertical"
-        android:text="Garantía"
+    <EditText
+        android:id="@+id/txtconsumo"
+        android:layout_width="147dp"
+        android:layout_height="59dp"
+        android:ems="10"
+        android:hint="Consumo"
+        android:inputType="number"
         android:textColor="#FF071145"
-        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintVertical_bias="0.626" />
+
+    <EditText
+        android:id="@+id/txtgarantia"
+        android:layout_width="221dp"
+        android:layout_height="58dp"
+        android:ems="10"
+        android:hint="Garantía"
+        android:inputType="number"
+        android:textColor="#FF071145"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.789" />
+
+    <EditText
+        android:id="@+id/txtmarca"
+        android:layout_width="349dp"
+        android:layout_height="55dp"
+        android:ems="10"
+        android:hint="Marca"
+        android:inputType="textPersonName"
+        android:textColor="#FF071145"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.465" />
 
     <EditText
         android:id="@+id/txtdispsotivo"
         android:layout_width="349dp"
         android:layout_height="55dp"
         android:ems="10"
+        android:hint="Tipo de dispositivo"
         android:inputType="textPersonName"
-        android:text="Dispositivo"
         android:textColor="#FF071145"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

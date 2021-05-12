@@ -1,0 +1,17 @@
+<div class="overflow-auto">
+  <table class="table table-responsive-sm table-hover table-striped" cellspacing="0"
+         width="100%">
+    <thead>
+    <tr>
+      <th scope="col">Continente</th>
+      <th scope="col">Pais</th>
+      <th scope="col">Cantidad de dispositivos</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let region of regions">
+    <td>{{region.continent}}</td>
+    <td>{{region.country}}</td>
+    <td>{{region.amount}}</td>
+    </tbody>
+  </table>
+</div>

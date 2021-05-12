@@ -3,11 +3,11 @@ import {DevicesPerUser} from '../../models/devices-per-user';
 import {DataService} from '../../data.service';
 
 @Component({
-  selector: 'app-device-table',
-  templateUrl: './device-table.component.html',
-  styleUrls: ['./device-table.component.css']
+  selector: 'app-devices-per-user',
+  templateUrl: './devices-per-user.component.html',
+  styleUrls: ['./devices-per-user.component.css']
 })
-export class DeviceTableComponent implements OnInit {
+export class DevicesPerUserComponent implements OnInit {
 
   devicesPerUser: DevicesPerUser;
   constructor(private dataService: DataService) { }

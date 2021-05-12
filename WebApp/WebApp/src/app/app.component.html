@@ -15,6 +15,18 @@
         </li>
       </ul>
 
+      <ul class="navbar-nav me-auto mb-1 mb-sm-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickAdmin()">Admin</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav me-auto mb-1 mb-sm-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="clickClient()">Client</a>
+        </li>
+      </ul>
+
       <ul class="navbar-nav me-auto mb-1 mb-sm-0" *ngIf="(this.usersService.isAdmin && this.usersService.isLogged);
       else elseClient">
 
@@ -25,10 +37,7 @@
           <a class="nav-link active" aria-current="page" (click)="clickDevices()">{{isDevices? "Hide Devices":"Devices"}}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickSeeDevs()">{{isActiveDevices? "Hide Devices Per User":"Active Devices Per User"}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" (click)="clickUsageDevices()">{{isUsageDevices? "Hide Total Devices":"Total Devices"}}</a>
+          <a class="nav-link active" aria-current="page" (click)="clickDashboard()">{{isDashboard? "Hide Dashboard":"Dashboard"}}</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" (click)="clickUploadDoc()">{{isUploadDoc? "Hide Excel Tab":"Excel Table"}}</a>
@@ -64,6 +73,6 @@
 <!-- Admin Tabs-->
 <app-device-maganer *ngIf="isDeviceType"></app-device-maganer>
 <app-devices *ngIf="isDevices"></app-devices>
-<app-device-table *ngIf="isActiveDevices"></app-device-table>
+<app-dasboard *ngIf="isDashboard"></app-dasboard>
 <app-uploadpage *ngIf="isUploadDoc"></app-uploadpage>
-<app-usage-table *ngIf="isUsageDevices"></app-usage-table>
+
