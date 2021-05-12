@@ -19,6 +19,8 @@ import {FormsModule} from '@angular/forms';
 import {MessagesComponent} from './messages/messages.component';
 import {UsersService} from './users.service';
 import { DevicesPerRegionComponent } from './components/devices-per-region/devices-per-region.component';
+import { DeviceTypesUsageComponent } from './components/device-types-usage/device-types-usage.component';
+import { DeviceDailyUsageComponent } from './components/device-daily-usage/device-daily-usage.component';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import { DevicesPerRegionComponent } from './components/devices-per-region/devic
     MessagesComponent,
     DasboardComponent,
     DevicesPerRegionComponent,
+    DeviceTypesUsageComponent,
+    DeviceDailyUsageComponent,
 
   ],
     imports: [

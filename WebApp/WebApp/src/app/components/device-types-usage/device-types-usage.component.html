@@ -1,0 +1,15 @@
+<div class="overflow-auto">
+  <table class="table table-responsive-sm table-hover table-striped" cellspacing="0"
+         width="100%">
+    <thead>
+    <tr>
+      <th scope="col">Tipo de dispositivo</th>
+      <th scope="col">Uso electrico por minuto</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let report of reports">
+    <td>{{report.string_value}}</td>
+    <td>{{report.numerical_value}}</td>
+    </tbody>
+  </table>
+</div>

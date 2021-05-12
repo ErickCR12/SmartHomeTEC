@@ -85,7 +85,7 @@ REFERENCES regions (continent, country);
 
 ALTER TABLE device_distributor
 ADD CONSTRAINT DEVICE_DISTRIBUTOR_SDEVICES_FK FOREIGN KEY (devices_serial_number)
-REFERENCES devices (serial_number);
+REFERENCES devices (serial_number) ON DELETE CASCADE;
 
 ALTER TABLE device_distributor
 ADD CONSTRAINT DEVICE_DISTRIBUTOR_DISTRIBUTORS_FK FOREIGN KEY (distributors_legal_card)
@@ -93,7 +93,7 @@ REFERENCES distributors (legal_card);
 
 ALTER TABLE devices
 ADD CONSTRAINT DEVICES_DEVICE_TYPES_FK FOREIGN KEY (device_type_name)
-REFERENCES device_types (name);
+REFERENCES device_types (name) ON DELETE CASCADE;
 
 ALTER TABLE devices
 ADD CONSTRAINT DEVICES_CLIENTS_FK FOREIGN KEY (client_email)
@@ -109,7 +109,7 @@ REFERENCES regions (continent, country);
 
 ALTER TABLE orders
 ADD CONSTRAINT ORDERS_DEVICES_FK FOREIGN KEY (device_serial_number)
-REFERENCES devices (serial_number);
+REFERENCES devices (serial_number) ON DELETE CASCADE;
 
 ALTER TABLE orders
 ADD CONSTRAINT ORDERS_CLIENTS_FK FOREIGN KEY (client_email)

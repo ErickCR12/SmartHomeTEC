@@ -41,6 +41,11 @@ namespace API_Service.Data
         DevicesPerUser GetDevicesPerUser();
         List<Region> GetDevicesPerRegion();
         int GetActiveDevices();
+        
+        
+        int GetMonthlyUsage(string email);
+        List<Report> GetDeviceTypesUsage(string email);
+        List<Report> GetDailyUsage(string email);
 
     }
 

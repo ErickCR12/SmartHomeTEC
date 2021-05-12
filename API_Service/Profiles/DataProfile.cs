@@ -25,6 +25,7 @@ namespace WebServiceResTEC.Profiles
             CreateMap<Region, RegionDto>().ReverseMap();
             CreateMap<DirectionClient, DirectionClientDto>().ReverseMap();
             CreateMap<DevicesPerUser, DevicesPerUserDto>().ReverseMap();
+            CreateMap<Report, ReportDto>().ReverseMap();
         }
     }
 
