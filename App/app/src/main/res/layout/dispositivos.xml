@@ -134,7 +134,7 @@
         android:layout_width="349dp"
         android:layout_height="55dp"
         android:ems="10"
-        android:hint="Dispositivo"
+        android:hint="Tipo de dispositivo"
         android:inputType="textPersonName"
         android:textColor="#FF071145"
         android:textStyle="bold"

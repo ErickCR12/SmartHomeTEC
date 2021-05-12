@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity() {
             //Se toma el valor de la contraseña registrada
             var contrasena = contrasena_inpurt.text.toString()
 
-            /**
-
 
             //ESTA PARTE SE COMENTA PARA HACER PRUEBAS DE BASES DE DATOS
 
@@ -89,32 +87,29 @@ class MainActivity : AppCompatActivity() {
 
             //HASTA ESTA PARTE LLEGA LO DE HACER REQUEST PARA EL API
 
-
-            **/
-
             //SIN HACER REQUEST DEL API
-
-
-
-            //Si el usuario no ha ingresado ningún dato de entrada
-            if (usuario_input.text.toString().isNullOrEmpty() || contrasena_inpurt.text.toString().isNullOrEmpty()) {
-                //Se despliega un mensaje de alerta solicitando datos válidos para el ingreso
-                Toast.makeText(this, "Favor ingresar datos válidos", Toast.LENGTH_LONG).show()
-            } else {
-                if (Corroborar(usuario, usuarios_registrados) && Corroborar(contrasena, contrasenas_registradas)) {
-
-                    Toast.makeText(this, "Bienvenido $usuario", Toast.LENGTH_LONG).show()
-
-                    val intent = Intent(this, Menu::class.java)
-                    intent.putExtra("usuario", usuario)
-
-                    startActivity(intent)
-
-                    //startActivity(Intent(this, Menu::class.java))
-                } else {
-                    Toast.makeText(this, "Datos ingresados no registrados", Toast.LENGTH_LONG).show()
-                }
-            }
+//
+//
+//
+//            //Si el usuario no ha ingresado ningún dato de entrada
+//            if (usuario_input.text.toString().isNullOrEmpty() || contrasena_inpurt.text.toString().isNullOrEmpty()) {
+//                //Se despliega un mensaje de alerta solicitando datos válidos para el ingreso
+//                Toast.makeText(this, "Favor ingresar datos válidos", Toast.LENGTH_LONG).show()
+//            } else {
+//                if (Corroborar(usuario, usuarios_registrados) && Corroborar(contrasena, contrasenas_registradas)) {
+//
+//                    Toast.makeText(this, "Bienvenido $usuario", Toast.LENGTH_LONG).show()
+//
+//                    val intent = Intent(this, Menu::class.java)
+//                    intent.putExtra("usuario", usuario)
+//
+//                    startActivity(intent)
+//
+//                    //startActivity(Intent(this, Menu::class.java))
+//                } else {
+//                    Toast.makeText(this, "Datos ingresados no registrados", Toast.LENGTH_LONG).show()
+//                }
+//            }
 
 
 

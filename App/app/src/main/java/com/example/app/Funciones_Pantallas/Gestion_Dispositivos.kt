@@ -181,7 +181,7 @@ class Gestion_Dispositivos: AppCompatActivity() {
             for (i in 0 until (response.length())) {
                 val disp: JSONObject = response.getJSONObject(i)
 
-                dispositivo.add(disp.getString("device_type_name"))
+                dispositivo.add(disp.getString("serial_number"))
                 Log.i("for", dispositivo.toString());
             }
         },
