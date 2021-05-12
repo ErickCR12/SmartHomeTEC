@@ -11,15 +11,27 @@
           </h6>
           <ul class="nav flex-column mb-2">
             <li class="nav-item">
-              <a class="nav-link" (click)="clickTD()" href="#">
+              <a class="nav-link" (click)="clickDevicesPerUser()" href="#">
                 <span data-feather="file-text"></span>
-                Total devices
+                Promedio dispositivos por usuario
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" (click)="clickDPU()" href="#">
+              <a class="nav-link" (click)="clickAmountDevices()" href="#">
                 <span data-feather="file-text"></span>
-                Devices per User
+                Cantidad total de dispositivos
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="clickDevicesPerRegion()" href="#">
+                <span data-feather="file-text"></span>
+                Cantidad total de dispositivos por región
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="clickDevicesList()" href="#">
+                <span data-feather="file-text"></span>
+                Listado de dispositivos
               </a>
             </li>
           </ul>
@@ -30,12 +42,12 @@
 
         <h2>Reportes</h2>
 
-        <app-device-table *ngIf="switchTables; else elseblock"></app-device-table>
-        <ng-template #elseblock>
-          <app-usage-table></app-usage-table>
-        </ng-template>
-
-
+        <app-devices-per-user *ngIf="isDevicesPerUser;"></app-devices-per-user>
+        <app-device-list-table *ngIf="isDevicesList"></app-device-list-table>
+        <app-devices-per-region *ngIf="isDevicesPerRegion"></app-devices-per-region>
+        <div *ngIf="isAmountDevices">
+          <p>La cantidad de dispositivos activos gestionados por el sistema es de: {{activeDevices}}</p>
+        </div>
       </main>
     </div>
   </div>

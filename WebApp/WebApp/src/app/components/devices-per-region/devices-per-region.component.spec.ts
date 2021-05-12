@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeviceTableComponent } from './device-table.component';
+import { DevicesPerRegionComponent } from './devices-per-region.component';
 
-describe('DeviceTableComponent', () => {
-  let component: DeviceTableComponent;
-  let fixture: ComponentFixture<DeviceTableComponent>;
+describe('DevicesPerRegionComponent', () => {
+  let component: DevicesPerRegionComponent;
+  let fixture: ComponentFixture<DevicesPerRegionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeviceTableComponent ]
+      declarations: [ DevicesPerRegionComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeviceTableComponent);
+    fixture = TestBed.createComponent(DevicesPerRegionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

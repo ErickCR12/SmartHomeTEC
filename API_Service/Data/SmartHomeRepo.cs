@@ -23,9 +23,8 @@ namespace API_Service.Data
 
             DBconn.Open();
             var sqlCmd = new NpgsqlCommand(
-                "SELECT serial_number, brand, electric_usage, price, device_type_name " +
-                "FROM devices " +
-                "WHERE client_email IS NULL",
+                "SELECT serial_number, brand, electric_usage, price, device_type_name, client_email " +
+                "FROM devices ",
                 DBconn
                 );
 
@@ -38,6 +37,7 @@ namespace API_Service.Data
                 device.electric_usage = Int32.Parse(DBreader[2].ToString());
                 device.price = Int32.Parse(DBreader[3].ToString());
                 device.device_type_name = DBreader[4].ToString();
+                device.client_email = DBreader[5].ToString();
                 allDevices.Add(device);
             }
             DBconn.Close();
@@ -151,14 +151,22 @@ namespace API_Service.Data
         {
             DBconn.Open();
 
-            var sqlCmd = new NpgsqlCommand(
+            var sqlDeleteFromShop = new NpgsqlCommand(
+                "DELETE FROM device_distributor " +
+                "WHERE devices_serial_number = @cond", 
+                DBconn
+                );
+
+            var sqlDeleteDevice = new NpgsqlCommand(
                 "DELETE FROM devices " +
                 "WHERE serial_number = @cond", 
                 DBconn
                 );
 
-            sqlCmd.Parameters.AddWithValue("cond", device.serial_number);
-            sqlCmd.ExecuteNonQuery();
+            sqlDeleteFromShop.Parameters.AddWithValue("cond", device.serial_number);
+            sqlDeleteDevice.Parameters.AddWithValue("cond", device.serial_number);
+            sqlDeleteFromShop.ExecuteNonQuery();
+            sqlDeleteDevice.ExecuteNonQuery();
 
             DBconn.Close();
         }
@@ -675,10 +683,12 @@ namespace API_Service.Data
 
             DBconn.Open();
             var sqlComm = new NpgsqlCommand(
-                "SELECT     country, continent, COUNT(country) AS devices_per_region " +
-                "FROM	    ((devices JOIN device_distributor ON serial_number = devices_serial_number) " +
-			                "JOIN distributors ON distributors_legal_card = legal_card) " +
-                "GROUP BY   country, continent",
+                "SELECT regions.continent, regions.country, COUNT(serial_number) as devices_per_region " +
+                "FROM   (((devices JOIN device_distributor ON serial_number = devices_serial_number) " +
+                "       JOIN distributors ON distributors_legal_card = legal_card) " +
+                "       RIGHT JOIN regions ON   regions.country = distributors.country AND " +
+                                                "regions.continent = distributors.continent) " +
+                "       GROUP BY regions.continent, regions.country", 
                 DBconn
                 );
 
@@ -686,8 +696,8 @@ namespace API_Service.Data
 
             while(DBreader.Read()){
                 Region devicePerRegion = new Region();
-                devicePerRegion.country = DBreader[0].ToString();
-                devicePerRegion.continent = DBreader[1].ToString();
+                devicePerRegion.continent = DBreader[0].ToString();
+                devicePerRegion.country = DBreader[1].ToString();
                 devicePerRegion.amount = Int32.Parse(DBreader[2].ToString());
                 devicesPerRegion.Add(devicePerRegion);
             }

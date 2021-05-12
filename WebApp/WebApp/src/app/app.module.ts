@@ -9,15 +9,16 @@ import { ShopComponent } from './components/shop/shop.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { DeviceMaganerComponent } from './components/device-maganer/device-maganer.component';
 import { DevicesComponent } from './components/devices/devices.component';
-import { DeviceTableComponent } from './components/device-table/device-table.component';
+import { DevicesPerUserComponent } from './components/devices-per-user/devices-per-user.component';
 import { UploadpageComponent } from './components/uploadpage/uploadpage.component';
-import { UsageTableComponent } from './components/usage-table/usage-table.component';
+import { DeviceListTableComponent } from './components/device-list-table/device-list-table.component';
 import { DasboardComponent } from './components/dasboard/dasboard.component';
 
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {MessagesComponent} from './messages/messages.component';
 import {UsersService} from './users.service';
+import { DevicesPerRegionComponent } from './components/devices-per-region/devices-per-region.component';
 
 
 @NgModule({
@@ -30,11 +31,12 @@ import {UsersService} from './users.service';
     ReportsComponent,
     DeviceMaganerComponent,
     DevicesComponent,
-    DeviceTableComponent,
+    DevicesPerUserComponent,
     UploadpageComponent,
-    UsageTableComponent,
+    DeviceListTableComponent,
     MessagesComponent,
     DasboardComponent,
+    DevicesPerRegionComponent,
 
   ],
     imports: [

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {DataService} from '../../data.service';
 
 @Component({
   selector: 'app-dasboard',
@@ -7,20 +8,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DasboardComponent implements OnInit {
 
-  switchTables = true;
+  isDevicesPerUser = true;
+  isAmountDevices = false;
+  isDevicesPerRegion = false;
+  isDevicesList = false;
 
-  constructor() { }
+  activeDevices: number;
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-
+    this.getActiveDevices();
   }
 
-  clickTD() {
-    this.switchTables = true;
+  getActiveDevices(): void{
+    this.dataService.getActiveDevices().subscribe(data => this.activeDevices = data.numerical_value);
   }
 
-  clickDPU() {
-    this.switchTables = false;
+  clickDevicesPerUser(): void {
+    this.isDevicesPerUser = true;
+    this.isAmountDevices = false;
+    this.isDevicesPerRegion = false;
+    this.isDevicesList = false;
   }
+  clickAmountDevices(): void {
+    this.isDevicesPerUser = false;
+    this.isAmountDevices = true;
+    this.isDevicesPerRegion = false;
+    this.isDevicesList = false;
+  }
+  clickDevicesPerRegion(): void {
+    this.isDevicesPerUser = false;
+    this.isAmountDevices = false;
+    this.isDevicesPerRegion = true;
+    this.isDevicesList = false;
+  }
+  clickDevicesList(): void {
+    this.isDevicesPerUser = false;
+    this.isAmountDevices = false;
+    this.isDevicesPerRegion = false;
+    this.isDevicesList = true;
+  }
+
 
 }

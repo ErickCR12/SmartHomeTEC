@@ -55,6 +55,7 @@ export class AppComponent {
     this.isDeviceType = false;
     this.isDevices  = false;
     this.isUploadDoc = false;
+    this.isDashboard = false;
   }
 
   clickAdmin() {
