@@ -13,6 +13,7 @@ import { DevicesPerUserComponent } from './components/devices-per-user/devices-p
 import { UploadpageComponent } from './components/uploadpage/uploadpage.component';
 import { DeviceListTableComponent } from './components/device-list-table/device-list-table.component';
 import { DasboardComponent } from './components/dasboard/dasboard.component';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
@@ -21,6 +22,8 @@ import {UsersService} from './users.service';
 import { DevicesPerRegionComponent } from './components/devices-per-region/devices-per-region.component';
 import { DeviceTypesUsageComponent } from './components/device-types-usage/device-types-usage.component';
 import { DeviceDailyUsageComponent } from './components/device-daily-usage/device-daily-usage.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @NgModule({
@@ -39,14 +42,13 @@ import { DeviceDailyUsageComponent } from './components/device-daily-usage/devic
     MessagesComponent,
     DasboardComponent,
     DevicesPerRegionComponent,
-    DeviceTypesUsageComponent,
-    DeviceDailyUsageComponent,
 
   ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        NgbModule
     ],
   providers: [UsersService],
   bootstrap: [AppComponent, LoginScreen]
