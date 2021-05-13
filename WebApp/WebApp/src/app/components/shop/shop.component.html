@@ -82,54 +82,80 @@
         <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
           <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2" /></svg>
         </div>
-            <div>
-              <h2>{{device.device_type_name}}</h2>
-              <span>Numero de serie: </span><span #serialNumber [textContent]="device.serial_number">Número de serie:
-              {{device.serial_number}}</span>
-              <p>Marca: {{device.brand}}</p>
-              <span>Precio: </span><span #price [textContent]="device.price">Precio: ${{device.price}}</span>
-              <p>Distribuidor: {{distributor.name}}</p>
-              <p>Uso eléctrico: {{device.electric_usage}}</p>
-              <a href="#" class="btn btn-primary" (click)="addOrder(serialNumber.textContent, price.textContent, i, j)">
-                Buy
-              </a>
-            </div>
-      </div>
+        <div>
+          <h2>{{device.device_type_name}}</h2>
+          <span>Numero de serie: </span><span #serialNumber [textContent]="device.serial_number">
+            Número de serie:
+            {{device.serial_number}}
+          </span>
+          <p>Marca: {{device.brand}}</p>
+          <span>Precio: </span><span #price [textContent]="device.price">Precio: ${{device.price}}</span>
+          <p>Distribuidor: {{distributor.name}}</p>
+          <p>Uso eléctrico: {{device.electric_usage}}</p>
+          <a href="#" class="btn btn-primary" (click)="addOrder(serialNumber.textContent, price.textContent, i, j)">
+            Buy
+          </a>
+        </div>
 
+
+
+
+
+      </div>
 
     </div>
   </div>
 
   <div class="b-example-divider"></div>
 
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Carrito de Compras</h4>
+    </div>
+    <div class="modal-body">
+      <p>Estas apunto de finalizar el pedido! Este contienene el siguiente producto</p>
+      <div class="b-example-divider"></div>
+      <p>Nombre del Producto: <!--{{device.device_type_name}} de {{device.brand}} --></p>
+      <p>Precio:<!--{{device.price}}--></p>
+      <div class="b-example-divider"></div>
+      <p>Deseas Confirmar la compra?</p>
+    </div>
+    <div class="modal-footer">
+      <!--Cambiar el boton save pro el boton que hace la compra-->
+      <button type="button" class="btn btn-outline-primary" (click)="c('Save click')">Lo Quiero!</button>
+      <button type="button" class="btn btn-outline-dark" (click)="c('Cross click')">Despues</button>
+    </div>
+  </ng-template>
+  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Confirmar compra</button>
+
+
+
 
   <!-- Este es el show con imagenes-->
-
-<!--  <div class="container py-5" id="custom-cards">-->
-<!--    <h2 class="pb-2 border-bottom">Con imagenes</h2>-->
-<!--      <div class="col">-->
-<!--        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('unsplash-photo-3.jpg');">-->
-<!--          <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">-->
-<!--            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">De manera correcta, si saben me dicen :)</h2>-->
-<!--            <ul class="d-flex list-unstyled mt-auto">-->
-<!--              <li class="me-auto">-->
-<!--                <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">-->
-<!--              </li>-->
-<!--              <li class="d-flex align-items-center me-3">-->
-<!--                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill" /></svg>-->
-<!--                <small>California</small>-->
-<!--              </li>-->
-<!--              <li class="d-flex align-items-center">-->
-<!--                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3" /></svg>-->
-<!--                <small>5d</small>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--  </div>-->
-
-<!--  <div class="b-example-divider"></div>-->
+  <!--  <div class="container py-5" id="custom-cards">-->
+  <!--    <h2 class="pb-2 border-bottom">Con imagenes</h2>-->
+  <!--      <div class="col">-->
+  <!--        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('unsplash-photo-3.jpg');">-->
+  <!--          <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">-->
+  <!--            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">De manera correcta, si saben me dicen :)</h2>-->
+  <!--            <ul class="d-flex list-unstyled mt-auto">-->
+  <!--              <li class="me-auto">-->
+  <!--                <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">-->
+  <!--              </li>-->
+  <!--              <li class="d-flex align-items-center me-3">-->
+  <!--                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill" /></svg>-->
+  <!--                <small>California</small>-->
+  <!--              </li>-->
+  <!--              <li class="d-flex align-items-center">-->
+  <!--                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3" /></svg>-->
+  <!--                <small>5d</small>-->
+  <!--              </li>-->
+  <!--            </ul>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--  </div>-->
+  <!--  <div class="b-example-divider"></div>-->
 
 
 
