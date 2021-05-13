@@ -108,6 +108,12 @@ namespace API_Service.Data
 
         public void AddDevice(Device device)
         {
+            if(GetDevice(device.serial_number) != null)
+            {
+                UpdateDevice(device);
+                return;
+            }
+
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
@@ -132,7 +138,7 @@ namespace API_Service.Data
 
             var sqlCmd = new NpgsqlCommand(
                 "UPDATE devices " +
-                "SET brand = @p1, electric_usage = @p2, price = @p3, device_type_name = @p4 " +
+                "SET brand = @p1, electric_usage = @p2, price = @p3, device_type_name = @p4, client_email = @p5 " +
                 "WHERE serial_number = @cond", 
                 DBconn
                 );
@@ -142,6 +148,7 @@ namespace API_Service.Data
             sqlCmd.Parameters.AddWithValue("p2", device.electric_usage);
             sqlCmd.Parameters.AddWithValue("p3", device.price);
             sqlCmd.Parameters.AddWithValue("p4", device.device_type_name);
+            sqlCmd.Parameters.AddWithValue("p5", device.client_email);
             sqlCmd.ExecuteNonQuery();
 
             DBconn.Close();
