@@ -1,7 +1,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using API_Service.Docs;
 using API_Service.Models;
 using Npgsql;
 
@@ -567,6 +567,14 @@ namespace API_Service.Data
             DBreader.Read();
             order.bill_number = Int32.Parse(DBreader[0].ToString());
             DBconn.Close();
+
+            Device device = GetDevice(order.device_serial_number);
+            order.device = device;
+            DeviceType deviceType = GetDeviceType(device.device_type_name);
+            order.device.device_type = deviceType;
+            Client client = GetClient(device.client_email);
+            order.client = client;
+            DocSender.SendOrderInfo(order);
         }
 
         
