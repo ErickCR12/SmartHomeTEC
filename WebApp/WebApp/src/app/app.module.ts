@@ -42,6 +42,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MessagesComponent,
     DasboardComponent,
     DevicesPerRegionComponent,
+    DeviceDailyUsageComponent,
+    DeviceTypesUsageComponent,
 
   ],
     imports: [
