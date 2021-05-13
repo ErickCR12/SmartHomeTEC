@@ -76,14 +76,15 @@
   <div class="b-example-divider"></div>
 
   <div class="container py-5" id="hanging-icons">
-    <h2 class="pb-2 border-bottom">Items Disponibles</h2>
-    <div class="row g-5 py-5" *ngFor="let distributor of distributors; let i = index">
-      <div class="col-md-4 d-flex align-items-start" *ngFor="let device of distributor.devices let j = index">
+    <h2 class="mb-5 border-bottom">Dispositivos Disponibles ({{client.country}})</h2>
+    <div class="row g-5 mb-2" *ngFor="let distributor of distributors; let i = index;" >
+        <div class="col-md-4 d-flex align-items-start bg-light rounded border border-primary"
+           *ngFor="let device of distributor.devices; let j = index">
         <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
           <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2" /></svg>
         </div>
         <div>
-          <h2>{{device.device_type_name}}</h2>
+          <h2 class="border-bottom">{{device.device_type_name}}</h2>
           <span>Numero de serie: </span><span #serialNumber [textContent]="device.serial_number">
             Número de serie:
             {{device.serial_number}}
@@ -92,41 +93,35 @@
           <span>Precio: </span><span #price [textContent]="device.price">Precio: ${{device.price}}</span>
           <p>Distribuidor: {{distributor.name}}</p>
           <p>Uso eléctrico: {{device.electric_usage}}</p>
-          <a href="#" class="btn btn-primary" (click)="addOrder(serialNumber.textContent, price.textContent, i, j)">
+          <a href="#" class="btn btn-primary mb-2" *ngIf="!deviceToBuy" (click)="addDevice(i, j)">
             Buy
           </a>
         </div>
-
-
-
-
-
       </div>
-
     </div>
   </div>
 
-  <div class="b-example-divider"></div>
+<!--  <div class="b-example-divider"></div>-->
 
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Carrito de Compras</h4>
     </div>
     <div class="modal-body">
-      <p>Estas apunto de finalizar el pedido! Este contienene el siguiente producto</p>
-      <div class="b-example-divider"></div>
-      <p>Nombre del Producto: <!--{{device.device_type_name}} de {{device.brand}} --></p>
-      <p>Precio:<!--{{device.price}}--></p>
-      <div class="b-example-divider"></div>
-      <p>Deseas Confirmar la compra?</p>
+      <p>Estas apunto de finalizar el pedido! Este contienene el siguiente producto:</p>
+      <div class="confirmation-divider"></div>
+      <p>Nombre del Producto: {{deviceToBuy.device_type_name}} de {{deviceToBuy.brand}}</p>
+      <p>Precio: {{deviceToBuy.price}}</p>
+      <div class="confirmation-divider"></div>
+      <p>¿Desea confirmar la compra?</p>
     </div>
     <div class="modal-footer">
-      <!--Cambiar el boton save pro el boton que hace la compra-->
-      <button type="button" class="btn btn-outline-primary" (click)="c('Save click')">Lo Quiero!</button>
-      <button type="button" class="btn btn-outline-dark" (click)="c('Cross click')">Despues</button>
+      <button type="button" class="btn btn-outline-primary"
+              (click)="addOrder(deviceToBuy.serial_number, deviceToBuy.price); c('Cross click')">Lo Quiero!</button>
+      <button type="button" class="btn btn-outline-dark" (click)="cancelOrder(); c('Cross click')">Cancelar Orden</button>
     </div>
   </ng-template>
-  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Confirmar compra</button>
+  <button *ngIf="deviceToBuy" class="btn btn-lg btn-outline-primary" (click)="open(content)">Confirmar compra</button>
 
 
 
