@@ -55,7 +55,7 @@
         android:layout_width="349dp"
         android:layout_height="55dp"
         android:ems="10"
-        android:hint="Serie"
+        android:hint="Tipo"
         android:inputType="textPersonName"
         android:textColor="#FF071145"
         android:textStyle="bold"
@@ -77,10 +77,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.811"
+        app:layout_constraintHorizontal_bias="0.885"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.628" />
+        app:layout_constraintVertical_bias="0.625" />
 
     <EditText
         android:id="@+id/txtconsumo"
@@ -134,7 +134,7 @@
         android:layout_width="349dp"
         android:layout_height="55dp"
         android:ems="10"
-        android:hint="Tipo de dispositivo"
+        android:hint="Dispositivo"
         android:inputType="textPersonName"
         android:textColor="#FF071145"
         android:textStyle="bold"

@@ -43,13 +43,6 @@ class Gestion_Dispositivos: AppCompatActivity() {
         val usuario_re = aposentos_re.get(aposentos_re.size - 1 )
 
         val urlTipos = "http://192.168.1.40/API_Service/api/deviceTypes/"
-        //TiposDispositivos(urlTipos)
-        //Log.i("tipos", tipos_del_server.toString())
-
-//        val url = "http://192.168.1.40/API_Service/api/devices/byclient/"
-//        val tomar_dispositivos = Dispositivos(url, dispostivos_del_server, usuario_re)
-//        Log.i("dispositivos", tomar_dispositivos.toString()
-
 
         //Variables para recibir los datos de entrada de los dispositivos y sus características
         val disp_nombre = findViewById<EditText>(R.id.txtdispsotivo) as EditText
@@ -115,13 +108,33 @@ class Gestion_Dispositivos: AppCompatActivity() {
                         //disp_nombre_ing
                     )
             )
+
+            //Envio de datos
+            val queue = Volley.newRequestQueue(this)
+            val jsonObject = JSONObject()
+            val url = "http://192.168.1.6/API_Service/api/devices/"
+
+            jsonObject.put("serial_number",disp_serie_ing)
+            jsonObject.put("brand", disp_nombre_ing)
+            jsonObject.put("electric_usage", disp_consumo_ing)
+            jsonObject.put("price", 456)
+            jsonObject.put("device_type_name",disp_tipo_ing)
+
+
+            val stringRequest = JsonObjectRequest(Request.Method.POST,
+                    url, jsonObject, { response ->
+            },
+                    {
+                        Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()})
+            queue.add(stringRequest)
         }
 
         btnsiguiente.setOnClickListener {
 
             val intent = Intent(this, Menu::class.java)
 
-            val urlTipos = "http://192.168.1.40/API_Service/api/deviceTypes/"
+            val urlTipos = "http://192.168.1.6/API_Service/api/deviceTypes/"
+
 
             val queue = Volley.newRequestQueue(this)
 
@@ -137,16 +150,16 @@ class Gestion_Dispositivos: AppCompatActivity() {
                         Log.i("for", dispositivos_registrados.toString());
                     }
 
-                    dispositivos_registrados.add("*$usuario_re")
+                    dispositivos_registrados.add("*")
 
                     for (registro in 0 until aposentos_re.size) {
                         dispositivos_registrados.add(aposentos_re[registro])
                     }
 
+                    Log.i("Dispositivos", dispositivos_registrados.toString())
 
                     intent.putExtra("dispositivos", dispositivos_registrados)
                     startActivity(intent)
-
 
                 },
                 {
@@ -154,66 +167,6 @@ class Gestion_Dispositivos: AppCompatActivity() {
                 })
 
             queue.add(stringRequest)
-
-            
-
-            //intent.putExtra("aposentos", aposentos_re)
-            //intent.putExtra("marcas", marcas_registrados)
-            //intent.putExtra("series", series_registrados)
-            //intent.putExtra("consumos", consumo_registrados)
-            //intent.putExtra("tiempos", garantias_registrados)
-
         }
-    }
-
-    private fun Dispositivos(url: String, dispositivo: ArrayList<String>, usuario:String) : ArrayList<String> {
-
-        val queue = Volley.newRequestQueue(this)
-        val jsonObject = JSONObject()
-
-        jsonObject.put("client_email",usuario)
-
-        //Validaciones para continuar en la aplicación
-
-        val stringRequest = JsonArrayRequest(Request.Method.GET,
-                url + usuario, null, { response ->
-
-            for (i in 0 until (response.length())) {
-                val disp: JSONObject = response.getJSONObject(i)
-
-                dispositivo.add(disp.getString("serial_number"))
-                Log.i("for", dispositivo.toString());
-            }
-        },
-                {
-                    Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()
-                })
-
-        queue.add(stringRequest)
-        return dispositivo
-
-    }
-
-    private fun TiposDispositivos(url: String) {
-
-        val queue = Volley.newRequestQueue(this)
-
-        //Validaciones para continuar en la aplicación
-
-        val stringRequest = JsonArrayRequest(Request.Method.GET,
-                url, null, { response ->
-
-            for (i in 0 until (response.length())) {
-                val tipo: JSONObject = response.getJSONObject(i)
-
-                tipos_del_server.add(tipo.getString("name"))
-                Log.i("for", tipos_del_server.toString());
-            }
-        },
-                {
-                    Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()
-                })
-
-        queue.add(stringRequest)
     }
 }

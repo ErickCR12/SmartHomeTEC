@@ -34,7 +34,7 @@ class Vincular: AppCompatActivity() {
         val dispositivo_re = aposento_registrados.subList(0,delimitador)
         Log.i("DISPOSITIVO", dispositivo_re.toString())
 
-        val aposento_re = dispositivos_registrados.subList(0, delimitador+1)
+        val aposento_re = dispositivos_registrados.subList(1, delimitador+2)
         Log.i("APOSENTO", aposento_re.toString())
 
         //Variable para administrar el spinner con la información de aposentos y dispositivos

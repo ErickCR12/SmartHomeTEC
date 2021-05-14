@@ -39,7 +39,7 @@ class Menu: AppCompatActivity() {
         }
 
         btnmenu2.setOnClickListener {
-            if (dispositivos_informacion.size == 0 || dispositivos_informacion == null){
+            if (dispositivos_informacion.size == 0 ){
                 Toast.makeText(this, "Favor seleccionar los dispositivos", Toast.LENGTH_LONG).show()
             }
             else {
