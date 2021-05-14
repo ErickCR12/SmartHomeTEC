@@ -49,7 +49,6 @@ class Gestion_Dispositivos: AppCompatActivity() {
         val disp_marca = findViewById<EditText>(R.id.txtmarca) as EditText
         val disp_serie = findViewById<EditText>(R.id.txtseries) as EditText
         val disp_consumo = findViewById<EditText>(R.id.txtconsumo) as EditText
-        val disp_precio = findViewById<EditText>(R.id.txtprecio) as EditText
 
         //disp_tipo.setText(tipos_del_server[0])
 
@@ -60,7 +59,6 @@ class Gestion_Dispositivos: AppCompatActivity() {
             val disp_marca_ing = disp_marca.text.toString()
             val disp_serie_ing = disp_serie.text.toString()
             val disp_consumo_ing = disp_consumo.text.toString()
-            val disp_precio_ing = disp_precio.text.toString()
 
             //Se agregan a un array para su control y gestión
              dispositivos_registrados.add(disp_nombre_ing)
@@ -71,9 +69,8 @@ class Gestion_Dispositivos: AppCompatActivity() {
             //Se limpian lo espacios para la siguiente añadidura
             disp_nombre.setText("")
             disp_marca.setText("")
-            disp_serie.setText("0")
-            disp_consumo.setText("0")
-            disp_precio.setText("0")
+            disp_serie.setText("")
+            disp_consumo.setText("")
 
             //Esta sección de códgio sireve para mostrar la información de fecha y hora
             val calendario:java.util.Calendar = java.util.Calendar.getInstance()
@@ -108,12 +105,11 @@ class Gestion_Dispositivos: AppCompatActivity() {
             //Envio de datos
             val queue = Volley.newRequestQueue(this)
             val jsonObject = JSONObject()
-            val url = "http://192.168.1.6/API_Service/api/devices/"
+            val url = "http://192.168.1.40/API_Service/api/devices/"
 
             jsonObject.put("serial_number",disp_serie_ing)
-            jsonObject.put("brand", disp_nombre_ing)
+            jsonObject.put("brand", disp_marca_ing)
             jsonObject.put("electric_usage", disp_consumo_ing)
-            jsonObject.put("price", disp_precio_ing)
             jsonObject.put("device_type_name",disp_nombre_ing)
 
 

@@ -83,22 +83,6 @@
         app:layout_constraintVertical_bias="0.599" />
 
     <EditText
-        android:id="@+id/txtprecio"
-        android:layout_width="357dp"
-        android:layout_height="59dp"
-        android:ems="10"
-        android:hint="Precio"
-        android:inputType="number"
-        android:textColor="#FF071145"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.462"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.729" />
-
-    <EditText
         android:id="@+id/txtmarca"
         android:layout_width="349dp"
         android:layout_height="55dp"
