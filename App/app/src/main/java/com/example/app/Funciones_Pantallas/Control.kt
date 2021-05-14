@@ -1,14 +1,22 @@
 package com.example.app.Funciones_Pantallas
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.app.DataBase.Historial
+import com.example.app.DataBase.HistorialDBHelper
+import com.example.app.DataBase.Registro
+import com.example.app.DataBase.RegistroDBHelper
 import com.example.app.R
 import kotlinx.android.synthetic.main.control.*
+import java.time.LocalDateTime
 
 class Control: AppCompatActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.control)
@@ -75,6 +83,17 @@ class Control: AppCompatActivity() {
         swinterruptor.setOnCheckedChangeListener{_, isChecked ->
             if (isChecked){
                 swinterruptor.text = "ENCENDIDO"
+
+                val baseDatos = HistorialDBHelper(this)
+                deleteDatabase(HistorialDBHelper.DATABASE_NAME)
+                baseDatos.crearHistoral(
+                        baseDatos.readableDatabase, Historial(
+                        label_dispositivo.text.toString(),
+                        1,
+                        LocalDateTime.parse("$mes$dia$ano" as CharSequence?),
+                        true
+                ))
+
             }
             else{
                 swinterruptor.text = "APAGADO"

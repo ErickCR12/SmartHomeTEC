@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val usuario_input = findViewById<EditText>(R.id.inputusuario) as EditText
         val contrasena_inpurt = findViewById<EditText>(R.id.inputcontrasena) as EditText
 
-        val url = "http://192.168.1.40/API_Service/api/"
+        val url = "http://192.168.1.6/API_Service/api/"
         val queue = Volley.newRequestQueue(this)
         val jsonObject = JSONObject()
 
