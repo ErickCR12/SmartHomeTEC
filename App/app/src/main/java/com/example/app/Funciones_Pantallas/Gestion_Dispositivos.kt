@@ -46,11 +46,10 @@ class Gestion_Dispositivos: AppCompatActivity() {
 
         //Variables para recibir los datos de entrada de los dispositivos y sus características
         val disp_nombre = findViewById<EditText>(R.id.txtdispsotivo) as EditText
-        val disp_tipo = findViewById<EditText>(R.id.txttipo) as EditText
         val disp_marca = findViewById<EditText>(R.id.txtmarca) as EditText
         val disp_serie = findViewById<EditText>(R.id.txtseries) as EditText
         val disp_consumo = findViewById<EditText>(R.id.txtconsumo) as EditText
-        val disp_gatantia = findViewById<EditText>(R.id.txtgarantia) as EditText
+        val disp_precio = findViewById<EditText>(R.id.txtprecio) as EditText
 
         //disp_tipo.setText(tipos_del_server[0])
 
@@ -58,26 +57,23 @@ class Gestion_Dispositivos: AppCompatActivity() {
 
             //Se capturan los valores de los satos registrados por el usuario
             val disp_nombre_ing = disp_nombre.text.toString()
-            val disp_tipo_ing = disp_tipo.text.toString()
             val disp_marca_ing = disp_marca.text.toString()
             val disp_serie_ing = disp_serie.text.toString()
             val disp_consumo_ing = disp_consumo.text.toString()
-            val disp_garantia_ing = disp_gatantia.text.toString()
+            val disp_precio_ing = disp_precio.text.toString()
 
             //Se agregan a un array para su control y gestión
              dispositivos_registrados.add(disp_nombre_ing)
-             tipos_registrados.add(disp_tipo_ing)
              marcas_registrados.add(disp_marca_ing)
              series_registrados.add(disp_serie_ing)
              consumo_registrados.add(disp_consumo_ing)
 
             //Se limpian lo espacios para la siguiente añadidura
             disp_nombre.setText("")
-            disp_tipo.setText("")
             disp_marca.setText("")
             disp_serie.setText("0")
             disp_consumo.setText("0")
-            disp_gatantia.setText("0")
+            disp_precio.setText("0")
 
             //Esta sección de códgio sireve para mostrar la información de fecha y hora
             val calendario:java.util.Calendar = java.util.Calendar.getInstance()
@@ -88,10 +84,10 @@ class Gestion_Dispositivos: AppCompatActivity() {
             val ano = calendario.get(java.util.Calendar.YEAR)
 
             /** AQUÍ SE TENDRÍA QUE RECIBIR EL MES DE GARANTÍA QUE VIENE DEL API PARA HACER EL CÁLCULO*/
-            val garantia = mes + disp_garantia_ing.toInt()
+            //val garantia = mes + disp_garantia_ing.toInt()
 
             //Se muestra la garantía del dispositivo como un Toast
-            Toast.makeText(this, "Garantía $garantia", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, "Garantía $garantia", Toast.LENGTH_LONG).show()
 
             //BASES DE DATOS
 
@@ -117,8 +113,8 @@ class Gestion_Dispositivos: AppCompatActivity() {
             jsonObject.put("serial_number",disp_serie_ing)
             jsonObject.put("brand", disp_nombre_ing)
             jsonObject.put("electric_usage", disp_consumo_ing)
-            jsonObject.put("price", 456)
-            jsonObject.put("device_type_name",disp_tipo_ing)
+            jsonObject.put("price", disp_precio_ing)
+            jsonObject.put("device_type_name",disp_nombre_ing)
 
 
             val stringRequest = JsonObjectRequest(Request.Method.POST,
@@ -135,7 +131,6 @@ class Gestion_Dispositivos: AppCompatActivity() {
 
             val urlTipos = "http://192.168.1.6/API_Service/api/deviceTypes/"
 
-
             val queue = Volley.newRequestQueue(this)
 
             //Validaciones para continuar en la aplicación
@@ -147,7 +142,7 @@ class Gestion_Dispositivos: AppCompatActivity() {
                         val tipo: JSONObject = response.getJSONObject(i)
 
                         dispositivos_registrados.add(tipo.getString("name"))
-                        Log.i("for", dispositivos_registrados.toString());
+                        Log.i("for", dispositivos_registrados.toString())
                     }
 
                     dispositivos_registrados.add("*")
@@ -160,8 +155,8 @@ class Gestion_Dispositivos: AppCompatActivity() {
 
                     intent.putExtra("dispositivos", dispositivos_registrados)
                     startActivity(intent)
-
                 },
+
                 {
                     Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()
                 })

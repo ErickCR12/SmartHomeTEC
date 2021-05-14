@@ -5,8 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.Volley
 import com.example.app.R
 import kotlinx.android.synthetic.main.menu.*
+import org.json.JSONObject
 
 class Menu: AppCompatActivity() {
 
@@ -39,14 +43,9 @@ class Menu: AppCompatActivity() {
         }
 
         btnmenu2.setOnClickListener {
-            if (dispositivos_informacion.size == 0 ){
-                Toast.makeText(this, "Favor seleccionar los dispositivos", Toast.LENGTH_LONG).show()
-            }
-            else {
-                val intent3 = Intent(this, Vincular::class.java)
-                intent3.putExtra("dispositivos", dispositivos_informacion)
-                startActivity(intent3)
-            }
+            val intent3 = Intent(this, Vincular::class.java)
+            intent3.putExtra("dispositivos", dispositivos_informacion)
+            startActivity(intent3)
         }
 
         btnmenu3.setOnClickListener {
