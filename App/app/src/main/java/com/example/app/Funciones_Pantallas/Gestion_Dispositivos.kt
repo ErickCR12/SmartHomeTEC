@@ -1,15 +1,18 @@
 package com.example.app.Funciones_Pantallas
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.app.DataBase.AposentosDBHelper
 import com.example.app.DataBase.Registro
 import com.example.app.DataBase.RegistroDBHelper
 import com.example.app.R
@@ -27,6 +30,7 @@ class Gestion_Dispositivos: AppCompatActivity() {
     val series_registrados = arrayListOf<String>()
     val consumo_registrados = arrayListOf<String>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dispositivos)
@@ -36,7 +40,8 @@ class Gestion_Dispositivos: AppCompatActivity() {
         val dispotivos_re = intent.getStringArrayListExtra("dispositivos")
 
         //Se toma el correo del usuario ingresado en la apliación
-        val usuario_re = dispotivos_re.get(dispotivos_re.size - 1 )
+        val tabla_aposentos = AposentosDBHelper(this)
+        val usuario_re = tabla_aposentos.obtenerAposento(0).nombreUsuario
 
         //Lista de dispositivos
         val lista_dispositivos = dispotivos_re.subList(0, dispotivos_re.size -1)

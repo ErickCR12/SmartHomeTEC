@@ -52,6 +52,8 @@ class MainActivity : AppCompatActivity() {
             //Se toma el valor de la contraseña registrada
             var contrasena = contrasena_inpurt.text.toString()
 
+            val intent = Intent(this, Menu::class.java)
+
             //Envio del usuario y contraseña en formato JSON
             jsonObject.put("username",usuario)
             jsonObject.put("password",contrasena)
@@ -68,18 +70,22 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "BIENVENIDO",  Toast.LENGTH_LONG).show()
 
                 val tabla_aposentos = AposentosDBHelper(this)
-                deleteDatabase(AposentosDBHelper.DATABASE_NAME)
-                for (i in 0 until aposentos.size){
-                    //Se agregan elementos a la base de datos aposentos
-                    tabla_aposentos.crearAposento(tabla_aposentos.readableDatabase,
-                            Aposentos(id, usuario, aposentos.get(i))
-                    )
+
+                val revisar_estado_inicial = tabla_aposentos.obtenerAposento(0).nombreAposento
+
+                if (revisar_estado_inicial.isNullOrEmpty()){
+                    deleteDatabase(AposentosDBHelper.DATABASE_NAME)
+                    for (i in 0 until aposentos.size){
+                        //Se agregan elementos a la base de datos aposentos
+                        tabla_aposentos.crearAposento(tabla_aposentos.readableDatabase,
+                                Aposentos(id, usuario, aposentos.get(i))
+                        )
+                    }
+                    startActivity(intent)
                 }
-
-
-                val intent = Intent(this, Menu::class.java)
-                intent.putExtra("usuario", response.get("username").toString())
-                startActivity(intent)
+                else{
+                    startActivity(intent)
+                }
             }
             else{
             Toast.makeText(this,"DATOS INVÁLIDOS", Toast.LENGTH_LONG).show()

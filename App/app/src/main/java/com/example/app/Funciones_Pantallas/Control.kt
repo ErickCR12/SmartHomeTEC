@@ -86,7 +86,6 @@ class Control: AppCompatActivity() {
         swinterruptor.setOnCheckedChangeListener{_, isChecked ->
             if (isChecked){
                 swinterruptor.text = "ENCENDIDO"
-
             }
             else{
                 swinterruptor.text = "APAGADO"

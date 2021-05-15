@@ -24,18 +24,9 @@ class Vincular: AppCompatActivity() {
 
         //Se recibe la información de los aposentos registrados de al ventana anterior
         val intent = getIntent()
-        val aposento_registrados = intent.getStringArrayListExtra("dispositivos")
+        val dispositivo_registrados = intent.getStringArrayListExtra("dispositivos")
+        val aposentos_registrados = intent.getStringArrayListExtra("aposentos")
 
-        val dispositivos_registrados = aposento_registrados.reversed()
-
-        //Se sleccionan los array para el mostrarlos en los spinners
-        val delimitador = Posicion("*", aposento_registrados)
-
-        val dispositivo_re = aposento_registrados.subList(0,delimitador)
-        Log.i("DISPOSITIVO", dispositivo_re.toString())
-
-        val aposento_re = dispositivos_registrados.subList(1, delimitador+2)
-        Log.i("APOSENTO", aposento_re.toString())
 
         //Variable para administrar el spinner con la información de aposentos y dispositivos
         //Se crea un spinner para mostar los elementos seleccionados por el usuario
@@ -44,10 +35,10 @@ class Vincular: AppCompatActivity() {
 
         //Se toman las listas de arrays creadas en la sección de values/strings del proyecto para
         //poder trabajar con ellos y mostrar lo que estan almacenan en la interfaz
-        val l_aposentos = ArrayAdapter(this,android.R.layout.simple_spinner_item, aposento_re)
+        val l_aposentos = ArrayAdapter(this,android.R.layout.simple_spinner_item, aposentos_registrados)
         aposentos_disp.adapter = l_aposentos
 
-        val l_dispositivos = ArrayAdapter(this,android.R.layout.simple_spinner_item, dispositivo_re)
+        val l_dispositivos = ArrayAdapter(this,android.R.layout.simple_spinner_item, dispositivo_registrados)
         dispositivos_disp.adapter = l_dispositivos
 
         //Indicadores de las posiciones de los elementos vinculados
@@ -76,12 +67,12 @@ class Vincular: AppCompatActivity() {
 
         btnvincular.setOnClickListener {
             //Se añaden los nuevos valores vinculados a su respectivo array
-            vinculados.add(aposento_re.get(indicador_aposento))
-            vinculados.add(dispositivo_re.get(indicador_dispositivo))
+            vinculados.add(aposentos_registrados.get(indicador_aposento))
+            vinculados.add(dispositivo_registrados.get(indicador_dispositivo))
             //vinculo_dispositivos.add(dispositivo_registrados.get(indicador_dispositivo))
 
             //Se eliminan del array original para no desplegarlos como opción otra vez
-            dispositivo_re.removeAt(indicador_dispositivo)
+            dispositivo_registrados.removeAt(indicador_dispositivo)
 
         }
 
