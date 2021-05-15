@@ -19,7 +19,7 @@ class RegistroDB
 
             //Relacionado al dispositivo
             public static final String DISPOSITIVO = "nombreDispositivo";
-            public static final String MARCA = "marcaDispositivo";
+            public static final String APOSENTO = "nombreAposento";
             public static final String SERIE = "serieDispositivo";
         }
     }

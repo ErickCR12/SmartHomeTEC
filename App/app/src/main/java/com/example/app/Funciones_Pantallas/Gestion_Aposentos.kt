@@ -33,6 +33,8 @@ class Gestion_Aposentos: AppCompatActivity() {
             aposentos_registrados.add( tabla_aposentos.getListaAposentos(0)[i].nombreAposento)
         }
 
+        Log.i("APOSENTOS",tabla_aposentos.getListaAposentos(0).size.toString() )
+
         //Se recibe la información de los aposentos registrados de al ventana anterior
         val intent = getIntent()
         val usuario_re = intent.getStringExtra("usuario")
@@ -135,17 +137,23 @@ class Gestion_Aposentos: AppCompatActivity() {
                     aposentos_disponibles.visibility = View.INVISIBLE
 
                 } else {
-                    //Si el usuario ingresa un aposento válido se añade a la lista vacia
-                    aposentos_registrados.add(aposento)
-                    tabla_aposentos.crearAposento(tabla_aposentos.readableDatabase,
-                            Aposentos(0, usuario_re, aposento)
-                    )
 
-                    Log.i("infoA", aposentos_registrados.toString())
+                    if (Posicion(aposento, aposentos_registrados) == -1){
+                        //Si el usuario ingresa un aposento válido se añade a la lista vacia
+                        aposentos_registrados.add(aposento)
+                        tabla_aposentos.crearAposento(tabla_aposentos.readableDatabase,
+                                Aposentos(0, usuario_re, aposento)
+                        )
 
-                    aposento_nombre.visibility = View.VISIBLE
-                    editar_aposento.visibility = View.INVISIBLE
-                    aposentos_disponibles.visibility = View.INVISIBLE
+                        Log.i("infoA", aposentos_registrados.toString())
+
+                        aposento_nombre.visibility = View.VISIBLE
+                        editar_aposento.visibility = View.INVISIBLE
+                        aposentos_disponibles.visibility = View.INVISIBLE
+                    }
+                    else{
+                        Toast.makeText(this, "Ese aposento ya se encuentra registrado",  Toast.LENGTH_LONG).show()
+                    }
                 }
             }
 
