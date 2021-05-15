@@ -8,7 +8,7 @@ import kotlin.properties.Delegates
 
 
 class Registro(var idUsuario: Int, var nombreUsuario: String, var nombreDispositivo: String,
-               var marcaDispositivo: String,  var serieDispositivo: Int){
+               var nombreAposento: String,  var serieDispositivo: Int){
 
     fun toContentValues(): ContentValues?{
         val values = ContentValues()
@@ -17,7 +17,7 @@ class Registro(var idUsuario: Int, var nombreUsuario: String, var nombreDisposit
         values.put(RegistroDB.RegistroEntrada.USUARIO, nombreUsuario)
         //Valores relacionados al dispositivos
         values.put(RegistroDB.RegistroEntrada.DISPOSITIVO, nombreDispositivo)
-        values.put(RegistroDB.RegistroEntrada.MARCA, marcaDispositivo)
+        values.put(RegistroDB.RegistroEntrada.APOSENTO, nombreAposento)
         values.put(RegistroDB.RegistroEntrada.SERIE, serieDispositivo)
         return  values
     }

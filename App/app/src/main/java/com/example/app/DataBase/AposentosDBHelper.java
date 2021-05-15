@@ -92,7 +92,6 @@ public class AposentosDBHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex("nombreAposento")));
             } while (cursor.moveToNext());
         }
-
         return aposentos;
     }
 }

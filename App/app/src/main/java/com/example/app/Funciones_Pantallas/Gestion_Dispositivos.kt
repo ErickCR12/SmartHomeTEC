@@ -107,18 +107,6 @@ class Gestion_Dispositivos: AppCompatActivity() {
 
             //BASES DE DATOS
 
-            val baseDatos = RegistroDBHelper(this)
-            deleteDatabase(RegistroDBHelper.DATABASE_NAME)
-            baseDatos.crearRegistro(
-                    baseDatos.readableDatabase, Registro(
-                        0,
-                        usuario_re,
-                        disp_nombre_ing,
-                        disp_marca_ing,
-                        disp_serie_ing.toInt()
-                    )
-            )
-
             //Envio de datos
             val queue = Volley.newRequestQueue(this)
             val jsonObject = JSONObject()

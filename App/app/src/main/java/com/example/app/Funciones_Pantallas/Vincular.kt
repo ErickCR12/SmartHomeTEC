@@ -1,6 +1,7 @@
 package com.example.app.Funciones_Pantallas
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,7 +9,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.app.DataBase.AposentosDBHelper
+import com.example.app.DataBase.Registro
+import com.example.app.DataBase.RegistroDBHelper
 import com.example.app.R
 import kotlinx.android.synthetic.main.vinculo.*
 import kotlinx.serialization.json.buildJsonObject
@@ -18,15 +23,24 @@ class Vincular: AppCompatActivity() {
     //Se crea un list de dispositivos registrados y caracaterísticas
     val vinculados = arrayListOf<String>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.vinculo)
+
+        val id = 0
+        val baseDatos = RegistroDBHelper(this)
+        deleteDatabase(RegistroDBHelper.DATABASE_NAME)
+
+        //Se toma el correo del usuario ingresado en la apliación
+        val tabla_aposentos = AposentosDBHelper(this)
+        val usuario_re = tabla_aposentos.obtenerAposento(0).nombreUsuario
 
         //Se recibe la información de los aposentos registrados de al ventana anterior
         val intent = getIntent()
         val dispositivo_registrados = intent.getStringArrayListExtra("dispositivos")
         val aposentos_registrados = intent.getStringArrayListExtra("aposentos")
-
+        val series_registradas = intent.getStringArrayListExtra("series")
 
         //Variable para administrar el spinner con la información de aposentos y dispositivos
         //Se crea un spinner para mostar los elementos seleccionados por el usuario
@@ -69,29 +83,26 @@ class Vincular: AppCompatActivity() {
             //Se añaden los nuevos valores vinculados a su respectivo array
             vinculados.add(aposentos_registrados.get(indicador_aposento))
             vinculados.add(dispositivo_registrados.get(indicador_dispositivo))
-            //vinculo_dispositivos.add(dispositivo_registrados.get(indicador_dispositivo))
+
+            baseDatos.crearRegistro(
+                    baseDatos.readableDatabase, Registro(
+                    id,
+                    usuario_re,
+                    dispositivo_registrados.get(indicador_dispositivo),
+                    aposentos_registrados.get(indicador_aposento),
+                    series_registradas.get(indicador_aposento).toInt()
+                )
+            )
 
             //Se eliminan del array original para no desplegarlos como opción otra vez
             dispositivo_registrados.removeAt(indicador_dispositivo)
-
         }
 
         //Se envia la iformación a la siguiente ventana
         btnsiguie.setOnClickListener {
 
             val intent = Intent(this, Menu::class.java)
-            Log.i("VINCULO", vinculados.toString())
-            intent.putExtra("vinculados", vinculados)
             startActivity(intent)
         }
-    }
-
-    private fun Posicion(elemento: String, datos: ArrayList<String>): Int {
-        for (registro in 0 until datos.size) {
-            if (elemento == datos.get(registro)) {
-                return registro
-            }
-        }
-        return -1
     }
 }

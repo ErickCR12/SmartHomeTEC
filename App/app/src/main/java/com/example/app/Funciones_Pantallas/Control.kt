@@ -4,14 +4,19 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.example.app.DataBase.Historial
 import com.example.app.DataBase.HistorialDBHelper
 import com.example.app.DataBase.Registro
 import com.example.app.DataBase.RegistroDBHelper
 import com.example.app.R
 import kotlinx.android.synthetic.main.control.*
+import org.json.JSONObject
 import java.time.LocalDateTime
 
 class Control: AppCompatActivity() {
@@ -25,7 +30,8 @@ class Control: AppCompatActivity() {
         val intent = getIntent()
         val vinculados_registrados = intent.getStringArrayListExtra("vinculados")
 
-        Log.i("vinculados_", vinculados_registrados.toString())
+        val tabla_vinculaciones = RegistroDBHelper(this)
+
 
         //Se toman los dispositivos y aposentos del array vinculados
         //Se muestran en la pantalla de forma dispositivo/aposento
@@ -44,11 +50,6 @@ class Control: AppCompatActivity() {
 
         //Esta sección de códgio sireve para mostrar la información de fecha y hora
         val calendario:java.util.Calendar = java.util.Calendar.getInstance()
-
-        //El formato es Día-Mes-Año la garantía
-        val dia = calendario.get(java.util.Calendar.DAY_OF_MONTH)
-        val mes = calendario.get(java.util.Calendar.MONTH)
-        val ano = calendario.get(java.util.Calendar.YEAR)
 
         //Se muestra la información de los labels
         label_aposento.setText(aposentos_vinculados.get(item))
@@ -84,11 +85,69 @@ class Control: AppCompatActivity() {
         }
 
         swinterruptor.setOnCheckedChangeListener{_, isChecked ->
+            //El formato es Día-Mes-Año la garantía
+            val dia = calendario.get(java.util.Calendar.DAY_OF_MONTH)
+            val mes = calendario.get(java.util.Calendar.MONTH)
+            val ano = calendario.get(java.util.Calendar.YEAR)
+            val hora = calendario.get(java.util.Calendar.HOUR)
+            val minuto = calendario.get(java.util.Calendar.MINUTE)
+
+            //Envio de datos
+            val queue = Volley.newRequestQueue(this)
+            val jsonObject = JSONObject()
+            val url = "http://192.168.1.6/API_Service/api/devices/state"
+
+            jsonObject.put("serial_number",tabla_vinculaciones.getListaRegistro(0)[item].serieDispositivo)
+            jsonObject.put("action", "Encender")
+            jsonObject.put("minutes_action", 45)
+            jsonObject.put("date","$ano/$mes/$dia")
+            jsonObject.put("time", "$hora:$minuto")
+
+            val stringRequest = JsonObjectRequest(Request.Method.POST,
+                    url, jsonObject, { response ->
+            },
+                    {
+                        Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()})
+            queue.add(stringRequest)
             if (isChecked){
                 swinterruptor.text = "ENCENDIDO"
+                //Envio de datos
+                val queue = Volley.newRequestQueue(this)
+                val jsonObject = JSONObject()
+                val url = "http://192.168.1.6/API_Service/api/devices/state"
+
+                jsonObject.put("serial_number",tabla_vinculaciones.getListaRegistro(0)[item].serieDispositivo)
+                jsonObject.put("action", "Encender")
+                jsonObject.put("minutes_action", minuto)
+                jsonObject.put("date","$ano/$mes/$dia")
+                jsonObject.put("time", "$hora:$minuto")
+
+                val stringRequest = JsonObjectRequest(Request.Method.POST,
+                        url, jsonObject, { response ->
+                },
+                        {
+                            Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()})
+                queue.add(stringRequest)
             }
+
             else{
-                swinterruptor.text = "APAGADO"
+                //Envio de datos
+                val queue = Volley.newRequestQueue(this)
+                val jsonObject = JSONObject()
+                val url = "http://192.168.1.6/API_Service/api/devices/state"
+
+                jsonObject.put("serial_number",tabla_vinculaciones.getListaRegistro(0)[item].serieDispositivo)
+                jsonObject.put("action", "Encender")
+                jsonObject.put("minutes_action", minuto)
+                jsonObject.put("date","$ano/$mes/$dia")
+                jsonObject.put("time", "$hora:$minuto")
+
+                val stringRequest = JsonObjectRequest(Request.Method.POST,
+                        url, jsonObject, { response ->
+                },
+                        {
+                            Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()})
+                queue.add(stringRequest)
             }
         }
     }

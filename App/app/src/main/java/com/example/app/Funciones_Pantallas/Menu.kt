@@ -23,6 +23,8 @@ class Menu: AppCompatActivity() {
 
     val dispositivos_informacion = arrayListOf<String>()
     val aposentos_informacion_i = arrayListOf<String>()
+    val series_informacion = arrayListOf<String>()
+    val vinculaciones = arrayListOf<String>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,12 +33,6 @@ class Menu: AppCompatActivity() {
 
         val tabla_aposentos = AposentosDBHelper(this)
         val usuario = tabla_aposentos.obtenerAposento(0).nombreUsuario
-
-      //Se recibe la información de los aposentos registrados de al ventana anterior
-        val intent = getIntent()
-        var aposentos_informacion = intent.getStringArrayListExtra("aposentos")
-        var vinculaciones = intent.getStringArrayListExtra("vinculados")
-
 
         //Botón para la ventana de aposentos
         btnmenu.setOnClickListener {
@@ -96,17 +92,19 @@ class Menu: AppCompatActivity() {
                     val tipo: JSONObject = response.getJSONObject(i)
                     val elemento_a_guardar =  tipo.getString("device_type_name") + tipo.getInt("serial_number").toString()
                     dispositivos_informacion.add(elemento_a_guardar )
+                    series_informacion.add(tipo.getInt("serial_number").toString())
                 }
 
                 //Manejo de los aposentos
                 val tabla_aposentos = AposentosDBHelper(this)
 
                 for (i in 0 until  tabla_aposentos.getListaAposentos(0).size ){
-                    aposentos_informacion_i.add( tabla_aposentos.getListaAposentos(0)[i].nombreAposento)
+                    aposentos_informacion_i.add(tabla_aposentos.getListaAposentos(0)[i].nombreAposento)
                 }
 
                 intent3.putExtra("dispositivos", dispositivos_informacion)
                 intent3.putExtra("aposentos", aposentos_informacion_i)
+                intent3.putExtra("series", series_informacion)
                 startActivity(intent3)
             },
                     {
@@ -115,12 +113,18 @@ class Menu: AppCompatActivity() {
             queue.add(stringRequest)
         }
 
-        //Botón para la ventana de vincular
+        //Botón para la ventana de control
         btnmenu3.setOnClickListener {
-            if (vinculaciones.isNullOrEmpty()){
+            val tabla_vinculaciones = RegistroDBHelper(this)
+            if (tabla_vinculaciones.getListaRegistro(0).size == 0){
                 Toast.makeText(this, "Debe vincular dispositivos", Toast.LENGTH_LONG).show()
             }
             else {
+
+                for (i in 0 until tabla_vinculaciones.getListaRegistro(0).size){
+                    vinculaciones.add(tabla_vinculaciones.getListaRegistro(0)[i].serieDispositivo.toString())
+                    vinculaciones.add(tabla_vinculaciones.getListaRegistro(0)[i].nombreAposento)
+                }
                 val intent4 = Intent(this, Control::class.java)
                 intent4.putExtra("vinculados", vinculaciones)
                 startActivity(intent4)
