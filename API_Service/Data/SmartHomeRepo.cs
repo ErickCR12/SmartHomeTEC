@@ -133,6 +133,26 @@ namespace API_Service.Data
             DBconn.Close();
         }
 
+        public void AddDeviceState(DeviceState deviceState)
+        {
+            DBconn.Open();
+
+            var sqlCmd = new NpgsqlCommand(
+                "INSERT INTO device_state (device_serial_number, action, minutes_action, date, time) " +
+                "VALUES (@p1, @p2, @p3, @p4, @p5)", 
+                DBconn
+                );
+
+            sqlCmd.Parameters.AddWithValue("p1", deviceState.device_serial_number);
+            sqlCmd.Parameters.AddWithValue("p2", deviceState.action);
+            sqlCmd.Parameters.AddWithValue("p3", deviceState.minutes_action);
+            sqlCmd.Parameters.AddWithValue("p4", deviceState.date);
+            sqlCmd.Parameters.AddWithValue("p5", deviceState.time);
+            sqlCmd.ExecuteNonQuery();
+
+            DBconn.Close();
+        }
+
         public void UpdateDevice(Device device)
         {
             DBconn.Open();

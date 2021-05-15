@@ -9,6 +9,7 @@ namespace API_Service.Data
         IEnumerable<Device> GetAllDevicesByClient(string client_email);
         Device GetDevice(int serialNumber);
         void AddDevice(Device device);
+        void AddDeviceState(DeviceState deviceState);
         void UpdateDevice(Device device);
         void DeleteDevice(Device device);
 

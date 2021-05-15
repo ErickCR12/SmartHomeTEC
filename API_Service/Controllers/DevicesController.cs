@@ -69,6 +69,20 @@ namespace API_Service.Controllers
                                 newDeviceDto);
         }
 
+        //POST api/devices
+        //This request receives all the needed info to create a new Device in the devices database.
+        [HttpPost("state")]
+        public ActionResult <DeviceStateDto> AddDeviceState(DeviceStateDto deviceStateDto)
+        {
+            var deviceStateModel = _mapper.Map<DeviceState>(deviceStateDto);
+            _repository.AddDeviceState(deviceStateModel);
+
+            var newDeviceStateDto = _mapper.Map<DeviceStateDto>(deviceStateModel);
+
+            return CreatedAtRoute(nameof(GetDeviceBySerialNumber), new {serial_number = newDeviceStateDto.device_serial_number}, 
+                                newDeviceStateDto);
+        }
+
         
         //PUT api/dishes/{serial_number}
         //This request receives a JSON representing Device Entity to be updated. This JSON is mapped to a Device Data Model 
