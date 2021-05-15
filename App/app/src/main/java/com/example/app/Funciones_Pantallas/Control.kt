@@ -97,7 +97,7 @@ class Control: AppCompatActivity() {
             val jsonObject = JSONObject()
             val url = "http://192.168.1.6/API_Service/api/devices/state"
 
-            jsonObject.put("serial_number",tabla_vinculaciones.getListaRegistro(0)[item].serieDispositivo)
+            jsonObject.put("device_serial_number",tabla_vinculaciones.getListaRegistro(0)[item].serieDispositivo)
             jsonObject.put("action", "Encender")
             jsonObject.put("minutes_action", 45)
             jsonObject.put("date","$ano/$mes/$dia")
@@ -116,7 +116,7 @@ class Control: AppCompatActivity() {
                 val jsonObject = JSONObject()
                 val url = "http://192.168.1.6/API_Service/api/devices/state"
 
-                jsonObject.put("serial_number",tabla_vinculaciones.getListaRegistro(0)[item].serieDispositivo)
+                jsonObject.put("device_serial_number",tabla_vinculaciones.getListaRegistro(0)[item].serieDispositivo)
                 jsonObject.put("action", "Encender")
                 jsonObject.put("minutes_action", minuto)
                 jsonObject.put("date","$ano/$mes/$dia")
@@ -137,7 +137,7 @@ class Control: AppCompatActivity() {
                 val url = "http://192.168.1.6/API_Service/api/devices/state"
 
                 jsonObject.put("serial_number",tabla_vinculaciones.getListaRegistro(0)[item].serieDispositivo)
-                jsonObject.put("action", "Encender")
+                jsonObject.put("action", "Apagar")
                 jsonObject.put("minutes_action", minuto)
                 jsonObject.put("date","$ano/$mes/$dia")
                 jsonObject.put("time", "$hora:$minuto")
