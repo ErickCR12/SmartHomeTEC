@@ -79,20 +79,13 @@ class Control: AppCompatActivity() {
                 lblaposento.setText(aposentos_vinculados.get(item))
             }
         }
+        btnsalir.setOnClickListener{
+            this.finish()
+        }
 
         swinterruptor.setOnCheckedChangeListener{_, isChecked ->
             if (isChecked){
                 swinterruptor.text = "ENCENDIDO"
-
-                val baseDatos = HistorialDBHelper(this)
-                deleteDatabase(HistorialDBHelper.DATABASE_NAME)
-                baseDatos.crearHistoral(
-                        baseDatos.readableDatabase, Historial(
-                        label_dispositivo.text.toString(),
-                        1,
-                        LocalDateTime.parse("$mes$dia$ano" as CharSequence?),
-                        true
-                ))
 
             }
             else{

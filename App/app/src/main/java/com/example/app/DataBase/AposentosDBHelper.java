@@ -29,8 +29,8 @@ public class AposentosDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + RegistroDB.RegistroEntrada.TABLE_NAME + " ("
-                + AposentosDB.RegistroAposentos.ID_USUARIO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+        sqLiteDatabase.execSQL("CREATE TABLE " + AposentosDB.RegistroAposentos.TABLE_NAME + " ("
+                + AposentosDB.RegistroAposentos.ID_USUARIO + " INTEGER,"
                 + AposentosDB.RegistroAposentos.USUARIO + " TEXT NOT NULL,"
                 + AposentosDB.RegistroAposentos.APOSENTO + " TEXT NOT NULL,"
                 + "UNIQUE (" + AposentosDB.RegistroAposentos.APOSENTO+ "))"
@@ -52,7 +52,7 @@ public class AposentosDBHelper extends SQLiteOpenHelper {
     public List<Aposentos> getListaAposentos(Integer id){
         ArrayList<Aposentos> lista = new ArrayList<Aposentos>();
         Cursor cursor = getReadableDatabase()
-                .rawQuery("SELECT * FROM aposento WHERE idUsuario == ?", new String[]{id.toString()});
+                .rawQuery("SELECT * FROM Aposentos WHERE idUsuario == ?", new String[]{id.toString()});
         if (cursor.moveToFirst()){
             do{
                 Aposentos aposentos = new Aposentos(
@@ -60,8 +60,7 @@ public class AposentosDBHelper extends SQLiteOpenHelper {
                         cursor.getInt(cursor.getColumnIndex("idUsuario")),
                         cursor.getString(cursor.getColumnIndex("nombreUsuario")),
                         //Dispositivo
-                        cursor.getString(cursor.getColumnIndex("nombreAposento"))
-                );
+                        cursor.getString(cursor.getColumnIndex("nombreAposento")));
 
                 aposentos.setIdUsuario(cursor.getColumnIndex("idUsuario"));
                 lista.add(aposentos);
@@ -70,12 +69,30 @@ public class AposentosDBHelper extends SQLiteOpenHelper {
         return lista;
     }
 
-    public int updateRegistro(Aposentos aposentos, Integer idAposento){
+    public int updateAposento(Aposentos aposentos, Integer idUsuario){
         return getWritableDatabase().update(
                 AposentosDB.RegistroAposentos.TABLE_NAME,
                 aposentos.toContentValues(),
                 AposentosDB.RegistroAposentos.ID_USUARIO + "LIKE ?",
-                new String[]{idAposento.toString()}
+                new String[]{idUsuario.toString()}
         );
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Aposentos obtenerAposento(Integer id) {
+        Aposentos aposentos = null;
+        Cursor cursor =  getReadableDatabase()
+                .rawQuery("SELECT * FROM Aposentos WHERE idUsuario == ?", new String[]{id.toString()});
+        if (cursor.moveToFirst()) {
+            do {
+                aposentos = new Aposentos(//Usuario
+                        cursor.getInt(cursor.getColumnIndex("idUsuario")),
+                        cursor.getString(cursor.getColumnIndex("nombreUsuario")),
+                        //Dispositivo
+                        cursor.getString(cursor.getColumnIndex("nombreAposento")));
+            } while (cursor.moveToNext());
+        }
+
+        return aposentos;
     }
 }

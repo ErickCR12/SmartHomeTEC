@@ -35,7 +35,6 @@ public class RegistroDBHelper extends SQLiteOpenHelper{
                 + RegistroDB.RegistroEntrada.ID_USUARIO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + RegistroDB.RegistroEntrada.USUARIO + " TEXT NOT NULL,"
                 + RegistroDB.RegistroEntrada.DISPOSITIVO + " TEXT NOT NULL,"
-                //+ RegistroDB.RegistroEntrada.TIPO + " TEXT NOT NULL,"
                 + RegistroDB.RegistroEntrada.SERIE + " INTEGER NOT NULL,"
                 + RegistroDB.RegistroEntrada.MARCA  + " TEXT,"
                 + "UNIQUE (" + RegistroDB.RegistroEntrada.SERIE+ "))"
@@ -53,6 +52,7 @@ public class RegistroDBHelper extends SQLiteOpenHelper{
                 registro.toContentValues());
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public List<Registro> getListaRegistro(Integer id){
         List<Registro> lista = new ArrayList<Registro>();
@@ -66,10 +66,8 @@ public class RegistroDBHelper extends SQLiteOpenHelper{
                         cursor.getString(cursor.getColumnIndex("nombreUsuario")),
                         //Dispositivo
                         cursor.getString(cursor.getColumnIndex("nombreDispositivo")),
-                      //  cursor.getString(cursor.getColumnIndex("tipoDispositivo")),
                         cursor.getString(cursor.getColumnIndex("marcaDispositivo")),
                         cursor.getInt(cursor.getColumnIndex("serieDispositivo"))
-                        //cursor.getString(cursor.getColumnIndex("descripcionDispositivo"))
                         );
 
                 registro.setIdUsuario(cursor.getColumnIndex("idUsuario"));

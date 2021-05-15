@@ -29,7 +29,7 @@ public class HistorialDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + RegistroDB.RegistroEntrada.TABLE_NAME + " ("
+        sqLiteDatabase.execSQL("CREATE TABLE " + HistorialDB.RegistroHistorial.TABLE_NAME + " ("
                 + HistorialDB.RegistroHistorial.DISPOSITIVO + " TEXT NOT NULL,"
                 + HistorialDB.RegistroHistorial.TIEMPO + " TEXT NOT NULL,"
                 + HistorialDB.RegistroHistorial.FECHA + " TEXT NOT NULL,"
@@ -53,7 +53,7 @@ public class HistorialDBHelper extends SQLiteOpenHelper {
     public List<Historial> getListaHistorial(Integer id){
         ArrayList<Historial> lista = new ArrayList<Historial>();
         Cursor cursor = getReadableDatabase()
-                .rawQuery("SELECT * FROM historial WHERE idUsuario == ?", new String[]{id.toString()});
+                .rawQuery("SELECT * FROM Historiales WHERE idUsuario == ?", new String[]{id.toString()});
         if (cursor.moveToFirst()){
             do{
                 Historial historial = new Historial(
@@ -62,7 +62,7 @@ public class HistorialDBHelper extends SQLiteOpenHelper {
                         cursor.getInt(cursor.getColumnIndex("tiempo")),
                         //Dispositivo
                         LocalDateTime.parse(cursor.getString(cursor.getColumnIndex("fecha"))),
-                        Boolean.valueOf(cursor.getString(cursor.getColumnIndex("estado")))
+                        Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("estado")))
                 );
                 lista.add(historial);
             }while (cursor.moveToNext());
