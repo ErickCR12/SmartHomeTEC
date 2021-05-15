@@ -3,9 +3,8 @@ package com.example.app.Funciones_Pantallas
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
@@ -24,13 +23,9 @@ class Gestion_Dispositivos: AppCompatActivity() {
 
     //Se crea un list de dispositivos registrados y caracaterísticas
     val dispositivos_registrados = arrayListOf<String>()
-    val tipos_registrados = arrayListOf<String>()
     val marcas_registrados = arrayListOf<String>()
     val series_registrados = arrayListOf<String>()
     val consumo_registrados = arrayListOf<String>()
-    val garantias_registrados = arrayListOf<String>()
-
-    val tipos_del_server = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +33,16 @@ class Gestion_Dispositivos: AppCompatActivity() {
 
         //Se recibe la información de los aposentos registrados de al ventana anterior
         val intent = getIntent()
-        val aposentos_re = intent.getStringArrayListExtra("aposentos")
+        val dispotivos_re = intent.getStringArrayListExtra("dispositivos")
 
-        val usuario_re = aposentos_re.get(aposentos_re.size - 1 )
+        //Se toma el correo del usuario ingresado en la apliación
+        val usuario_re = dispotivos_re.get(dispotivos_re.size - 1 )
 
-        val urlTipos = "http://192.168.1.40/API_Service/api/deviceTypes/"
+        //Lista de dispositivos
+        val lista_dispositivos = dispotivos_re.subList(0, dispotivos_re.size -1)
+
+        //Indidicador de posicion para el spinner seleccionado
+        var indicador = 0
 
         //Variables para recibir los datos de entrada de los dispositivos y sus características
         val disp_nombre = findViewById<EditText>(R.id.txtdispsotivo) as EditText
@@ -50,12 +50,26 @@ class Gestion_Dispositivos: AppCompatActivity() {
         val disp_serie = findViewById<EditText>(R.id.txtseries) as EditText
         val disp_consumo = findViewById<EditText>(R.id.txtconsumo) as EditText
 
-        //disp_tipo.setText(tipos_del_server[0])
+        //Variable para el spinner
+        val tipos_disp = findViewById<Spinner>(R.id.spntipos)
+
+        val l_tipos = ArrayAdapter(this,android.R.layout.simple_spinner_item, lista_dispositivos)
+        tipos_disp.adapter = l_tipos
+
+        //Seccion de trabajo para el spinner en la interfaz
+        tipos_disp.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                indicador = position
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
 
         btnagregadis.setOnClickListener {
 
             //Se capturan los valores de los satos registrados por el usuario
-            val disp_nombre_ing = disp_nombre.text.toString()
+            val disp_nombre_ing = dispotivos_re.get(indicador)
             val disp_marca_ing = disp_marca.text.toString()
             val disp_serie_ing = disp_serie.text.toString()
             val disp_consumo_ing = disp_consumo.text.toString()
@@ -95,23 +109,21 @@ class Gestion_Dispositivos: AppCompatActivity() {
                         0,
                         usuario_re,
                         disp_nombre_ing,
-                        //disp_tipo_ing,
                         disp_marca_ing,
                         disp_serie_ing.toInt()
-                        //disp_nombre_ing
                     )
             )
 
             //Envio de datos
             val queue = Volley.newRequestQueue(this)
             val jsonObject = JSONObject()
-            val url = "http://192.168.1.40/API_Service/api/devices/"
+            val url = "http://192.168.1.6/API_Service/api/devices/"
 
             jsonObject.put("serial_number",disp_serie_ing)
             jsonObject.put("brand", disp_marca_ing)
             jsonObject.put("electric_usage", disp_consumo_ing)
             jsonObject.put("device_type_name",disp_nombre_ing)
-
+            jsonObject.put("client_email", usuario_re)
 
             val stringRequest = JsonObjectRequest(Request.Method.POST,
                     url, jsonObject, { response ->
@@ -121,43 +133,11 @@ class Gestion_Dispositivos: AppCompatActivity() {
             queue.add(stringRequest)
         }
 
+
+        //Se regresa al menú principal
         btnsiguiente.setOnClickListener {
-
             val intent = Intent(this, Menu::class.java)
-
-            val urlTipos = "http://192.168.1.6/API_Service/api/deviceTypes/"
-
-            val queue = Volley.newRequestQueue(this)
-
-            //Validaciones para continuar en la aplicación
-
-            val stringRequest = JsonArrayRequest(Request.Method.GET,
-                urlTipos, null, { response ->
-
-                    for (i in 0 until (response.length())) {
-                        val tipo: JSONObject = response.getJSONObject(i)
-
-                        dispositivos_registrados.add(tipo.getString("name"))
-                        Log.i("for", dispositivos_registrados.toString())
-                    }
-
-                    dispositivos_registrados.add("*")
-
-                    for (registro in 0 until aposentos_re.size) {
-                        dispositivos_registrados.add(aposentos_re[registro])
-                    }
-
-                    Log.i("Dispositivos", dispositivos_registrados.toString())
-
-                    intent.putExtra("dispositivos", dispositivos_registrados)
-                    startActivity(intent)
-                },
-
-                {
-                    Toast.makeText(this,it.toString(), Toast.LENGTH_LONG).show()
-                })
-
-            queue.add(stringRequest)
+            startActivity(intent)
         }
     }
 }

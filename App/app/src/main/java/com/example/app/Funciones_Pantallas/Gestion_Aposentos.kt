@@ -2,11 +2,15 @@ package com.example.app.Funciones_Pantallas
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.app.DataBase.Aposentos
+import com.example.app.DataBase.AposentosDBHelper
 import com.example.app.R
 import kotlinx.android.synthetic.main.aposentos.*
 import kotlinx.android.synthetic.main.dispositivos.*
@@ -16,17 +20,22 @@ class Gestion_Aposentos: AppCompatActivity() {
     //Se crea un list de aposentos registrados
     val aposentos_registrados = arrayListOf<String>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.aposentos)
 
+        //Manejo de los aposentos
+        val tabla_aposentos = AposentosDBHelper(this)
+
+        for (i in 0 until  tabla_aposentos.getListaAposentos(0).size ){
+            aposentos_registrados.add( tabla_aposentos.getListaAposentos(0)[i].nombreAposento)
+        }
+
         //Se recibe la información de los aposentos registrados de al ventana anterior
         val intent = getIntent()
         val usuario_re = intent.getStringExtra("usuario")
-
-
-        Log.i("USER", usuario_re.toString())
 
         //Variables para recibir los datos de entrada de los aposentos
         val aposento_nombre = findViewById<EditText>(R.id.txtaposentonombre) as EditText
@@ -118,11 +127,8 @@ class Gestion_Aposentos: AppCompatActivity() {
                 //Si no se añade ningún aposento registrado se añaden por default
                 //dormitorio, cocina, sala, comedor
                 if (aposento_nombre.text.toString().isNullOrEmpty()) {
-                    aposentos_registrados.add("dormitorio")
-                    aposentos_registrados.add("cocina")
-                    aposentos_registrados.add("sala")
-                    aposentos_registrados.add("comedor")
-                    Log.i("infoA", aposentos_registrados.toString())
+
+                    Toast.makeText(this, "Favor ingrese un aposento",  Toast.LENGTH_LONG).show()
 
                     aposento_nombre.visibility = View.VISIBLE
                     editar_aposento.visibility = View.INVISIBLE
@@ -131,10 +137,10 @@ class Gestion_Aposentos: AppCompatActivity() {
                 } else {
                     //Si el usuario ingresa un aposento válido se añade a la lista vacia
                     aposentos_registrados.add(aposento)
-                    aposentos_registrados.add("dormitorio")
-                    aposentos_registrados.add("cocina")
-                    aposentos_registrados.add("sala")
-                    aposentos_registrados.add("comedor")
+                    tabla_aposentos.crearAposento(tabla_aposentos.readableDatabase,
+                            Aposentos(0, usuario_re, aposento)
+                    )
+
                     Log.i("infoA", aposentos_registrados.toString())
 
                     aposento_nombre.visibility = View.VISIBLE
@@ -205,14 +211,8 @@ class Gestion_Aposentos: AppCompatActivity() {
 
         //Se envía toda la información a la ventana de gestión de dispositivos
         btnvisualizar2.setOnClickListener {
-
-            aposentos_registrados.add(usuario_re)
-
             val intent = Intent(this, Menu::class.java)
-            intent.putExtra("aposentos", aposentos_registrados)
             startActivity(intent)
-
-            //startActivity(Intent(this, Menu::class.java))
         }
     }
 
