@@ -117,8 +117,8 @@ namespace API_Service.Data
             DBconn.Open();
 
             var sqlCmd = new NpgsqlCommand(
-                "INSERT INTO devices (serial_number, brand, electric_usage, price, device_type_name) " +
-                "VALUES (@p1, @p2, @p3, @p4, @p5)", 
+                "INSERT INTO devices (serial_number, brand, electric_usage, price, device_type_name, client_email) " +
+                "VALUES (@p1, @p2, @p3, @p4, @p5, @p6)", 
                 DBconn
                 );
 
@@ -127,6 +127,7 @@ namespace API_Service.Data
             sqlCmd.Parameters.AddWithValue("p3", device.electric_usage);
             sqlCmd.Parameters.AddWithValue("p4", device.price);
             sqlCmd.Parameters.AddWithValue("p5", device.device_type_name);
+            sqlCmd.Parameters.AddWithValue("p6", device.client_email);
             sqlCmd.ExecuteNonQuery();
 
             DBconn.Close();
