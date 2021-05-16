@@ -9,8 +9,7 @@ using System;
 namespace API_Service.Controllers
 {
 
-    //This is an API Controller for the Client entity type. 
-    //This Controller allows a GET request to obtain all the Clients in the database, a POST request to create a new client.
+    //This is an API Controller for the Client entity type.
     [Route("api/[controller]")]
     [ApiController]
     public class ClientsController : ControllerBase
@@ -25,7 +24,7 @@ namespace API_Service.Controllers
         }        
 
         //GET api/clients
-        //This request returns a list of Client entities in a JSON format representing the chef database.
+        //This request returns a list of Client entities in a JSON format representing the clients database.
         [HttpGet]
         public ActionResult <IEnumerable<ClientDto>> GetAllClients()
         {
@@ -33,8 +32,8 @@ namespace API_Service.Controllers
             return Ok(_mapper.Map<IEnumerable<ClientDto>>(clientsItem));
         }
 
-        //GET api/clients/{serial_number}
-        //This request returns a single Client entity in a JSON format. This entity has the same serial number
+        //GET api/clients/{email}
+        //This request returns a single Client entity in a JSON format. This entity has the same email
         //as the received in the request header.
         [HttpGet("{email}", Name = "GetClientByEmail")]
         public ActionResult <ClientDto> GetClientByEmail(string email)
@@ -65,6 +64,9 @@ namespace API_Service.Controllers
                                 newClientDto);
         }
 
+        
+        //POST api/clients/direction
+        //This request receives all the needed info to create a new direction in the direction_client database.
         [HttpPost("direction")]
         public ActionResult <DirectionClientDto> AddDirection(DirectionClientDto directionClientDto)
         {
@@ -77,6 +79,8 @@ namespace API_Service.Controllers
                                 newDirectionClientDto);
         }
 
+        //PUT api/clients
+        //This request receives all the needed info to modify an existing Client in the clients database.
         [HttpPut("{client_email}")]
         public ActionResult UpdateClient(string client_email, ClientDto clientDto)
         {

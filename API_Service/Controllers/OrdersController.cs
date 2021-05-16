@@ -25,7 +25,7 @@ namespace API_Service.Controllers
         }        
 
         //POST api/orders
-        //This request receives all the needed info to create a new Client in the clients database.
+        //This request receives all the needed info to create a new Order in the orders database.
         [HttpPost(Name = "CreateOrder")]
         public ActionResult <OrderDto> CreateOrder(OrderDto orderDto)
         {

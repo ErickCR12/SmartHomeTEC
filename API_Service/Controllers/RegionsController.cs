@@ -24,8 +24,8 @@ namespace API_Service.Controllers
             _mapper = mapper;
         }        
 
-        //GET api/clients
-        //This request receives all the needed info to create a new Client in the clients database.
+        //GET api/regions/continents
+        //This request returns all the registered contienents in the regions database.
         [HttpGet("continents")]
         public ActionResult <IEnumerable<RegionDto>> GetAllContinents()
         {
@@ -33,6 +33,8 @@ namespace API_Service.Controllers
             return Ok(_mapper.Map<IEnumerable<RegionDto>>(regionsItem));
         }
 
+        //GET api/regions/countries/{continent}
+        //This request returns all the countries of the specified continent in the regions database.
         [HttpGet("countries/{continent}")]
         public ActionResult <IEnumerable<RegionDto>> GetCountriesByContinent(string continent)
         {
