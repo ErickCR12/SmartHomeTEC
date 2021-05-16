@@ -30,11 +30,9 @@ public class HistorialDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE " + HistorialDB.RegistroHistorial.TABLE_NAME + " ("
-                + HistorialDB.RegistroHistorial.DISPOSITIVO + " TEXT NOT NULL,"
-                + HistorialDB.RegistroHistorial.TIEMPO + " TEXT NOT NULL,"
-                + HistorialDB.RegistroHistorial.FECHA + " TEXT NOT NULL,"
-                + HistorialDB.RegistroHistorial.ESTADO + "BOOLEAN NOT NULL,"
-                + "UNIQUE (" + HistorialDB.RegistroHistorial.TIEMPO+ "))"
+                + HistorialDB.RegistroHistorial.ID_USUARIO + " INTEGER,"
+                + HistorialDB.RegistroHistorial.USUARIO + " TEXT NOT NULL,"
+                + "UNIQUE (" + HistorialDB.RegistroHistorial.ID_USUARIO+ "))"
         );
     }
 
@@ -58,12 +56,8 @@ public class HistorialDBHelper extends SQLiteOpenHelper {
             do{
                 Historial historial = new Historial(
                         //Usuario
-                        cursor.getString(cursor.getColumnIndex("nombreDispositivo")),
-                        cursor.getInt(cursor.getColumnIndex("tiempo")),
-                        //Dispositivo
-                        LocalDateTime.parse(cursor.getString(cursor.getColumnIndex("fecha"))),
-                        Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("estado")))
-                );
+                        cursor.getInt(cursor.getColumnIndex("idUsuario")),
+                        cursor.getString(cursor.getColumnIndex("nombreUsuario")));
                 lista.add(historial);
             }while (cursor.moveToNext());
         }
@@ -77,5 +71,21 @@ public class HistorialDBHelper extends SQLiteOpenHelper {
                 AposentosDB.RegistroAposentos.ID_USUARIO + "LIKE ?",
                 new String[]{idHistorial.toString()}
         );
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Historial obtenerHistorial(Integer id) {
+        Historial historial = null;
+        Cursor cursor =  getReadableDatabase()
+                .rawQuery("SELECT * FROM Historiales WHERE idUsuario == ?", new String[]{id.toString()});
+        if (cursor.moveToFirst()) {
+            do {
+                historial = new Historial(//Usuario
+                        //Usuario
+                        cursor.getInt(cursor.getColumnIndex("idUsuario")),
+                        cursor.getString(cursor.getColumnIndex("nombreUsuario")));
+            } while (cursor.moveToNext());
+        }
+        return historial;
     }
 }

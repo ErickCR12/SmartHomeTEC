@@ -13,9 +13,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.app.DataBase.Aposentos
-import com.example.app.DataBase.AposentosDBHelper
-import com.example.app.DataBase.RegistroDBHelper
+import com.example.app.DataBase.*
 import com.example.app.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -70,8 +68,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "BIENVENIDO",  Toast.LENGTH_LONG).show()
 
                 val tabla_aposentos = AposentosDBHelper(this)
-
                 val revisar_estado_inicial = tabla_aposentos.obtenerAposento(0).nombreAposento
+
 
                 if (revisar_estado_inicial.isNullOrEmpty()){
                     deleteDatabase(AposentosDBHelper.DATABASE_NAME)

@@ -33,8 +33,6 @@ class Gestion_Aposentos: AppCompatActivity() {
             aposentos_registrados.add( tabla_aposentos.getListaAposentos(0)[i].nombreAposento)
         }
 
-        Log.i("APOSENTOS",tabla_aposentos.getListaAposentos(0).size.toString() )
-
         //Se recibe la información de los aposentos registrados de al ventana anterior
         val intent = getIntent()
         val usuario_re = intent.getStringExtra("usuario")
