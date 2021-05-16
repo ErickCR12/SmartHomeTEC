@@ -24,8 +24,6 @@ namespace API_Service.Models
 
         public List<Order> orders {get; set;}
 
-        public List<Chamber> chambers {get; set;}
-
         public List<Device> devices {get; set;}
 
         public List<DirectionClient> directions {get; set;}

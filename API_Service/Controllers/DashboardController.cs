@@ -33,7 +33,7 @@ namespace API_Service.Controllers
         }
 
         //GET api/dashboard/devicePerUser
-        //This request returns a numerical value representing the amount of devices per user.
+        //This request returns a list of devices that exist in the shop for the specified region.
         [HttpGet("devicesPerRegion")]
         public ActionResult <IEnumerable<RegionDto>> GetDevicesPerRegion()
         {
@@ -43,7 +43,7 @@ namespace API_Service.Controllers
         }
 
         //GET api/dashboard/activeDevices   
-        //This request returns a numerical value representing the amount of devices per user.
+        //This request returns a numerical value representing the active devices.
         [HttpGet("activeDevices")]
         public ActionResult <NumericalDto> GetActiveDevices()
         {

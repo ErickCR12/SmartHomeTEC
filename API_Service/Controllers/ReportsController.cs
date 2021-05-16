@@ -23,8 +23,8 @@ namespace API_Service.Controllers
             _mapper = mapper;
         }        
 
-        //GET api/dashboard/activeDevices   
-        //This request returns a numerical value representing the amount of devices per user.
+        //GET api/reports/monthlyUsage/{email}   
+        //This request returns a numerical value representing the monthly usage of the specified client.
         [HttpGet("monthlyUsage/{email}")]
         public ActionResult <NumericalDto> GetMonthlyUsage(string email)
         {
@@ -34,6 +34,8 @@ namespace API_Service.Controllers
             return Ok(monthlyUsageDto);
         }
 
+        //GET api/reports/deviceTypesUsage/{email}   
+        //This request returns a report representing the usage per device type of the specified client.
         [HttpGet("deviceTypesUsage/{email}")]
         public ActionResult <IEnumerable<ReportDto>> GetDeviceTypesUsage(string email)
         {
@@ -42,6 +44,8 @@ namespace API_Service.Controllers
             return Ok(_mapper.Map<IEnumerable<ReportDto>>(deviceTypesUsageValue));
         }
 
+        //GET api/reports/dailyUsage/{email}   
+        //This request returns a report representing the monthly usage of the specified client.
         [HttpGet("dailyUsage/{email}")]
         public ActionResult <IEnumerable<ReportDto>> GetDailyUsage(string email)
         {
