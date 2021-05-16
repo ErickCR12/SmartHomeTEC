@@ -20,11 +20,13 @@ namespace WebServiceResTEC.Profiles
                 .ReverseMap();
             CreateMap<Order, OrderDto>().ForMember(x => x.purchase_date,
                 opt => opt.MapFrom(src => ((DateTime)src.purchase_date).ToShortDateString())).ReverseMap();
-
             CreateMap<LoginProfile, LoginDto>().ReverseMap();
             CreateMap<Region, RegionDto>().ReverseMap();
             CreateMap<DirectionClient, DirectionClientDto>().ReverseMap();
             CreateMap<DevicesPerUser, DevicesPerUserDto>().ReverseMap();
+            CreateMap<Report, ReportDto>().ReverseMap();
+            CreateMap<DeviceState, DeviceStateDto>().ForMember(x => x.date,
+                opt => opt.MapFrom(src => ((DateTime)src.date).ToShortDateString())).ReverseMap();
         }
     }
 

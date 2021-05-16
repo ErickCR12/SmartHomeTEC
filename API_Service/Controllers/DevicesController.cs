@@ -25,7 +25,7 @@ namespace API_Service.Controllers
         }
 
         //GET api/devices
-        //This request returns a list of Device entities in a JSON format representing the chef database.
+        //This request returns a list of Device entities in a JSON format representing the device database.
         [HttpGet]
         public ActionResult<IEnumerable<DeviceDto>> GetAllDevices()
         {
@@ -34,7 +34,7 @@ namespace API_Service.Controllers
         }
 
         //GET api/devices/byclient/{client_email}
-        //This request returns a list of Device entities in a JSON format representing the chef database.
+        //This request returns a list of Device entities in a JSON format representing the devices of a specified client.
         [HttpGet("byclient/{client_email}")]
         public ActionResult<IEnumerable<DeviceDto>> GetAllDevicesByClient(string client_email)
         {
@@ -69,8 +69,22 @@ namespace API_Service.Controllers
                                 newDeviceDto);
         }
 
+        //POST api/devices
+        //This request receives all the needed info to create a new DeviceState in the device_state database.
+        [HttpPost("state")]
+        public ActionResult <DeviceStateDto> AddDeviceState(DeviceStateDto deviceStateDto)
+        {
+            var deviceStateModel = _mapper.Map<DeviceState>(deviceStateDto);
+            _repository.AddDeviceState(deviceStateModel);
+
+            var newDeviceStateDto = _mapper.Map<DeviceStateDto>(deviceStateModel);
+
+            return CreatedAtRoute(nameof(GetDeviceBySerialNumber), new {serial_number = newDeviceStateDto.device_serial_number}, 
+                                newDeviceStateDto);
+        }
+
         
-        //PUT api/dishes/{serial_number}
+        //PUT api/devices/{serial_number}
         //This request receives a JSON representing Device Entity to be updated. This JSON is mapped to a Device Data Model 
         //and with the serial_number received in the header of the request, the matching entity will be replaced with the new info.
         [HttpPut("{serial_number}")]

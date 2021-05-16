@@ -13,6 +13,7 @@ import {DirectionClient} from './models/direction-client';
 import {DevicesPerUser} from './models/devices-per-user';
 import {Order} from './models/order';
 import {NumberDto} from './models/number-dto';
+import {Report} from './models/report';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +27,7 @@ export class DataService {
   private loginUrl = 'api/login/';
   private regionsUrl = 'api/regions/';
   private orderUrl = 'api/orders/';
+  private reportsUrl = 'api/reports/';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -162,7 +164,7 @@ export class DataService {
     this.messageService.add('DataService: fetched ActiveDevices');
     return this.http.get<NumberDto>(this.dashboardUrl + 'activeDevices')
       .pipe(
-        catchError(this.handleError<NumberDto>('getAllDevices', null))
+        catchError(this.handleError<NumberDto>('getActiveDevices', null))
       );
   }
 
@@ -179,6 +181,28 @@ export class DataService {
     return this.http.get<Region[]>(this.dashboardUrl + 'DevicesPerRegion')
       .pipe(
         catchError(this.handleError<Region[]>('DevicesPerRegion', null))
+      );
+  }
+
+  getMonthlyUsage(email: string): Observable<NumberDto> {
+    this.messageService.add('DataService: fetched MonthlyUsage');
+    return this.http.get<NumberDto>(this.reportsUrl + 'monthlyUsage/' + email)
+      .pipe(
+        catchError(this.handleError<NumberDto>('MonthlyUsage', null))
+      );
+  }
+
+  getDeviceTypesUsage(email: string): Observable<Report[]> {
+    return this.http.get<Report[]>(this.reportsUrl + 'deviceTypesUsage/' + email)
+      .pipe(
+        catchError(this.handleError<Report[]>('DeviceTypesUsage', null))
+      );
+  }
+
+  getDailyUsage(email: string): Observable<Report[]> {
+    return this.http.get<Report[]>(this.reportsUrl + 'dailyUsage/' + email)
+      .pipe(
+        catchError(this.handleError<Report[]>('DailyUsage', null))
       );
   }
 

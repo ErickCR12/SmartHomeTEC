@@ -3,16 +3,13 @@ package com.example.app.DataBase
 import android.content.ContentValues
 import java.time.LocalDateTime
 
-class Historial (var dispositivo: String, var tiempo: Int, var fecha: LocalDateTime, var estado: Boolean) {
+class Historial (var idUsuario: Int, var Usuario: String) {
 
         fun toContentValues(): ContentValues?{
             val values = ContentValues()
 
-            values.put(HistorialDB.RegistroHistorial.DISPOSITIVO, dispositivo)
-            values.put(HistorialDB.RegistroHistorial.TIEMPO, tiempo)
-            values.put(HistorialDB.RegistroHistorial.FECHA, fecha.toString())
-            values.put(HistorialDB.RegistroHistorial.ESTADO, estado)
-
+            values.put(HistorialDB.RegistroHistorial.ID_USUARIO, idUsuario)
+            values.put(HistorialDB.RegistroHistorial.USUARIO, Usuario)
             return  values
         }
 }

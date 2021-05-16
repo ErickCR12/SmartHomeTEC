@@ -35,9 +35,8 @@ public class RegistroDBHelper extends SQLiteOpenHelper{
                 + RegistroDB.RegistroEntrada.ID_USUARIO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + RegistroDB.RegistroEntrada.USUARIO + " TEXT NOT NULL,"
                 + RegistroDB.RegistroEntrada.DISPOSITIVO + " TEXT NOT NULL,"
-                //+ RegistroDB.RegistroEntrada.TIPO + " TEXT NOT NULL,"
+                + RegistroDB.RegistroEntrada.APOSENTO  + " TEXT,"
                 + RegistroDB.RegistroEntrada.SERIE + " INTEGER NOT NULL,"
-                + RegistroDB.RegistroEntrada.MARCA  + " TEXT,"
                 + "UNIQUE (" + RegistroDB.RegistroEntrada.SERIE+ "))"
         );
     }
@@ -53,11 +52,12 @@ public class RegistroDBHelper extends SQLiteOpenHelper{
                 registro.toContentValues());
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public List<Registro> getListaRegistro(Integer id){
         List<Registro> lista = new ArrayList<Registro>();
         Cursor cursor = getReadableDatabase()
-                .rawQuery("SELECT * FROM registro WHERE idUsuario == ?", new String[]{id.toString()});
+                .rawQuery("SELECT * FROM Registros WHERE idUsuario == ?", new String[]{id.toString()});
         if (cursor.moveToFirst()){
             do{
                 Registro registro = new Registro(
@@ -66,10 +66,8 @@ public class RegistroDBHelper extends SQLiteOpenHelper{
                         cursor.getString(cursor.getColumnIndex("nombreUsuario")),
                         //Dispositivo
                         cursor.getString(cursor.getColumnIndex("nombreDispositivo")),
-                      //  cursor.getString(cursor.getColumnIndex("tipoDispositivo")),
-                        cursor.getString(cursor.getColumnIndex("marcaDispositivo")),
+                        cursor.getString(cursor.getColumnIndex("nombreAposento")),
                         cursor.getInt(cursor.getColumnIndex("serieDispositivo"))
-                        //cursor.getString(cursor.getColumnIndex("descripcionDispositivo"))
                         );
 
                 registro.setIdUsuario(cursor.getColumnIndex("idUsuario"));
@@ -86,6 +84,26 @@ public class RegistroDBHelper extends SQLiteOpenHelper{
                 RegistroDB.RegistroEntrada.ID_USUARIO + "LIKE ?",
                 new String[]{idRegistro.toString()}
         );
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Registro obtenerRegistro(Integer id) {
+        Registro registro = null;
+        Cursor cursor =  getReadableDatabase()
+                .rawQuery("SELECT * FROM Registros WHERE idUsuario == ?", new String[]{id.toString()});
+        if (cursor.moveToFirst()) {
+            do {
+                registro = new Registro(//Usuario
+                        //Usuario
+                        cursor.getInt(cursor.getColumnIndex("idUsuario")),
+                        cursor.getString(cursor.getColumnIndex("nombreUsuario")),
+                        //Dispositivo
+                        cursor.getString(cursor.getColumnIndex("nombreDispositivo")),
+                        cursor.getString(cursor.getColumnIndex("nombreAposento")),
+                        cursor.getInt(cursor.getColumnIndex("serieDispositivo")));
+            } while (cursor.moveToNext());
+        }
+        return registro;
     }
 
 }

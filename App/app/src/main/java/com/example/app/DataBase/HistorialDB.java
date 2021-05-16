@@ -8,10 +8,9 @@ class HistorialDB {
         public static final String TABLE_NAME = "Historiales";
 
 
-        public static final String DISPOSITIVO = "nombreDispositivo";
-        public static final String TIEMPO = "tiempo";
-        public static final String FECHA = "fecha";
-        public static final String ESTADO = "estado";
+        public static final String ID_USUARIO = "idUsuario";
+        public static final String USUARIO = "nombreUsuario";
+
 
 
 

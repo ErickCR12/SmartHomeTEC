@@ -35,7 +35,7 @@ namespace API_Service.Controllers
         //This request returns a single DeviceType entity in a JSON format. This entity has the same name
         //as the received in the request header.
         [HttpGet("{name}", Name = "GetDeviceByName")]
-        public ActionResult <DeviceTypeDto> GetDeviceByName(string name)
+        public ActionResult <DeviceTypeDto> GetDeviceTypeByName(string name)
         {
             var deviceTypeModel = _repository.GetDeviceType(name);
             if(deviceTypeModel != null){
@@ -47,14 +47,14 @@ namespace API_Service.Controllers
         //POST api/devicetypes
         //This request receives all the needed info to create a new DeviceType in the device_types database.
         [HttpPost]
-        public ActionResult <DeviceTypeDto> CreateDevice(DeviceTypeDto deviceTypeDto)
+        public ActionResult <DeviceTypeDto> CreateDeviceType(DeviceTypeDto deviceTypeDto)
         {
             var deviceTypeModel = _mapper.Map<DeviceType>(deviceTypeDto);
             _repository.AddDeviceType(deviceTypeModel);
 
             var newDeviceTypeDto = _mapper.Map<DeviceTypeDto>(deviceTypeModel);
 
-            return CreatedAtRoute(nameof(GetDeviceByName), new {name = newDeviceTypeDto.name}, 
+            return CreatedAtRoute(nameof(GetDeviceTypeByName), new {name = newDeviceTypeDto.name}, 
                                 newDeviceTypeDto);
         }
 

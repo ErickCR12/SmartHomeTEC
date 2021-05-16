@@ -58,17 +58,6 @@ export class AppComponent {
     this.isDashboard = false;
   }
 
-  clickAdmin() {
-    this.usersService.isLogged = true;
-    this.usersService.isAdmin = true;
-    this.isReg = false;
-  }
-
-  clickClient() {
-    this.usersService.isLogged = true;
-    this.usersService.isAdmin = false;
-    this.isReg = false;
-  }
 
   clickReg() {
     this.isReg = !this.isReg;
