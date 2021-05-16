@@ -37,30 +37,43 @@ namespace API_Service.Data
         Client GetClient(string email);
         //Updates the client with the specified.
         void UpdateClient(Client client);
-
+        //Adds a client to the database
         void AddClient(Client client);
+        //Adds a client direction to the database
         void AddDirection(DirectionClient directionClient);
-        
+        //Returns a list of distributors with devices that represents the online store
         IEnumerable<Distributor> GetOnlineStore(string continent, string country);
+        //Receives a list of distributors with devices that represents the new online store to be stored
         void AddOnlineStore(IEnumerable<Distributor> distributors);
+        //Deletes the device store from the database.
         void DeleteOnlineStore();
 
+        //Returns all the exisitng continents in the database
         IEnumerable<Region> GetAllContinents();
+        //Returns all countries that are related to the specified continent.
         IEnumerable<Region> GetCountriesByContinent(string continent);
 
+        //Adds a new order representing the purchase of a device.
         void AddOrder(Order order);
 
+        //Checks the received login profile and returns a login profile indicating what kind of user has logged in.
         LoginProfile CheckCredentials(LoginProfile loginProfile);
 
+        //Returns the admin stored in the database.
         Admin GetAdmin();
 
+        //Returns the amount of devices per user.
         DevicesPerUser GetDevicesPerUser();
+        //Returns the amount of devices that exist per region
         List<Region> GetDevicesPerRegion();
+        //Returns all the active devices.
         int GetActiveDevices();
         
-        
+        //Returns the amount of monthly usage of devices from a client.
         int GetMonthlyUsage(string email);
+        //Returns the amount of usage per device type devices from a client.
         List<Report> GetDeviceTypesUsage(string email);
+        //Returns the amount of daily usage of devices from a client.
         List<Report> GetDailyUsage(string email);
 
     }
