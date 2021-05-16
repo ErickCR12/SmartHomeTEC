@@ -33,7 +33,8 @@ export class DevicesComponent implements OnInit {
     const serial_number = Number(serialNumberStr);
     const electric_usage = Number(electricUsageStr);
     const price = Number(priceStr);
-    const new_device = {serial_number, brand, electric_usage, price, device_type_name} as Device;
+    const client_email = '';
+    const new_device = {serial_number, brand, electric_usage, price, device_type_name, client_email} as Device;
     this.dataService.addDevice(new_device).subscribe(data => {
       if (data){
         this.devices.push(new_device);
@@ -51,7 +52,8 @@ export class DevicesComponent implements OnInit {
     const serial_number = Number(serialNumberStr);
     const electric_usage = Number(electricUsageStr);
     const price = Number(priceStr);
-    const updated_device = {serial_number, brand, electric_usage, price, device_type_name} as Device;
+    const client_email = '';
+    const updated_device = {serial_number, brand, electric_usage, price, device_type_name, client_email} as Device;
     this.dataService.updateDevice(updated_device).subscribe();
   }
 

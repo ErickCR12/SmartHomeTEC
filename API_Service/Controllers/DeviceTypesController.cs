@@ -34,7 +34,7 @@ namespace API_Service.Controllers
         //GET api/devicetypes/{name}
         //This request returns a single DeviceType entity in a JSON format. This entity has the same name
         //as the received in the request header.
-        [HttpGet("{name}", Name = "GetDeviceByName")]
+        [HttpGet("{name}", Name = "GetDeviceTypeByName")]
         public ActionResult <DeviceTypeDto> GetDeviceTypeByName(string name)
         {
             var deviceTypeModel = _repository.GetDeviceType(name);

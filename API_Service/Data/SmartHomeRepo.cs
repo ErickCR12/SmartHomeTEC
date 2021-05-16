@@ -127,7 +127,10 @@ namespace API_Service.Data
             sqlCmd.Parameters.AddWithValue("p3", device.electric_usage);
             sqlCmd.Parameters.AddWithValue("p4", device.price);
             sqlCmd.Parameters.AddWithValue("p5", device.device_type_name);
-            sqlCmd.Parameters.AddWithValue("p6", device.client_email);
+            if(device.client_email != "")
+                sqlCmd.Parameters.AddWithValue("p6", device.client_email);
+            else
+                sqlCmd.Parameters.AddWithValue("p6", DBNull.Value);
             sqlCmd.ExecuteNonQuery();
 
             DBconn.Close();
@@ -169,7 +172,10 @@ namespace API_Service.Data
             sqlCmd.Parameters.AddWithValue("p2", device.electric_usage);
             sqlCmd.Parameters.AddWithValue("p3", device.price);
             sqlCmd.Parameters.AddWithValue("p4", device.device_type_name);
-            sqlCmd.Parameters.AddWithValue("p5", device.client_email);
+            if (device.client_email != "")
+                sqlCmd.Parameters.AddWithValue("p5", device.client_email);
+            else
+                sqlCmd.Parameters.AddWithValue("p5", DBNull.Value);
             sqlCmd.ExecuteNonQuery();
 
             DBconn.Close();
